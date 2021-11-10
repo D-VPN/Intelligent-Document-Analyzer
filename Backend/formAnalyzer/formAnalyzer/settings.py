@@ -25,7 +25,10 @@ SECRET_KEY = 'django-insecure-!05=$u8n_(npv-mi@3l(qnxcny6_1!(wmg)58h7jhwt3+=$qjv
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
+
+# MongoDB connection string
+# mongodb+srv://vishal2720:1infiniteloop@cluster0.xgy7f.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
 
 
 # Application definition
@@ -79,8 +82,14 @@ WSGI_APPLICATION = 'formAnalyzer.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'djongo',
+        "CLIENT": {
+           "name": "db",
+           "host": "mongodb+srv://vishal2720:1infiniteloop@cluster0.xgy7f.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+           "username": "vishal2720",
+           "password": "1infiniteloop",
+           "authMechanism": "SCRAM-SHA-1",
+        }, 
     }
 }
 
