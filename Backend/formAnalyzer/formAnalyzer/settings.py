@@ -34,8 +34,11 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    'djoser',
     'corsheaders',
     'rest_framework',
+    'rest_framework.authtoken',
+    'authUser',
     'formAnalyzerApp',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -82,15 +85,19 @@ WSGI_APPLICATION = 'formAnalyzer.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'djongo',
-        "CLIENT": {
-           "name": "db",
-           "host": "mongodb+srv://vishal2720:1infiniteloop@cluster0.xgy7f.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
-           "username": "vishal2720",
-           "password": "1infiniteloop",
-           "authMechanism": "SCRAM-SHA-1",
-        }, 
-    }
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    },
+    # 'mongodb' : {
+    #     'ENGINE': 'djongo',
+    #     "CLIENT": {
+    #        "name": "db",
+    #        "host": "mongodb+srv://vishal2720:1infiniteloop@cluster0.xgy7f.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+    #        "username": "vishal2720",
+    #        "password": "1infiniteloop",
+    #        "authMechanism": "SCRAM-SHA-1",
+    #     }
+    # }
 }
 
 
@@ -112,6 +119,27 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES' : [
+        'rest_framework.permissions.IsAuthenticated',
+    ]
+}
+
+DJOSER = {
+    'LOGIN_FIELD' : 'email',
+    'USER_CREATE_PASSWORD_RETYPE' : True,
+    'SERIALIZERS' : {
+        'user_create' : 'authUser.serializers.UserCreateSerializer',
+        'user' : 'authUser.serializers.UserCreateSerializer',
+    }
+}
+
+AUTH_USER_MODEL = 'authUser.User'
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
