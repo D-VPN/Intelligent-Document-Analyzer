@@ -1,20 +1,38 @@
 import React, { useState } from 'react'
-import PropTypes from 'prop-types';
-import './Login.css';
-import axios from 'axios';
+import './Registration.css';
 
-const Login = ({ setToken }) => {
+const Registration = () => {
+    const [username, setUsername] = useState("")
+    const [firstName, setFirstName] = useState("")
+    const [lastName, setLastName] = useState("")
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+    const [repassword, setRepassword] = useState("")
     const [error, setError] = useState("")
-    const onLogin = async (e) => {
+    const onRegistration = async (e) => {
         e.preventDefault();
         setError("");
-        if (email.length == 0) {
+        if (username.length == 0) {
+            setError("Username is required");
+        }
+        else if (firstName.length == 0) {
+            setError("First Name is required");
+        }
+        else if (lastName.length == 0) {
+            setError("Last Name is required");
+        }
+        else if (email.length == 0) {
             setError("Email is required");
         }
         else if (password.length == 0) {
             setError("Password is required");
+        }
+        else if (repassword.length == 0) {
+            setError("Please fill the last blank");
+        }
+
+        else if (repassword !== password) {
+            setError("Passwords are not matching");
         }
         const url = "https:/auth/token/login";
         // await axios.post(url, {
@@ -39,8 +57,8 @@ const Login = ({ setToken }) => {
             username: password,
             token: "token",
         }
-        setToken(user);
     }
+
     const showError = () => {
         if (error.length > 0)
             return (
@@ -48,13 +66,17 @@ const Login = ({ setToken }) => {
             )
     }
     return (
-        <div className="login">
-            <form className="login__form" onSubmit={(e) => onLogin(e)}>
+        <div className="registration">
+            <form className="registration__form" onSubmit={(e) => onRegistration(e)}>
                 <h1>
-                    Login Here
+                    Register Here
                 </h1>
+                <input type="name" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} />
+                <input type="name" placeholder="First Name" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
+                <input type="name" placeholder="Last Name" value={lastName} onChange={(e) => setLastName(e.target.value)} />
                 <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
                 <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                <input type="password" placeholder="Re-type Password" value={repassword} onChange={(e) => setRepassword(e.target.value)} />
                 {showError()}
                 <button type="submit" className="submit__btn">Submit</button>
 
@@ -62,10 +84,8 @@ const Login = ({ setToken }) => {
 
         </div>
     )
+
+
 }
 
-Login.propTypes = {
-    setToken: PropTypes.func.isRequired
-}
-
-export default Login
+export default Registration
