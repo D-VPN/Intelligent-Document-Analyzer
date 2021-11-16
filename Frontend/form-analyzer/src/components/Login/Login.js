@@ -16,30 +16,27 @@ const Login = ({ setToken }) => {
         else if (password.length == 0) {
             setError("Password is required");
         }
-        const url = "https:/auth/token/login";
-        // await axios.post(url, {
-        //     email: email,
-        //     password: password,
-        // },
-        //     {
-        //         'Content-Type': 'application/json',
-        //     }
-        // ).then((response, error) => {
-        //     const user = {
-        //         email: "darshansatra1@gmail.com",
-        //         username: "darshansatra1",
-        //         token: "token",
-        //     }
-        //     setToken(user);
-
-        // });
-
-        const user = {
+        if (error.length != 0)
+            return;
+        const url = "http://127.0.0.1:8000/auth/token/login";
+        await axios.post(url, {
             email: email,
-            username: password,
-            token: "token",
-        }
-        setToken(user);
+            password: password,
+        },
+            {
+                'Content-Type': 'application/json',
+            }
+        ).then((response, error) => {
+            console.log(response);
+            const user = {
+                email: "darshansatra1@gmail.com",
+                username: "darshansatra1",
+                token: "token",
+            }
+            setToken(user);
+            console.log(error)
+
+        });
     }
     const showError = () => {
         if (error.length > 0)

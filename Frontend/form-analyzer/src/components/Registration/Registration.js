@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import axios from 'axios';
 import './Registration.css';
 
 const Registration = () => {
@@ -34,29 +35,31 @@ const Registration = () => {
         else if (repassword !== password) {
             setError("Passwords are not matching");
         }
-        const url = "https:/auth/token/login";
-        // await axios.post(url, {
-        //     email: email,
-        //     password: password,
-        // },
-        //     {
-        //         'Content-Type': 'application/json',
-        //     }
-        // ).then((response, error) => {
-        //     const user = {
-        //         email: "darshansatra1@gmail.com",
-        //         username: "darshansatra1",
-        //         token: "token",
-        //     }
-        //     setToken(user);
-
-        // });
-
-        const user = {
+        if (error.length != 0) return;
+        const url = "http://127.0.0.1:8000/auth/users/";
+        await axios.post(url, {
             email: email,
-            username: password,
-            token: "token",
-        }
+            first_name: firstName,
+            last_name: lastName,
+            username: username,
+            organization_name: "D-VPN",
+            password: password,
+            re_password: password,
+        },
+            {
+                'Content-Type': 'application/json',
+            }
+        ).then((response, error) => {
+            console.log(response);
+            const user = {
+                email: "darshansatra1@gmail.com",
+                username: "darshansatra1",
+                token: "token",
+            }
+
+            console.log(error)
+        });
+
     }
 
     const showError = () => {
