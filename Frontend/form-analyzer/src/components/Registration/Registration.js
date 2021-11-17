@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import axios from 'axios';
 import './Registration.css';
 import login from '../../images/login.jpg';
+import { Link, useNavigate } from "react-router-dom";
 
 const Registration = () => {
     const [username, setUsername] = useState("")
@@ -12,11 +13,15 @@ const Registration = () => {
     const [password, setPassword] = useState("")
     const [repassword, setRepassword] = useState("")
     const [error, setError] = useState("")
+    const navigate = useNavigate()
     const onRegistration = async (e) => {
         e.preventDefault();
         setError("");
         if (username.length === 0) {
             setError("Username is required");
+            return;
+        } else if (email.length === 0) {
+            setError("Email is required");
             return;
         }
         else if (firstName.length === 0) {
@@ -27,16 +32,12 @@ const Registration = () => {
             setError("Last Name is required");
             return;
         }
-        else if (email.length === 0) {
-            setError("Email is required");
-            return;
-        }
         else if (password.length === 0) {
             setError("Password is required");
             return;
         }
         else if (repassword.length === 0) {
-            setError("Please fill the last blank");
+            setError("Please re-type your password");
             return;
         }
 
@@ -58,9 +59,8 @@ const Registration = () => {
                 'Content-Type': 'application/json',
             }
         ).then((response) => {
-            console.log(response);
-            if (response.data.status === 201) {
-                // Yaha phir dashboard me navigate karna hai
+            if (response.status === 201) {
+                navigate("/login", { replace: true, });
             }
         }).catch((error) => {
             if (error.response) {
@@ -95,7 +95,7 @@ const Registration = () => {
     const showError = () => {
         if (error.length > 0)
             return (
-                <h4 style={{ color: "red" }}>{error}</h4>
+                <p style={{ color: "red" }}>{error}</p>
             )
     }
     return (
@@ -104,58 +104,93 @@ const Registration = () => {
             <h1 className='text-center login-header'>REGISTER</h1>
             <div className='row register-row'>
                 <div className='col-md-6'>
-                <img src={login} alt="Logo" style={{height:"90%", width:"100%"}}  className='img-fluid' />
+                    <img src={login} alt="Logo" style={{ height: "90%", width: "100%" }} className='img-fluid' />
                 </div>
                 <div className='col-md-6'>
-                    <form>
+                    <form onSubmit={(e) => onRegistration(e)}>
                         <div className='row g-2'>
                             <div className='col-md'>
                                 <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com"/>
-                                    <label for="floatingInput">Username</label>
+                                    <input type="name" class="form-control" id="username" placeholder="darshan"
+                                        value={username} onChange={(e) => setUsername(e.target.value)}
+                                    />
+                                    <label for="username">Username</label>
                                 </div>
-                            </div>   
+                            </div>
                             <div className='col-md'>
                                 <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com"/>
-                                    <label for="floatingInput">Email</label>
+                                    <input type="email" class="form-control" id="email" placeholder="name@example.com"
+                                        value={email} onChange={(e) => setEmail(e.target.value)}
+
+                                    />
+                                    <label for="email">Email</label>
                                 </div>
-                            </div>   
+                            </div>
                         </div>
 
                         <div className='row g-2'>
                             <div className='col-md'>
                                 <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com"/>
-                                    <label for="floatingInput">First Name</label>
+                                    <input type="name" class="form-control" id="firstName" placeholder="darshan"
+
+                                        value={firstName} onChange={(e) => setFirstName(e.target.value)}
+                                    />
+                                    <label for="firstName">First Name</label>
                                 </div>
-                            </div>   
+                            </div>
                             <div className='col-md'>
                                 <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com"/>
-                                    <label for="floatingInput">Last Name</label>
+                                    <input type="name" class="form-control" id="lastName" placeholder="satra"
+
+                                        value={lastName} onChange={(e) => setLastName(e.target.value)}
+                                    />
+                                    <label for="lastName">Last Name</label>
                                 </div>
-                            </div>   
+                            </div>
                         </div>
                         <div className='row g-2'>
                             <div className='col-md'>
                                 <div class="form-floating mb-3">
-                                    <input type="password" class="form-control" id="floatingPassword" placeholder="Password"/>
-                                    <label for="floatingPassword">Password</label>
+                                    <input type="password" class="form-control" id="password" placeholder="Password"
+
+                                        value={password} onChange={(e) => setPassword(e.target.value)}
+
+                                    />
+                                    <label for="password">Password</label>
                                 </div>
-                            </div>   
+                            </div>
                             <div className='col-md'>
                                 <div class="form-floating mb-3">
-                                    <input type="password" class="form-control" id="floatingPassword" placeholder="Password"/>
-                                    <label for="floatingPassword">Re-Type Password</label>
+                                    <input type="password" class="form-control" id="repassword" placeholder="Password"
+                                        value={repassword} onChange={(e) => setRepassword(e.target.value)}
+
+                                    />
+                                    <label for="repassword">Re-Type Password</label>
                                 </div>
-                            </div>   
+                            </div>
                         </div>
-                        
-                        <div class='d-grid gap-2 '>
-                            <button class='btn btn-primary' type='submit'>Submit</button>
-                            <button class='btn btn-primary' type='submit'>Already Have An Account? Login</button>
+                        <div className='col-md'>
+                            <div class="form-floating mb-3">
+                                <input type="name" class="form-control" id="organization" placeholder="D-VPN"
+                                    value={organization} onChange={(e) => setOrganization(e.target.value)}
+
+                                />
+                                <label for="repassword">Organization</label>
+                            </div>
                         </div>
+                        {showError()}
+                        <div class="d-grid gap-2">
+                            <button className="submit__btn" type='submit'>Submit</button>
+                        </div>
+                        <div class='row mt-3'>
+                            <div class='col-md-6 mx-auto'>
+
+                                <Link to="/login" replace>
+                                    <a href="">Already have an Account? Login</a>
+                                </Link>
+                            </div>
+                        </div>
+
                     </form>
                 </div>
             </div>
@@ -163,24 +198,6 @@ const Registration = () => {
 
 
 
-        /* <div className="registration">
-            <form className="registration__form" onSubmit={(e) => onRegistration(e)}>
-                <h1>
-                    Register Here
-                </h1>
-                <input type="name" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} />
-                <input type="name" placeholder="First Name" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
-                <input type="name" placeholder="Last Name" value={lastName} onChange={(e) => setLastName(e.target.value)} />
-                <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
-                <input type="name" placeholder="Organization Name" value={organization} onChange={(e) => setOrganization(e.target.value)} />
-                <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
-                <input type="password" placeholder="Re-type Password" value={repassword} onChange={(e) => setRepassword(e.target.value)} />
-                {showError()}
-                <button type="submit" className="submit__btn">Submit</button>
-
-            </form>
-
-        </div> */
     )
 
 
