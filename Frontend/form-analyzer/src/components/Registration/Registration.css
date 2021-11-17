@@ -1,3 +1,6 @@
+.body {
+  font-family: "Inter";
+}
 .registration {
   display: flex;
   flex-direction: column;
@@ -7,19 +10,14 @@
   font-family: "Inter";
 }
 
-.register-header{
-  font-family:'Times New Roman', Times, serif;
-}
-
-.register-container{
+.register-container {
   margin: 2%;
   margin-bottom: 0;
 }
 
-.register-row{
+.register-row {
   padding-top: 3%;
 }
-
 
 .registration__form {
   display: flex;

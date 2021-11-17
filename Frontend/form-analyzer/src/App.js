@@ -9,15 +9,17 @@ import Registration from './components/Registration/Registration';
 function App() {
   const { token, setToken } = useToken();
 
-  // if (!token) {
-  //   return <Login setToken={setToken} />
-  // }
   return (
     <div className="wrapper">
       <Router>
         <Routes>
-          <Route path="/" element={<Dashboard />} />
-          <Route path="/login" exact element={<Login />} />
+          <Route exact path="/" element=
+            {
+              token ? <Dashboard /> : <Login setToken={setToken} />
+            }
+          >
+          </Route>
+          <Route path="/login" exact element={<Login setToken={setToken} />} />
           <Route path="/registration" exact element={<Registration />} />
         </Routes>
       </Router>
