@@ -7,57 +7,86 @@ const Registration = () => {
     const [firstName, setFirstName] = useState("")
     const [lastName, setLastName] = useState("")
     const [email, setEmail] = useState("")
+    const [organization, setOrganization] = useState("")
     const [password, setPassword] = useState("")
     const [repassword, setRepassword] = useState("")
     const [error, setError] = useState("")
     const onRegistration = async (e) => {
         e.preventDefault();
         setError("");
-        if (username.length == 0) {
+        if (username.length === 0) {
             setError("Username is required");
+            return;
         }
-        else if (firstName.length == 0) {
+        else if (firstName.length === 0) {
             setError("First Name is required");
+            return;
         }
-        else if (lastName.length == 0) {
+        else if (lastName.length === 0) {
             setError("Last Name is required");
+            return;
         }
-        else if (email.length == 0) {
+        else if (email.length === 0) {
             setError("Email is required");
+            return;
         }
-        else if (password.length == 0) {
+        else if (password.length === 0) {
             setError("Password is required");
+            return;
         }
-        else if (repassword.length == 0) {
+        else if (repassword.length === 0) {
             setError("Please fill the last blank");
+            return;
         }
 
         else if (repassword !== password) {
             setError("Passwords are not matching");
+            return;
         }
-        if (error.length != 0) return;
         const url = "http://127.0.0.1:8000/auth/users/";
         await axios.post(url, {
             email: email,
             first_name: firstName,
             last_name: lastName,
             username: username,
-            organization_name: "D-VPN",
+            organization_name: organization,
             password: password,
             re_password: password,
         },
             {
                 'Content-Type': 'application/json',
             }
-        ).then((response, error) => {
+        ).then((response) => {
             console.log(response);
-            const user = {
-                email: "darshansatra1@gmail.com",
-                username: "darshansatra1",
-                token: "token",
+            if (response.data.status === 201) {
+                // Yaha phir dashboard me navigate karna hai
+            }
+        }).catch((error) => {
+            if (error.response) {
+                if (error.response.data.email) {
+                    setError(error.response.data.email[0]);
+                }
+                else if (error.response.data.first_name) {
+                    setError(error.response.data.first_name[0]);
+                }
+                else if (error.response.data.last_name) {
+                    setError(error.response.data.last_name[0]);
+                }
+                else if (error.response.data.username) {
+                    setError(error.response.data.username[0]);
+                }
+                else if (error.response.data.organization_name) {
+                    setError(error.response.data.organization_name[0]);
+                }
+                else if (error.response.data.password) {
+                    setError(error.response.data.password[0]);
+                }
+                else if (error.response.data.non_field_errors) {
+                    setError(error.response.data.non_field_errors[0]);
+
+                }
             }
 
-            console.log(error)
         });
 
     }
@@ -78,6 +107,7 @@ const Registration = () => {
                 <input type="name" placeholder="First Name" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
                 <input type="name" placeholder="Last Name" value={lastName} onChange={(e) => setLastName(e.target.value)} />
                 <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                <input type="name" placeholder="Organization Name" value={organization} onChange={(e) => setOrganization(e.target.value)} />
                 <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
                 <input type="password" placeholder="Re-type Password" value={repassword} onChange={(e) => setRepassword(e.target.value)} />
                 {showError()}
