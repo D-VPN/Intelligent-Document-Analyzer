@@ -1,0 +1,41 @@
+.body{
+    padding: 5%;
+}
+.card{
+    margin: 2%;
+}
+
+.card-text{
+    font-family: "Times New Roman", Times, serif;
+    font-size: 20px;
+    letter-spacing: 0px;
+    word-spacing: 0px;
+    color: #000000;
+    font-weight: 400;
+    text-decoration: none;
+    font-style: normal;
+    font-variant: small-caps;
+    text-transform: uppercase;
+}
+
+.card-header{
+    background-color: black;
+    color: white;
+}
+
+.card-subtitle{
+    margin-top: 2%;
+    font-size:smaller;
+}
+
+.card-textarea{
+    padding: 10%;
+}
+
+.card-textarea a{
+    text-decoration: none;
+}
+
+.card-textarea a:hover{
+    text-decoration:underline;
+}
