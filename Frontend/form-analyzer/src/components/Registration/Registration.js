@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import axios from 'axios';
 import './Registration.css';
 import login from '../../images/login.jpg';
+import NavbarLR from '../Navbar/NavbarLR';
 import { Link, useNavigate } from "react-router-dom";
 
 const Registration = () => {
@@ -99,8 +100,10 @@ const Registration = () => {
             )
     }
     return (
-
-        <div className='container register-container'>
+        <div>
+            <NavbarLR></NavbarLR>
+            <div className='container register-container'>
+            
             <h1 className='text-center login-header'>REGISTER</h1>
             <div className='row register-row'>
                 <div className='col-md-6'>
@@ -195,6 +198,8 @@ const Registration = () => {
                 </div>
             </div>
         </div>
+        </div>
+        
 
 
 

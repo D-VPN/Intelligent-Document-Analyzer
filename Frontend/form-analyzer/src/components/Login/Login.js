@@ -4,6 +4,7 @@ import './Login.css';
 import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
 import login from '../../images/login-image.png';
+import NavbarLR from '../Navbar/NavbarLR';
 
 const Login = ({ setToken }) => {
     const [email, setEmail] = useState("")
@@ -106,6 +107,12 @@ const Login = ({ setToken }) => {
 
 
             {/* <div className='row login-row'>
+        <div>
+            <NavbarLR></NavbarLR>
+            <div className='container login-container'>
+            
+            <h1 className='text-center login-header'>LOGIN</h1>
+            <div className='row login-row'>
                 <div className='col-md-6'>
                     <img src={login} alt="Logo" style={{ height: "50%", width: "70%" }} className='img-fluid' />
                 </div>
@@ -148,6 +155,19 @@ const Login = ({ setToken }) => {
                 </div>
             </div> */}
         </div >
+
+
+        /* <div className="login">
+            <form className="login__form" onSubmit={(e) => onLogin(e)}>
+                <h1>
+                    Login Here
+                </h1>
+                <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                {showError()}
+                <button type="submit" className="submit__btn">Submit</button>
+
+            </form> */
 
     )
 }
