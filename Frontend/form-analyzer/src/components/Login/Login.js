@@ -4,7 +4,7 @@ import './Login.css';
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import login from '../../images/login.jpg';
-import Navbar from '../Navbar/Navbar';
+import NavbarLR from '../Navbar/NavbarLR';
 
 const Login = ({ setToken }) => {
     const [email, setEmail] = useState("")
@@ -56,9 +56,10 @@ const Login = ({ setToken }) => {
             )
     }
     return (
-        
-        <div className='container login-container'>
-            {/* <Navbar></Navbar> */}
+        <div>
+            <NavbarLR></NavbarLR>
+            <div className='container login-container'>
+            
             <h1 className='text-center login-header'>LOGIN</h1>
             <div className='row login-row'>
                 <div className='col-md-6'>
@@ -95,6 +96,8 @@ const Login = ({ setToken }) => {
                 </div>
             </div>
         </div>
+        </div>
+        
         
         /* <div className="login">
             <form className="login__form" onSubmit={(e) => onLogin(e)}>

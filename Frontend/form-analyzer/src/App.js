@@ -1,12 +1,10 @@
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import Dashboard from './components/Dashboard/Dashboard';
 import Login from './components/Login/Login';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import useToken from './useToken';
 import Registration from './components/Registration/Registration';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import Navbar from './components/Navbar/Navbar';
-
 
 function App() {
   const { token, setToken } = useToken();
@@ -16,7 +14,6 @@ function App() {
   // }
   return (
     <div className="wrapper">
-      <Navbar></Navbar>
       <Router>
         <Routes>
           <Route path="/" element={<Dashboard />} />

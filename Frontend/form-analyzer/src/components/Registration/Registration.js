@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import axios from 'axios';
 import './Registration.css';
 import login from '../../images/login.jpg';
+import NavbarLR from '../Navbar/NavbarLR';
 
 const Registration = () => {
     const [username, setUsername] = useState("")
@@ -99,8 +100,10 @@ const Registration = () => {
             )
     }
     return (
-
-        <div className='container register-container'>
+        <div>
+            <NavbarLR></NavbarLR>
+            <div className='container register-container'>
+            
             <h1 className='text-center login-header'>REGISTER</h1>
             <div className='row register-row'>
                 <div className='col-md-6'>
@@ -160,6 +163,8 @@ const Registration = () => {
                 </div>
             </div>
         </div>
+        </div>
+        
 
 
 
