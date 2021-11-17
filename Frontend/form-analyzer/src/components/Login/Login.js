@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types';
 import './Login.css';
+import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import login from '../../images/login.jpg';
 import Navbar from '../Navbar/Navbar';
@@ -12,14 +13,14 @@ const Login = ({ setToken }) => {
     const onLogin = async (e) => {
         e.preventDefault();
         setError("");
-        if (email.length == 0) {
+        if (email.length === 0) {
             setError("Email is required");
-        }
-        else if (password.length == 0) {
-            setError("Password is required");
-        }
-        if (error.length != 0)
             return;
+        }
+        else if (password.length === 0) {
+            setError("Password is required");
+            return;
+        }
         const url = "http://127.0.0.1:8000/auth/token/login";
         await axios.post(url, {
             email: email,
@@ -28,16 +29,24 @@ const Login = ({ setToken }) => {
             {
                 'Content-Type': 'application/json',
             }
-        ).then((response, error) => {
+        ).then((response) => {
             console.log(response);
-            const user = {
-                email: "darshansatra1@gmail.com",
-                username: "darshansatra1",
-                token: "token",
+            if (response.data.status === 200) {
+                // Yaha phir dashboard me navigate karna hai
             }
-            setToken(user);
-            console.log(error)
+        }).catch((error) => {
+            if (error.response) {
+                if (error.response.data.email) {
+                    setError(error.response.data.email[0]);
+                }
+                else if (error.response.data.password) {
+                    setError(error.response.data.password[0]);
+                }
+                else if (error.response.data.non_field_errors) {
+                    setError(error.response.data.non_field_errors[0]);
 
+                }
+            }
         });
     }
     const showError = () => {
