@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import PropTypes from 'prop-types';
 import './Login.css';
 import axios from 'axios';
+import login from '../../images/login.jpg';
+import Navbar from '../Navbar/Navbar';
 
 const Login = ({ setToken }) => {
     const [email, setEmail] = useState("")
@@ -45,7 +47,47 @@ const Login = ({ setToken }) => {
             )
     }
     return (
-        <div className="login">
+        
+        <div className='container login-container'>
+            {/* <Navbar></Navbar> */}
+            <h1 className='text-center login-header'>LOGIN</h1>
+            <div className='row login-row'>
+                <div className='col-md-6'>
+                    <img src={login} alt="Logo" style={{height:"90%", width:"100%"}}  className='img-fluid' />
+                </div>
+                <div className='col-md-6'>
+                    <form onSubmit={(e) => onLogin(e)}>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email:</label>
+                            <input 
+                                type="email" 
+                                class="form-control" 
+                                id="email" 
+                                placeholder="name@example.com"
+                                value={email} onChange={(e) => setEmail(e.target.value)}
+                            />
+                        </div>
+                        <div class="mb-3">
+                            <label for="pw" class="form-label">Password:</label>
+                            <input 
+                                type="password" 
+                                class="form-control" 
+                                id="pw"
+                                value={password} onChange={(e) => setPassword(e.target.value)}
+                            />
+                        </div>
+                        {showError()}
+                        <div class='d-grid gap-2 '>
+                            <button class='btn btn-primary' type='submit'>Submit</button>
+                            <button class='btn btn-primary' type='submit'>Don't Have An Account? Register</button>
+                        </div>
+                    </form>
+                    
+                </div>
+            </div>
+        </div>
+        
+        /* <div className="login">
             <form className="login__form" onSubmit={(e) => onLogin(e)}>
                 <h1>
                     Login Here
@@ -57,7 +99,7 @@ const Login = ({ setToken }) => {
 
             </form>
 
-        </div>
+        </div> */
     )
 }
 

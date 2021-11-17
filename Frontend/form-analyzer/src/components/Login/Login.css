@@ -1,10 +1,16 @@
-.login {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  height: 100vh;
-  align-items: center;
-  font-family: "Inter";
+.login-header{
+  font-family:'Times New Roman', Times, serif;
+}
+
+.login-container{
+  margin: 2%;
+  margin-bottom: 0;
+  /* border: 4px solid rgba(8,19,16,0.96);
+  border-radius: 40px; */
+}
+
+.login-row{
+  padding-top: 3%;
 }
 
 .login__form {

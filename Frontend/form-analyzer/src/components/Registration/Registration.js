@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import axios from 'axios';
 import './Registration.css';
+import login from '../../images/login.jpg';
 
 const Registration = () => {
     const [username, setUsername] = useState("")
@@ -69,7 +70,71 @@ const Registration = () => {
             )
     }
     return (
-        <div className="registration">
+
+        <div className='container register-container'>
+            <h1 className='text-center login-header'>REGISTER</h1>
+            <div className='row register-row'>
+                <div className='col-md-6'>
+                <img src={login} alt="Logo" style={{height:"90%", width:"100%"}}  className='img-fluid' />
+                </div>
+                <div className='col-md-6'>
+                    <form>
+                        <div className='row g-2'>
+                            <div className='col-md'>
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com"/>
+                                    <label for="floatingInput">Username</label>
+                                </div>
+                            </div>   
+                            <div className='col-md'>
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com"/>
+                                    <label for="floatingInput">Email</label>
+                                </div>
+                            </div>   
+                        </div>
+
+                        <div className='row g-2'>
+                            <div className='col-md'>
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com"/>
+                                    <label for="floatingInput">First Name</label>
+                                </div>
+                            </div>   
+                            <div className='col-md'>
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com"/>
+                                    <label for="floatingInput">Last Name</label>
+                                </div>
+                            </div>   
+                        </div>
+                        <div className='row g-2'>
+                            <div className='col-md'>
+                                <div class="form-floating mb-3">
+                                    <input type="password" class="form-control" id="floatingPassword" placeholder="Password"/>
+                                    <label for="floatingPassword">Password</label>
+                                </div>
+                            </div>   
+                            <div className='col-md'>
+                                <div class="form-floating mb-3">
+                                    <input type="password" class="form-control" id="floatingPassword" placeholder="Password"/>
+                                    <label for="floatingPassword">Re-Type Password</label>
+                                </div>
+                            </div>   
+                        </div>
+                        
+                        <div class='d-grid gap-2 '>
+                            <button class='btn btn-primary' type='submit'>Submit</button>
+                            <button class='btn btn-primary' type='submit'>Already Have An Account? Login</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+
+        /* <div className="registration">
             <form className="registration__form" onSubmit={(e) => onRegistration(e)}>
                 <h1>
                     Register Here
@@ -85,7 +150,7 @@ const Registration = () => {
 
             </form>
 
-        </div>
+        </div> */
     )
 
 
