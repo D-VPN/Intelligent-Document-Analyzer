@@ -15,7 +15,7 @@ function App() {
         <Routes>
           <Route exact path="/" element=
             {
-              token ? <Dashboard /> : <Login setToken={setToken} />
+              token ? <Dashboard setToken={setToken} /> : <Login setToken={setToken} />
             }
           >
           </Route>
