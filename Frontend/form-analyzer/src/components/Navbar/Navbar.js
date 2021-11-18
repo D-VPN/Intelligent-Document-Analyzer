@@ -1,7 +1,7 @@
 import React from 'react'
 import './Navbar.css';
 
-const Navbar = ({logout}) => {
+const Navbar = ({ logout }) => {
     return (
         <div >
             <nav class="navbar navbar-expand-lg bg-dark p-3" >

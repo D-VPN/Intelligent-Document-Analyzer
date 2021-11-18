@@ -2,10 +2,16 @@ import React from 'react'
 // import './Dashboard.css';
 import PropTypes from 'prop-types';
 import Navbar from '../Navbar/Navbar';
+import { useNavigate } from 'react-router';
 const Dashboard = ({ setToken }) => {
+    const navigate = useNavigate();
+    const logout = () => {
+        setToken();
+        navigate("/login", { replace: true });
+    }
     return (
         <div>
-            <Navbar />
+            <Navbar logout={logout} />
             <div class='container'>
                 <div class='row mt-5'>
                     <div class="col-lg-4 d-flex align-items-stretch">
