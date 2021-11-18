@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import axios from 'axios';
 import './Registration.css';
-import login from '../../images/login.jpg';
+import login from '../../images/login-image.png';
 import NavbarLR from '../Navbar/NavbarLR';
 import { Link, useNavigate } from "react-router-dom";
 
@@ -103,103 +103,112 @@ const Registration = () => {
         <div>
             <NavbarLR></NavbarLR>
             <div className='container register-container'>
-            
-            <h1 className='text-center login-header'>REGISTER</h1>
-            <div className='row register-row'>
-                <div className='col-md-6'>
-                    <img src={login} alt="Logo" style={{ height: "90%", width: "100%" }} className='img-fluid' />
+
+                <div class="card mb-5 shadow " style={{ maxWidth: "1000px", margin: "auto", borderRadius: "2%" }}>
+                    <div class="row g-0">
+                        <div class="col-md-6">
+                            <img src={login} style={{ height: "100%", width: "100%", borderRadius: "2%" }} />
+                        </div>
+                        <div class="col-md-6 p-5">
+                            <h1 className='text-center login-header mb-5'>REGISTER</h1>
+                            <form onSubmit={(e) => onRegistration(e)}>
+                                <div className='row g-2'>
+                                    <div className='col-md'>
+                                        <div class="form-floating mb-3">
+                                            <input type="name" class="form-control" id="username" placeholder="darshan"
+                                                value={username} onChange={(e) => setUsername(e.target.value)}
+                                            />
+                                            <label for="username">Username</label>
+                                        </div>
+                                    </div>
+                                    <div className='col-md'>
+                                        <div class="form-floating mb-3">
+                                            <input type="email" class="form-control" id="email" placeholder="name@example.com"
+                                                value={email} onChange={(e) => setEmail(e.target.value)}
+
+                                            />
+                                            <label for="email">Email</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className='row g-2'>
+                                    <div className='col-md'>
+                                        <div class="form-floating mb-3">
+                                            <input type="name" class="form-control" id="firstName" placeholder="darshan"
+
+                                                value={firstName} onChange={(e) => setFirstName(e.target.value)}
+                                            />
+                                            <label for="firstName">First Name</label>
+                                        </div>
+                                    </div>
+                                    <div className='col-md'>
+                                        <div class="form-floating mb-3">
+                                            <input type="name" class="form-control" id="lastName" placeholder="satra"
+
+                                                value={lastName} onChange={(e) => setLastName(e.target.value)}
+                                            />
+                                            <label for="lastName">Last Name</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className='row g-2'>
+                                    <div className='col-md'>
+                                        <div class="form-floating mb-3">
+                                            <input type="password" class="form-control" id="password" placeholder="Password"
+
+                                                value={password} onChange={(e) => setPassword(e.target.value)}
+
+                                            />
+                                            <label for="password">Password</label>
+                                        </div>
+                                    </div>
+                                    <div className='col-md'>
+                                        <div class="form-floating mb-3">
+                                            <input type="password" class="form-control" id="repassword" placeholder="Password"
+                                                value={repassword} onChange={(e) => setRepassword(e.target.value)}
+
+                                            />
+                                            <label for="repassword">Re-Type Password</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className='col-md'>
+                                    <div class="form-floating mb-3">
+                                        <input type="name" class="form-control" id="organization" placeholder="D-VPN"
+                                            value={organization} onChange={(e) => setOrganization(e.target.value)}
+
+                                        />
+                                        <label for="repassword">Organization</label>
+                                    </div>
+                                </div>
+                                {showError()}
+                                <div class="d-grid gap-2 mt-5">
+                                    <button className="submit__btn" type='submit'>Submit</button>
+                                </div>
+                                <div class='row mt-3'>
+                                    <Link to="/login" replace>
+                                        <a href="">Already have an Account? Login</a>
+                                    </Link>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
                 </div>
-                <div className='col-md-6'>
-                    <form onSubmit={(e) => onRegistration(e)}>
-                        <div className='row g-2'>
-                            <div className='col-md'>
-                                <div class="form-floating mb-3">
-                                    <input type="name" class="form-control" id="username" placeholder="darshan"
-                                        value={username} onChange={(e) => setUsername(e.target.value)}
-                                    />
-                                    <label for="username">Username</label>
-                                </div>
-                            </div>
-                            <div className='col-md'>
-                                <div class="form-floating mb-3">
-                                    <input type="email" class="form-control" id="email" placeholder="name@example.com"
-                                        value={email} onChange={(e) => setEmail(e.target.value)}
 
-                                    />
-                                    <label for="email">Email</label>
-                                </div>
-                            </div>
-                        </div>
+                {/* <h1 className='text-center login-header'>REGISTER</h1>
+                <div className='row register-row'>
+                    <div className='col-md-6'>
+                        <img src={login} alt="Logo" style={{ height: "90%", width: "100%" }} className='img-fluid' />
+                    </div>
+                    <div className='col-md-6'>
 
-                        <div className='row g-2'>
-                            <div className='col-md'>
-                                <div class="form-floating mb-3">
-                                    <input type="name" class="form-control" id="firstName" placeholder="darshan"
-
-                                        value={firstName} onChange={(e) => setFirstName(e.target.value)}
-                                    />
-                                    <label for="firstName">First Name</label>
-                                </div>
-                            </div>
-                            <div className='col-md'>
-                                <div class="form-floating mb-3">
-                                    <input type="name" class="form-control" id="lastName" placeholder="satra"
-
-                                        value={lastName} onChange={(e) => setLastName(e.target.value)}
-                                    />
-                                    <label for="lastName">Last Name</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div className='row g-2'>
-                            <div className='col-md'>
-                                <div class="form-floating mb-3">
-                                    <input type="password" class="form-control" id="password" placeholder="Password"
-
-                                        value={password} onChange={(e) => setPassword(e.target.value)}
-
-                                    />
-                                    <label for="password">Password</label>
-                                </div>
-                            </div>
-                            <div className='col-md'>
-                                <div class="form-floating mb-3">
-                                    <input type="password" class="form-control" id="repassword" placeholder="Password"
-                                        value={repassword} onChange={(e) => setRepassword(e.target.value)}
-
-                                    />
-                                    <label for="repassword">Re-Type Password</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div className='col-md'>
-                            <div class="form-floating mb-3">
-                                <input type="name" class="form-control" id="organization" placeholder="D-VPN"
-                                    value={organization} onChange={(e) => setOrganization(e.target.value)}
-
-                                />
-                                <label for="repassword">Organization</label>
-                            </div>
-                        </div>
-                        {showError()}
-                        <div class="d-grid gap-2">
-                            <button className="submit__btn" type='submit'>Submit</button>
-                        </div>
-                        <div class='row mt-3'>
-                            <div class='col-md-6 mx-auto'>
-
-                                <Link to="/login" replace>
-                                    <a href="">Already have an Account? Login</a>
-                                </Link>
-                            </div>
-                        </div>
-
-                    </form>
-                </div>
+                    </div>
+                </div> */}
             </div>
         </div>
-        </div>
-        
+
 
 
 
