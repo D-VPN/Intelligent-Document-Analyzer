@@ -69,7 +69,7 @@ const Login = ({ setToken }) => {
             <NavbarLR />
 
             <div className='container login-container mt-5'>
-                <div class="card mb-5 shadow " style={{ maxWidth: "800px", margin: "auto", borderRadius: "2%" }}>
+                <div class="card mb-5 shadow " style={{ maxWidth: "1000px", margin: "auto", borderRadius: "2%" }}>
                     <div class="row g-0">
                         <div class="col-md-6">
                             <img src={login} style={{ height: "100%", width: "100%", borderRadius: "2%" }} />
@@ -77,8 +77,7 @@ const Login = ({ setToken }) => {
                         <div class="col-md-6 p-5">
                             <h1 className='text-center login-header mb-5'>LOGIN</h1>
                             <form onSubmit={(e) => onLogin(e)}>
-                                <div class="mb-3">
-                                    <label for="email" class="form-label">Email</label>
+                                <div class="mb-3 form-floating">
                                     <input
                                         type="email"
                                         class="form-control"
@@ -86,15 +85,17 @@ const Login = ({ setToken }) => {
                                         placeholder="name@example.com"
                                         value={email} onChange={(e) => setEmail(e.target.value)}
                                     />
+                                    <label for="email" class="form-label">Email</label>
                                 </div>
-                                <div class="mb-3">
-                                    <label for="pw" class="form-label">Password</label>
+                                <div class="mb-3 form-floating">
                                     <input
                                         type="password"
                                         class="form-control"
                                         id="pw"
+                                        placeholder="random password"
                                         value={password} onChange={(e) => setPassword(e.target.value)}
                                     />
+                                    <label for="pw" class="form-label">Password</label>
                                 </div>
                                 {showError()}
                                 <div class="d-grid gap-2 mt-5">
