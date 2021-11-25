@@ -1,12 +1,41 @@
-import React from 'react'
+import React, { Component } from 'react'
 import CreateNewProject from './CreateNewProject/CreateNewProject'
 
-const CreateProject = () => {
-    return (
-        <div>
-            <CreateNewProject />
-        </div>
-    )
-}
+export default class CreateProject extends Component {
+    state = {
+        step: 0,
+        name: '',
+        file: null,
+    }
+    prevStep = () => {
+        const { step } = this.state;
+        this.setState({ step: step - 1 });
+    }
+    nextStep = () => {
+        const { step } = this.state;
+        this.setState({ step: step + 1 });
+    }
+    handleChange = input => e => {
+        this.setState({ [input]: e.target.value });
+    }
+    onFileChange = file => {
+        this.setState({ file: file });
+    }
 
-export default CreateProject
+    render() {
+        const { step } = this.state;
+        const { name, file } = this.state;
+        const values = { name, file };
+        switch (step) {
+            case 0:
+                return (
+                    <CreateNewProject nextStep={this.nextStep} values={values} handleChange={this.handleChange} onFileChange={this.onFileChange} />
+                )
+            case 1:
+                return (
+                    <div>NExt Page</div>
+                )
+            default:
+        }
+    }
+}
