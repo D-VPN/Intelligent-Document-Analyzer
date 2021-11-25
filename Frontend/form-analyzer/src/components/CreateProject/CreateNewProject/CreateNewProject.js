@@ -19,7 +19,7 @@ const CreateNewProject = () => {
                             <input type="text" class="form-control" id="floatingInput" placeholder="My Project"/>
                         </div>
                         <div class="upload">
-                            <input type="file" class="form-control" id="floatingPassword" placeholder="Password"/>
+                            <input type="file" accept="image/png, image/jpeg" class="form-control" id="floatingPassword" placeholder="Password"/>
                             <label for="floatingPassword">Upload Template Form</label>
                         </div>
                         <div class="d-grid gap-2 mt-5">
