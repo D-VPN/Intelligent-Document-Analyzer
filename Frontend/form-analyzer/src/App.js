@@ -5,7 +5,7 @@ import Login from './components/Login/Login';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import useToken from './useToken';
 import Registration from './components/Registration/Registration';
-import CreateNewProject from './components/CreateProject/CreateNewProject/CreateNewProject';
+import CreateProject from './components/CreateProject/CreateProject';
 
 function App() {
   const { token, setToken } = useToken();
@@ -22,7 +22,7 @@ function App() {
           </Route>
           <Route exact path="/create" element=
             {
-              token ? <CreateNewProject setToken={setToken} /> : <Login setToken={setToken} />
+              token ? <CreateProject setToken={setToken} /> : <Login setToken={setToken} />
             }
           >
           </Route>
