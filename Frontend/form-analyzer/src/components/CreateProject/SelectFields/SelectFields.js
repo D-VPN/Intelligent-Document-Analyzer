@@ -4,50 +4,62 @@ import Navbar from '../../Navbar/Navbar';
 
 /* https://stackoverflow.com/questions/42316604/how-to-implement-a-dynamic-form-with-controlled-components-in-reactjs */
 
-import React, { Component } from 'react'
+const SelectFields = () => {
 
-class SelectFields extends Component {
-    
-    constructor(props){
-        super(props);
-
-        this.state = {
-            
+    var fields = [
+        {
+            key : 'Name',
+            valueType : null,
+            isSelected :  false
+        },
+        {
+            key : 'Age',
+            valueType : null,
+            isSelected :  false
+        },
+        {
+            key : 'Gender',
+            valueType : null,
+            isSelected :  false
+        },
+        {
+            key : 'Email',
+            valueType : null,
+            isSelected :  false
         }
-    }
+    ]
 
-    createUI(){
-        return this.state.fields.map((keyName, i) =>(
-            <div key={i}>
-                <select class="form-select" aria-label="Default select example">
-                    <option selected>Open this select menu</option>
-                    <option value="text">String</option>
-                    <option value="int">Int</option>
-                    <option value="long-int">Long Int</option>
-                    <option value="checkbox">Checkbox</option>
-                    <option value="radio">Radio</option>
-                </select>
-            </div>
-        ))
-    }
-    
-    render() {
-        return (
-            <div>
+    const createUI = () => {
+        return fields.map((el, i)=>
+            <div key={i} >
+                <div class='row' class='input-group'>
+                    <div class='col-md-2'>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"/>
+                        </div>
+                    </div>
+                    <div class='col-md-5'>
+                        {el.key}
+                    </div>
+                    <div class='col-md-5'>
+                        <select class="form-select" aria-label="Default select example">
+                            <option selected>Open this select menu</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </select>
+                    </div>
+                </div>
                 
             </div>
         )
     }
-}
 
-export default SelectFields;
-
-const SelectFields = () => {
     return (
         <div>
             <Navbar/>
             <div class='container'>
-                <div class='header'>
+                <div class='header text-center'>
                     <h1>Project Name Dynamically Render Karna</h1>
                     <p><small>Choose Data Type Of Each Field</small></p>
                 </div>
@@ -57,15 +69,16 @@ const SelectFields = () => {
                     <div class='col-md-6'>
                     <form>
                         <div class=" mb-3">
-                            <label for="floatingInput">Project Name</label>
-                            <input type="text" class="form-control" id="floatingInput" placeholder="My Project"/>
+                            {createUI()}
                         </div>
-                        <div class="upload">
-                            <input type="file" accept="image/png, image/jpeg" class="form-control" id="floatingPassword" placeholder="Password"/>
-                            <label for="floatingPassword">Upload Template Form</label>
-                        </div>
-                        <div class="d-grid gap-2 mt-5">
-                            <button className="submit__btn" type='submit'>NEXT</button>
+    
+                        <div class="row mt-5">
+                            <div class='d-grid col-md-6'>
+                                <button className="submit__btn" type='submit'>PREVIOUS</button>
+                            </div>
+                            <div class='d-grid col-md-6'>
+                                <button className="submit__btn" type='submit'>NEXT</button>
+                            </div>
                         </div>
                     </form>
                     </div>

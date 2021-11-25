@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
 import CreateNewProject from './CreateNewProject/CreateNewProject'
+import SelectFields from './SelectFields/SelectFields';
 
 export default class CreateProject extends Component {
     state = {
         step: 0,
         name: '',
         file: null,
+        fields: []
     }
     prevStep = () => {
         const { step } = this.state;
@@ -33,7 +35,7 @@ export default class CreateProject extends Component {
                 )
             case 1:
                 return (
-                    <div>NExt Page</div>
+                    <SelectFields/>
                 )
             default:
         }
