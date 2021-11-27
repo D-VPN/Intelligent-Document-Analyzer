@@ -49,9 +49,10 @@ const SelectFields = ({ nextStep, values, prevStep }) => {
                     <div class='col-md-5'>
                         <select class="form-select" aria-label="Default select example">
                             <option selected>Open this select menu</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
+                            <option value="text">Text</option>
+                            <option value="number">Number</option>
+                            <option value="date">Date</option>
+                            <option value="checkbox">Checkbox</option>
                         </select>
                     </div>
                 </div>
