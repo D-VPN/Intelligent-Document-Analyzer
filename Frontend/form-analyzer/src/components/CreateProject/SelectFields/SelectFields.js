@@ -1,17 +1,15 @@
 import React from 'react'
 import './SelectFields.css';
-import Navbar from '../../Navbar/Navbar';
-import { useNavigate } from 'react-router';
 
 
 const SelectFields = ({ nextStep, values, prevStep }) => {
-    const navigate = useNavigate();
-    const submit = (e) => {
+    // const navigate = useNavigate();
+    // const submit = (e) => {
 
-        e.preventDefault();
-        navigate('/', { replace: true });
+    //     e.preventDefault();
+    //     navigate('/', { replace: true });
 
-    }
+    // }
 
     var fields = [
         {
@@ -83,7 +81,7 @@ const SelectFields = ({ nextStep, values, prevStep }) => {
                                     <button className="submit__btn" type='submit' onClick={prevStep} >PREVIOUS</button>
                                 </div>
                                 <div class='d-grid col-md-6'>
-                                    <button className="submit__btn" type='submit' onClick={submit}>NEXT</button>
+                                    <button className="submit__btn" type='submit' onClick={nextStep}>NEXT</button>
                                 </div>
                             </div>
                         </form>

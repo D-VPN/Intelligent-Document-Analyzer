@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import './Navbar.css';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 
 class Navbar extends Component {
@@ -18,7 +18,9 @@ class Navbar extends Component {
             <div>
                 < nav class="navbar navbar-expand-lg bg-dark p-3" >
                     <div class="container-fluid">
-                        <a class="navbar-brand text-light" href="#">Form Data Analyzer</a>
+                        <Link to="/">
+                            <a class="navbar-brand text-light" href="#">Form Data Analyzer</a>
+                        </Link>
                         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="navbar-toggler-icon"></span>
                         </button>

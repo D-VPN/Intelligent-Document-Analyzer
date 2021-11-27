@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import CreateNewProject from './CreateNewProject/CreateNewProject'
 import SelectFields from './SelectFields/SelectFields';
 
-import Navbar from '../Navbar/Navbar';
+import UploadForms from './UploadForms/UploadForms';
+import Visualizations from './Visualizations/Visualizations';
 export default class CreateProject extends Component {
     state = {
         step: 0,
@@ -32,16 +33,21 @@ export default class CreateProject extends Component {
         switch (step) {
             case 0:
                 return (
-                    <div>
-                        <CreateNewProject nextStep={this.nextStep} values={values} handleChange={this.handleChange} onFileChange={this.onFileChange} />
-                    </div>
+                    <CreateNewProject nextStep={this.nextStep} values={values} handleChange={this.handleChange} onFileChange={this.onFileChange} />
                 )
             case 1:
                 return (
-                    <div>
-                        <SelectFields nextStep={this.nextStep} values={values} prevStep={this.prevStep} />
-                    </div>
+                    <SelectFields nextStep={this.nextStep} values={values} prevStep={this.prevStep} />
                 )
+            case 2:
+                return (
+                    <UploadForms nextStep={this.nextStep} values={values} prevStep={this.prevStep} />
+                )
+            case 3:
+                return (
+                    <Visualizations values={values} />
+                )
+
             default:
         }
     }

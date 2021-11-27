@@ -1,10 +1,8 @@
 import React from 'react'
-import Navbar from '../Navbar/Navbar';
 
-const Visualizations = () => {
+const Visualizations = ({ values }) => {
     return (
         <div>
-            <Navbar/>
             <div class='container'>
                 <div class='header text-center'>
                     <h1>Project Name Dynamically Render Karna</h1>
