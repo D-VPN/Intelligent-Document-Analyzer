@@ -1,14 +1,8 @@
 import React from 'react'
 // import './Dashboard.css';
 import PropTypes from 'prop-types';
-import Navbar from '../Navbar/Navbar';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 const Dashboard = ({ setToken }) => {
-    const navigate = useNavigate();
-    const logout = () => {
-        setToken();
-        navigate("/login", { replace: true });
-    }
     return (
         <div>
             <div class='container'>
