@@ -4,7 +4,6 @@ import './Login.css';
 import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
 import login from '../../images/login-image.png';
-import NavbarLR from '../Navbar/NavbarLR';
 
 const Login = ({ setToken }) => {
     const [email, setEmail] = useState("")
@@ -66,8 +65,6 @@ const Login = ({ setToken }) => {
     }
     return (
         <div>
-            <NavbarLR />
-
             <div className='container login-container mt-5'>
                 <div class="card mb-5 shadow " style={{ maxWidth: "1000px", margin: "auto", borderRadius: "2%" }}>
                     <div class="row g-0">
@@ -113,88 +110,6 @@ const Login = ({ setToken }) => {
                 </div>
 
 
-                {/* <div className='row login-row'>
-        <div>
-            <NavbarLR></NavbarLR>
-            <div className='container login-container'>
-            
-            <h1 className='text-center login-header'>LOGIN</h1>
-            <div className='row login-row'>
-                <div className='col-md-6'>
-                    <img src={login} alt="Logo" style={{ height: "50%", width: "70%" }} className='img-fluid' />
-                </div>
-                <div className='col-md-6'>
-                    <form onSubmit={(e) => onLogin(e)}>
-                        <div class="mb-3">
-                            <label for="email" class="form-label">Email:</label>
-                            <input
-                                type="email"
-                                class="form-control"
-                                id="email"
-                                placeholder="name@example.com"
-                                value={email} onChange={(e) => setEmail(e.target.value)}
-                            />
-                        </div>
-                        <div class="mb-3">
-                            <label for="pw" class="form-label">Password:</label>
-                            <input
-                                type="password"
-                                class="form-control"
-                                id="pw"
-                                value={password} onChange={(e) => setPassword(e.target.value)}
-                            />
-                        </div>
-                        {showError()}
-                        <div class="d-grid gap-2">
-                            <button className="submit__btn" type='submit'>Submit</button>
-                        </div>
-                        <div class='row mt-3'>
-                            <div class='col-md-6 mx-auto'>
-
-                <h1 className='text-center login-header'>LOGIN</h1>
-                <div className='row login-row'>
-                    <div className='col-md-6'>
-                        <img src={login} alt="Logo" style={{ height: "90%", width: "100%" }} className='img-fluid' />
-                    </div>
-                    <div className='col-md-6'>
-                        <form onSubmit={(e) => onLogin(e)}>
-                            <div class="mb-3">
-                                <label for="email" class="form-label">Email:</label>
-                                <input
-                                    type="email"
-                                    class="form-control"
-                                    id="email"
-                                    placeholder="name@example.com"
-                                    value={email} onChange={(e) => setEmail(e.target.value)}
-                                />
-                            </div>
-                            <div class="mb-3">
-                                <label for="pw" class="form-label">Password:</label>
-                                <input
-                                    type="password"
-                                    class="form-control"
-                                    id="pw"
-                                    value={password} onChange={(e) => setPassword(e.target.value)}
-                                />
-                            </div>
-                            {showError()}
-                            <div class="d-grid gap-2">
-                                <button className="submit__btn" type='submit'>Submit</button>
-                            </div>
-                            <div class='row mt-3'>
-                                <div class='col-md-6 mx-auto'>
-
-                                    <Link to="/registration" replace>
-                                        <a href="">Don't have an Account? Register</a>
-                                    </Link>
-                                </div>
-                            </div>
-
-                        </form>
-
-                    </div>
-                </div>
-            </div> */}
             </div >
         </div>
     )

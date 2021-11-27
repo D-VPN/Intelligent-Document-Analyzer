@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import axios from 'axios';
 import './Registration.css';
 import login from '../../images/login-image.png';
-import NavbarLR from '../Navbar/NavbarLR';
 import { Link, useNavigate } from "react-router-dom";
 
 const Registration = () => {
@@ -101,8 +100,7 @@ const Registration = () => {
     }
     return (
         <div>
-            <NavbarLR></NavbarLR>
-            <div className='container register-container'>
+            <div className='container registe-container'>
 
                 <div class="card mb-5 shadow " style={{ maxWidth: "1000px", margin: "auto", borderRadius: "2%" }}>
                     <div class="row g-0">

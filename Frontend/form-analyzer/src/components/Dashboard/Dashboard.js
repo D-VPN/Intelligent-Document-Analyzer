@@ -11,7 +11,6 @@ const Dashboard = ({ setToken }) => {
     }
     return (
         <div>
-            <Navbar logout={logout} />
             <div class='container'>
                 <div class='row mt-5'>
                     <div class="col-lg-4 d-flex align-items-stretch">

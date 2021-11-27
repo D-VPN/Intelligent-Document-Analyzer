@@ -1,5 +1,4 @@
 import React from 'react'
-import Navbar from '../../Navbar/Navbar';
 import './CreateNewProject.css';
 
 const CreateNewProject = ({ nextStep, values, handleChange, onFileChange }) => {
@@ -25,7 +24,6 @@ const CreateNewProject = ({ nextStep, values, handleChange, onFileChange }) => {
 
     return (
         <div>
-            <Navbar />
             <div class='container'>
                 <div class='header text-center'>
                     <h1>Create New Project</h1>
