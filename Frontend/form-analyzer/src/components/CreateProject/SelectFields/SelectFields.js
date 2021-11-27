@@ -65,7 +65,7 @@ const SelectFields = ({ nextStep, values, prevStep }) => {
         <div>
             <div class='container'>
                 <div class='header text-center'>
-                    <h1>Project Name Dynamically Render Karna</h1>
+                    <h1>Project Name</h1>
                     <p><small>Choose Data Type Of Each Field</small></p>
                 </div>
 
