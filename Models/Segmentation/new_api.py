@@ -80,9 +80,9 @@ def API(img_path, filename):
                 cv2.imwrite(save_path1, temp_img1)
                 cv2.imwrite(save_path2, temp_img2)
 
-                key = pytesseract.image_to_string(temp_img1)
-                value = pytesseract.image_to_string(temp_img2).replace("|", "I")
-                print(key, value)
+                key = pytesseract.image_to_string(temp_img1, lang='eng').replace("\n"," ").replace("♀","")
+                value = pytesseract.image_to_string(temp_img2, lang='eng').replace("|", "I").replace("\n"," ").replace("♀","")
+                print('KEY:', key,'\nVALUE:',value)
                 break
         i += 1
 
