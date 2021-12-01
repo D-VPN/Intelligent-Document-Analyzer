@@ -96,13 +96,14 @@ def API(img_path, filename):
                 cv2.imwrite(save_path2, temp_img2)
 
                 key = pytesseract.image_to_string(
-                    temp_img1, lang='eng').replace("\n", " ").replace("♀", "")
+                    temp_img1, lang='eng').replace(
+                        "|", "I").replace("\n", " ").replace("\x0c", "").replace("♀", "").strip()
                 if "Gender" in key:
                     value = multiple_choice(
                         parent_path, key, cv2.imread(save_path2))
                 else:
                     value = pytesseract.image_to_string(temp_img2, lang='eng').replace(
-                        "|", "I").replace("\n", " ").replace("♀", "")
+                        "|", "I").replace("\n", " ").replace("\x0c", "").replace("♀", "").strip()
 
                 extracted_key_value.append([key, value])
                 print('KEY:', key, '\nVALUE:', value)

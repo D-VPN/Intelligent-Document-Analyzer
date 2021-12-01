@@ -64,7 +64,8 @@ def multiple_choice(parent_path, parent_key, image):
         else:
             value_text = "yes"
         key_val = [pytesseract.image_to_string(
-            key_img, lang='eng').replace("\n", " ").replace("♀", ""), value_text]
+            key_img, lang='eng').replace(
+            "|", "I").replace("\n", " ").replace("\x0c", "").replace("♀", "").strip(), value_text]
 
         extracted_value.append(key_val)
 
