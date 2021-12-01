@@ -3,7 +3,7 @@
 }
 
 .login-container{
-  margin: 2%;
+  /* margin: 2%; */
   margin-bottom: 0;
   /* border: 4px solid rgba(8,19,16,0.96);
   border-radius: 40px; */
@@ -11,30 +11,6 @@
 
 .login-row{
   padding-top: 3%;
-}
-
-.login__form {
-  display: flex;
-  flex-direction: column;
-}
-
-.login__form > h1 {
-  font-size: 35px;
-  margin-bottom: 15px;
-  padding-bottom: 10px;
-  letter-spacing: -1px;
-}
-
-.login__form > input {
-  min-width: 380px;
-  padding: 20px 0;
-  padding-left: 15px;
-  margin-bottom: 10px;
-  outline: none;
-  border: 1px solid rgba(0, 0, 0, 0.24);
-  font-family: "Inter";
-  border-radius: 2px;
-  font-size: 15px;
 }
 
 .submit__btn {

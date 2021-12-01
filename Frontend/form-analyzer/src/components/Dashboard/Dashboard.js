@@ -1,28 +1,21 @@
 import React from 'react'
 // import './Dashboard.css';
 import PropTypes from 'prop-types';
-import Navbar from '../Navbar/Navbar';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 const Dashboard = ({ setToken }) => {
-    const navigate = useNavigate();
-    const logout = () => {
-        setToken();
-        navigate("/login", { replace: true });
-    }
     return (
         <div>
-            <Navbar logout={logout} />
             <div class='container'>
                 <div class='row mt-5'>
                     <div class="col-lg-4 d-flex align-items-stretch">
-                        <Link to="/create">
-                            <div class="card shadow d-flex" style={{ width: "18rem" }}>
+                        <div class="card shadow d-flex" style={{ width: "18rem" }}>
+                            <Link to="/create">
                                 <div class="card-body p-4" >
                                     <i class="fa fa-plus" style={{ fontSize: "60px", position: "absolute", bottom: "50%", left: "40%" }}></i>
                                     <h5 class="card-title" style={{ position: "absolute", bottom: "10%", left: "20%" }}>Create New Project</h5>
                                 </div>
-                            </div>
-                        </Link>
+                            </Link>
+                        </div>
                     </div>
                     <div class="col-lg-4 d-flex align-items-stretch">
                         <div class="card shadow" style={{ width: "18rem" }}>

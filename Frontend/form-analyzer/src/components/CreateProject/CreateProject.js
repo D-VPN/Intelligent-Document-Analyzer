@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import CreateNewProject from './CreateNewProject/CreateNewProject'
 import SelectFields from './SelectFields/SelectFields';
 
+import UploadForms from './UploadForms/UploadForms';
+import Visualizations from './Visualizations/Visualizations';
 export default class CreateProject extends Component {
     state = {
         step: 0,
@@ -35,8 +37,17 @@ export default class CreateProject extends Component {
                 )
             case 1:
                 return (
-                    <SelectFields/>
+                    <SelectFields nextStep={this.nextStep} values={values} prevStep={this.prevStep} />
                 )
+            case 2:
+                return (
+                    <UploadForms nextStep={this.nextStep} values={values} prevStep={this.prevStep} />
+                )
+            case 3:
+                return (
+                    <Visualizations values={values} />
+                )
+
             default:
         }
     }

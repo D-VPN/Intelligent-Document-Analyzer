@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import useToken from './useToken';
 import Registration from './components/Registration/Registration';
 import CreateProject from './components/CreateProject/CreateProject';
+import MainNav from './components/Navbar/MainNav';
 
 function App() {
   const { token, setToken } = useToken();
@@ -13,6 +14,7 @@ function App() {
   return (
     <div className="wrapper">
       <Router>
+        <MainNav setToken={setToken} token={token} />
         <Routes>
           <Route exact path="/" element=
             {
