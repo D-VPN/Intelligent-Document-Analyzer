@@ -12,6 +12,8 @@ except ImportError:
 import pytesseract
 from matplotlib.pyplot import figure
 
+from multi_correct_extraction import *
+
 
 def API(img_path, filename):
     img = cv2.imread(img_path, 0)
@@ -42,7 +44,9 @@ def API(img_path, filename):
     MAX = 255
     i = 0
     directory = "output/" + filename
-    os.makedirs(directory)
+    Path(directory).mkdir(parents=True, exist_ok=True)
+
+    extracted_key_value = []
 
     while i < len(arr):
         for j in range(len(arr[i])):
@@ -55,6 +59,17 @@ def API(img_path, filename):
                 x2, y2 = img.shape[1], end
                 temp_img1 = img[y1 - 1:y2 + 1, x1 - 1: j - 1]  # key
                 temp_img2 = img[y1 - 1:y2 + 1, j + 1: x2]  # value
+
+                parent_path = (
+                    os.path.abspath(os.getcwd())
+                    + "\\output\\"
+                    + filename
+                    + "\\"
+                    + str(i)
+                    + "_"
+                    + str(j)
+                )
+
                 save_path1 = (
                     os.path.abspath(os.getcwd())
                     + "\\output\\"
@@ -82,11 +97,20 @@ def API(img_path, filename):
 
                 key = pytesseract.image_to_string(
                     temp_img1, lang='eng').replace("\n", " ").replace("♀", "")
-                value = pytesseract.image_to_string(temp_img2, lang='eng').replace(
-                    "|", "I").replace("\n", " ").replace("♀", "")
+                if "Gender" in key:
+                    value = multiple_choice(
+                        parent_path, key, cv2.imread(save_path2))
+                else:
+                    value = pytesseract.image_to_string(temp_img2, lang='eng').replace(
+                        "|", "I").replace("\n", " ").replace("♀", "")
+
+                extracted_key_value.append([key, value])
                 print('KEY:', key, '\nVALUE:', value)
                 break
         i += 1
+
+    print(extracted_key_value)
+    return extracted_key_value
 
 
 path = os.path.abspath(os.getcwd()) + "\\images\\"
