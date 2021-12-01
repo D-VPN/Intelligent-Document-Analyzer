@@ -53,8 +53,8 @@ def API(img_path, filename):
                 end = i - 1
                 x1, y1 = 0, start
                 x2, y2 = img.shape[1], end
-                temp_img1 = img[y1:y2, x1 : j - 1]  # key
-                temp_img2 = img[y1:y2, j + 1 : x2]  # value
+                temp_img1 = img[y1 - 1:y2 + 1, x1 - 1: j - 1]  # key
+                temp_img2 = img[y1 - 1:y2 + 1, j + 1: x2]  # value
                 save_path1 = (
                     os.path.abspath(os.getcwd())
                     + "\\output\\"
@@ -81,7 +81,8 @@ def API(img_path, filename):
                 cv2.imwrite(save_path2, temp_img2)
 
                 key = pytesseract.image_to_string(temp_img1)
-                value = pytesseract.image_to_string(temp_img2).replace("|", "I")
+                value = pytesseract.image_to_string(
+                    temp_img2).replace("|", "I")
                 print(key, value)
                 break
         i += 1
