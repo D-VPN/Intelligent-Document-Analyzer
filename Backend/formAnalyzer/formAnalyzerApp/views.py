@@ -56,15 +56,23 @@ def textExtraction(request):
 
     return HttpResponse()
 
-@api_view(['POST'])
+
+@api_view(["POST"])
+def extractKeys(request):
+    # template_image = request.data
+    img_path = r"images/temp.png"
+    print(API(img_path, "temp.png"))
+
+
+@api_view(["POST"])
 def projectCreate(request):
-	# serializer = ProjectSerializer(data=request.data)
+    # serializer = ProjectSerializer(data=request.data)
     # serializer = ProjectSerializer(data=request.data)
     # print(serializer)
     print(request.data)
 
 
-	# if serializer.is_valid():
-	# 	serializer.save()
+# if serializer.is_valid():
+# 	serializer.save()
 
-	# return Response(serializer.data)
+# return Response(serializer.data)
