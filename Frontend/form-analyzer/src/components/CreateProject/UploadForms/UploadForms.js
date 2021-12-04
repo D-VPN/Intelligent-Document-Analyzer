@@ -1,7 +1,7 @@
 import React from 'react'
 import './UploadForms.css';
 
-const UploadForms = ({ nextStep, values, prevStep }) => {
+const UploadForms = ({ nextStep, values }) => {
     return (
         <div>
             <div class='container'>
@@ -18,10 +18,7 @@ const UploadForms = ({ nextStep, values, prevStep }) => {
                             </div>
                         </form>
                         <div class="row mt-5">
-                            <div class='d-grid col-md-6'>
-                                <button className="submit__btn" type='submit' onClick={prevStep} >PREVIOUS</button>
-                            </div>
-                            <div class='d-grid col-md-6'>
+                            <div class='d-grid '>
                                 <button className="submit__btn" type='submit' onClick={nextStep}>NEXT</button>
                             </div>
                         </div>

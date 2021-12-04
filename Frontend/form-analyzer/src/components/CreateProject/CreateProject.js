@@ -9,14 +9,17 @@ export default class CreateProject extends Component {
         step: 0,
         name: '',
         file: null,
-        fields: []
+        fields: [],
+        projectId: "",
     }
     prevStep = () => {
         const { step } = this.state;
+        console.log(this.state.fields)
         this.setState({ step: step - 1 });
     }
     nextStep = () => {
         const { step } = this.state;
+        console.log(this.state.fields)
         this.setState({ step: step + 1 });
     }
     handleChange = input => e => {
@@ -25,23 +28,31 @@ export default class CreateProject extends Component {
     onFileChange = file => {
         this.setState({ file: file });
     }
+    setFields = fields => {
+        console.log(fields);
+        this.setState({ fields: fields });
+    }
+    setProjectId = id => {
+        this.setState({ projectId: id });
+    }
+
 
     render() {
         const { step } = this.state;
-        const { name, file } = this.state;
-        const values = { name, file };
+        const { name, file, fields } = this.state;
+        const values = { name, file, fields };
         switch (step) {
             case 0:
                 return (
-                    <CreateNewProject nextStep={this.nextStep} values={values} handleChange={this.handleChange} onFileChange={this.onFileChange} />
+                    <CreateNewProject nextStep={this.nextStep} values={values} handleChange={this.handleChange} onFileChange={this.onFileChange} setFields={this.setFields} />
                 )
             case 1:
                 return (
-                    <SelectFields nextStep={this.nextStep} values={values} prevStep={this.prevStep} />
+                    <SelectFields nextStep={this.nextStep} values={values} prevStep={this.prevStep} setFields={this.setFields} setProjectId={this.setProjectId} />
                 )
             case 2:
                 return (
-                    <UploadForms nextStep={this.nextStep} values={values} prevStep={this.prevStep} />
+                    <UploadForms nextStep={this.nextStep} values={values} />
                 )
             case 3:
                 return (

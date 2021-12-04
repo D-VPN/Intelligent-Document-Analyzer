@@ -1,58 +1,75 @@
 import React from 'react'
 import './SelectFields.css';
+import axios from '../../../helper/axios';
 
 
-const SelectFields = ({ nextStep, values, prevStep }) => {
-    // const navigate = useNavigate();
-    // const submit = (e) => {
+const SelectFields = ({ nextStep, values, prevStep, setFields, setProjectId }) => {
+    const checkboxChange = (e, index) => {
+        const { fields } = values;
+        fields[index].isSelected = e.target.checked;
+        setFields(fields);
 
-    //     e.preventDefault();
-    //     navigate('/', { replace: true });
+    }
+    const handleTypeChange = (e, index) => {
+        const { fields } = values;
+        fields[index].valueType = e.target.value;
+        setFields(fields);
+    }
 
-    // }
+    const submit = async (e) => {
+        nextStep();
+        return;
+        e.preventDefault();
+        const url = "/create-project/";
+        const newFields = [];
+        values.fields.forEach((value) => {
+            if (value.isSelected) {
+                if (value.valueType === "") {
 
-    var fields = [
-        {
-            key: 'Name',
-            valueType: null,
-            isSelected: false
-        },
-        {
-            key: 'Age',
-            valueType: null,
-            isSelected: false
-        },
-        {
-            key: 'Gender',
-            valueType: null,
-            isSelected: false
-        },
-        {
-            key: 'Email',
-            valueType: null,
-            isSelected: false
+                    return;
+                }
+
+                const a = {
+                    name: value.key,
+                    valueType: value.valueType,
+                }
+                newFields.push(a);
+            }
+        });
+        const body = {
+            name: values.name,
+            fields: newFields,
         }
-    ]
+        console.log(body)
+        try {
+            const { data } = await axios.post(url, body);
+            console.log(data);
+            // nextStep();
+        }
+        catch (e) {
+            console.log(e);
+        }
+    }
 
     const createUI = () => {
-        return fields.map((el, i) =>
+        return values.fields.map((el, i) =>
             <div key={i} >
                 <div class='row' class='input-group'>
                     <div class='col-md-2'>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
+                            <input class="form-check-input" type="checkbox" checked={el.isSelected} id="flexCheckDefault" onChange={(e) => checkboxChange(e, i)} />
                         </div>
                     </div>
                     <div class='col-md-5'>
                         {el.key}
                     </div>
                     <div class='col-md-5'>
-                        <select class="form-select" aria-label="Default select example">
+                        <select value={el.valueType} onChange={(e) => handleTypeChange(e, i)} class="form-select" aria-label="Default select example">
                             <option selected>Open this select menu</option>
-                            <option value="text">Text</option>
-                            <option value="number">Number</option>
-                            <option value="date">Date</option>
-                            <option value="checkbox">Checkbox</option>
+                            <option value="Text">Text</option>
+                            <option value="Number">Number</option>
+                            <option value="Date">Date</option>
+                            <option value="Checkbox">Checkbox</option>
                         </select>
                     </div>
                 </div>
@@ -79,10 +96,13 @@ const SelectFields = ({ nextStep, values, prevStep }) => {
 
                             <div class="row mt-5">
                                 <div class='d-grid col-md-6'>
-                                    <button className="submit__btn" type='submit' onClick={prevStep} >PREVIOUS</button>
+                                    <button className="submit__btn" type='submit' onClick={(e) => {
+                                        e.preventDefault();
+                                        prevStep();
+                                    }} >PREVIOUS</button>
                                 </div>
                                 <div class='d-grid col-md-6'>
-                                    <button className="submit__btn" type='submit' onClick={nextStep}>NEXT</button>
+                                    <button className="submit__btn" type='submit' onClick={submit}>CREATE</button>
                                 </div>
                             </div>
                         </form>

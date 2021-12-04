@@ -1,7 +1,8 @@
 import React from 'react'
 import './CreateNewProject.css';
+import axios from '../../../helper/axios';
 
-const CreateNewProject = ({ nextStep, values, handleChange, onFileChange }) => {
+const CreateNewProject = ({ nextStep, values, handleChange, onFileChange, setFields }) => {
     const Continue = e => {
         e.preventDefault();
         const { name, file } = values;
@@ -14,7 +15,37 @@ const CreateNewProject = ({ nextStep, values, handleChange, onFileChange }) => {
             return;
         }
 
-        nextStep();
+        submit(file);
+        // nextStep();
+    }
+
+    const submit = async (file) => {
+        const data = new FormData();
+        data.append('file', file);
+
+        try {
+            const form = "/users/me/";
+            // const { data } = await axios.post(form, data,);
+            const data = {
+                fields: [
+                    "Name", "Age", "Number",
+                ]
+            }
+            const fields = [];
+            data.fields.forEach((value) => {
+                const ob = {
+                    key: value,
+                    valueType: "",
+                    isSelected: false
+                };
+                fields.push(ob);
+            });
+            setFields(fields);
+            nextStep();
+        }
+        catch (error) {
+            console.log(error);
+        }
     }
     const onChange = (e) => {
         console.log(e.target.files);
