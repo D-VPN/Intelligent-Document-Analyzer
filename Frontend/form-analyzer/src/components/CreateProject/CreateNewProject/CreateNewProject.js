@@ -21,11 +21,11 @@ const CreateNewProject = ({ nextStep, values, handleChange, onFileChange, setFie
 
     const submit = async (file) => {
         const data = new FormData();
-        data.append('file', file);
+        data.append('template', file);
 
         try {
-            const form = "/users/me/";
-            // const { data } = await axios.post(form, data,);
+            const form = "/extract-keys";
+            const response = await axios.post(form, data);
             const data = {
                 fields: [
                     "Name", "Age", "Number",

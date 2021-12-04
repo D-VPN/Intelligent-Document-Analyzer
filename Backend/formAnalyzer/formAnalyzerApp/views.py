@@ -59,8 +59,10 @@ def textExtraction(request):
 @api_view(['POST'])
 def projectCreate(request):
 	# serializer = ProjectSerializer(data=request.data)
-    serializer = ProjectSerializer(data=request.data)
-    print(serializer)
+    # serializer = ProjectSerializer(data=request.data)
+    # print(serializer)
+    print(request.data)
+
 
 	# if serializer.is_valid():
 	# 	serializer.save()
