@@ -1,6 +1,6 @@
 import React from 'react'
 import './CreateNewProject.css';
-import axios from '../../../helper/axios';
+import multiAxios from '../../../helper/multipart_axios';
 
 const CreateNewProject = ({ nextStep, values, handleChange, onFileChange, setFields }) => {
     const Continue = e => {
@@ -22,26 +22,27 @@ const CreateNewProject = ({ nextStep, values, handleChange, onFileChange, setFie
     const submit = async (file) => {
         const data = new FormData();
         data.append('template', file);
+        console.log(data)
 
         try {
             const form = "/extract-keys";
-            const response = await axios.post(form, data);
-            const data = {
-                fields: [
-                    "Name", "Age", "Number",
-                ]
-            }
-            const fields = [];
-            data.fields.forEach((value) => {
-                const ob = {
-                    key: value,
-                    valueType: "",
-                    isSelected: false
-                };
-                fields.push(ob);
-            });
-            setFields(fields);
-            nextStep();
+            const response = await multiAxios.post(form, data);
+            // const data = {
+            //     fields: [
+            //         "Name", "Age", "Number",
+            //     ]
+            // }
+            // const fields = [];
+            // data.fields.forEach((value) => {
+            //     const ob = {
+            //         key: value,
+            //         valueType: "",
+            //         isSelected: false
+            //     };
+            //     fields.push(ob);
+            // });
+            // setFields(fields);
+            // nextStep();
         }
         catch (error) {
             console.log(error);
