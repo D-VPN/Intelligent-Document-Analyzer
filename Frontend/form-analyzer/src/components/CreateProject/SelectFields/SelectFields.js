@@ -8,8 +8,8 @@ const SelectFields = ({ nextStep, values, prevStep, setFields, setProjectId }) =
         const { fields } = values;
         fields[index].isSelected = e.target.checked;
         setFields(fields);
-
     }
+
     const handleTypeChange = (e, index) => {
         const { fields } = values;
         fields[index].valueType = e.target.value;
@@ -17,8 +17,6 @@ const SelectFields = ({ nextStep, values, prevStep, setFields, setProjectId }) =
     }
 
     const submit = async (e) => {
-        nextStep();
-        return;
         e.preventDefault();
         const url = "/create-project/";
         const newFields = [];

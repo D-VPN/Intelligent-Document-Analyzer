@@ -1,8 +1,8 @@
 from django.urls import path
-from .views import home, CreateProjectView, textExtraction
+from .views import home, textExtraction,projectCreate
 
 urlpatterns = [
     path("api/", home, name="api"),
-    path("create-project/", CreateProjectView, name="create-project"),
+    path("create-project/", projectCreate, name="create-project"),
     path("extraction-api/", textExtraction, name="text-extraction"),
 ]

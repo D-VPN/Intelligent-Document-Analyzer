@@ -55,3 +55,14 @@ def textExtraction(request):
         text_form_image = request.text_form
 
     return HttpResponse()
+
+@api_view(['POST'])
+def projectCreate(request):
+	# serializer = ProjectSerializer(data=request.data)
+    serializer = ProjectSerializer(data=request.data)
+    print(serializer)
+
+	# if serializer.is_valid():
+	# 	serializer.save()
+
+	# return Response(serializer.data)
