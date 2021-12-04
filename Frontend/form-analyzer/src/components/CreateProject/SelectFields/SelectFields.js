@@ -17,15 +17,14 @@ const SelectFields = ({ nextStep, values, prevStep, setFields, setProjectId }) =
     }
 
     const submit = async (e) => {
-        nextStep();
-        return;
+        // nextStep();
+        // return;
         e.preventDefault();
         const url = "/create-project/";
         const newFields = [];
         values.fields.forEach((value) => {
             if (value.isSelected) {
                 if (value.valueType === "") {
-
                     return;
                 }
 
@@ -44,7 +43,7 @@ const SelectFields = ({ nextStep, values, prevStep, setFields, setProjectId }) =
         try {
             const { data } = await axios.post(url, body);
             console.log(data);
-            // nextStep();
+            nextStep();
         }
         catch (e) {
             console.log(e);

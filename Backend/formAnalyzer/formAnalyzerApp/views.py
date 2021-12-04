@@ -1,3 +1,4 @@
+from typing import Collection
 from django.shortcuts import HttpResponse
 from .forms import ProjetForm, TextForm
 from .extraction_api import API
@@ -14,13 +15,7 @@ from django.core.files.base import ContentFile
 connection_string = "mongodb://vishal2720:1infiniteloop@cluster0-shard-00-00.xgy7f.mongodb.net:27017,cluster0-shard-00-01.xgy7f.mongodb.net:27017,cluster0-shard-00-02.xgy7f.mongodb.net:27017/myFirstDatabase?ssl=true&replicaSet=atlas-2cqg7j-shard-0&authSource=admin&retryWrites=true&w=majority"
 client = pymongo.MongoClient(connection_string)
 # old_string = "mongodb+srv://vishal2720:1infiniteloop@cluster0.xgy7f.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
-
 db = client["db"]
-# collection = db["test"]
-
-
-def home(request):
-    return HttpResponse("Done!")
 
 
 class CreateProjectView:
@@ -49,40 +44,34 @@ class CreateProjectView:
         )
 
 
-def textExtraction(request):
-    if request.method == "GET":
-        form = TextForm()
-
-    if request.method == "POST":
-        text_form_image = request.text_form
-
-    return HttpResponse()
-
-
 @api_view(["POST"])
 def extractKeys(request):
-    print(request.data)
-    data = request.FILES.get('file') # or self.files['image'] in your form
-    path = default_storage.save('tmp/img.jpg', ContentFile(data.read()))   
-    # template_image = request.data
+    data = request.FILES.get("file")
+    path = default_storage.save("tmp/img.jpg", ContentFile(data.read()))
+
     img_path = r"tmp/img.jpg"
     res = API(img_path, "temp.jpg")
-    print(res)
+
     keys = [kv[0] for kv in res]
     json_object = json.dumps(keys)
+
+    os.remove(img_path)
 
     return HttpResponse(json_object)
 
 
 @api_view(["POST"])
 def projectCreate(request):
-    # serializer = ProjectSerializer(data=request.data)
-    # serializer = ProjectSerializer(data=request.data)
-    # print(serializer)
-    print(request.data)
 
+    print(request.user.id)
 
-# if serializer.is_valid():
-# 	serializer.save()
+    collection = db["Projects"]
+    collection.insert_one(
+        {
+            "user_id": request.user.id,
+            "name": request.data["name"],
+            "fields": request.data["fields"],
+        }
+    )
 
-# return Response(serializer.data)
+    return HttpResponse()

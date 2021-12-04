@@ -43,7 +43,6 @@ const CreateNewProject = ({ nextStep, values, handleChange, onFileChange, setFie
             });
             setFields(fields);
             nextStep();
-            // console.log(response.data)
         }
         catch (error) {
             console.log(error);
