@@ -25,7 +25,7 @@ const CreateNewProject = ({ nextStep, values, handleChange, onFileChange, setFie
         console.log(data)
 
         try {
-            const form = "/extract-keys";
+            const form = "/extract-keys/";
             const response = await multiAxios.post(form, data);
             // const data = {
             //     fields: [
