@@ -21,28 +21,29 @@ const CreateNewProject = ({ nextStep, values, handleChange, onFileChange, setFie
 
     const submit = async (file) => {
         const data = new FormData();
-        data.append('template', file);
+        data.append('file', file);
         console.log(data)
 
         try {
             const form = "/extract-keys/";
             const response = await multiAxios.post(form, data);
-            // const data = {
-            //     fields: [
-            //         "Name", "Age", "Number",
-            //     ]
-            // }
-            // const fields = [];
-            // data.fields.forEach((value) => {
-            //     const ob = {
-            //         key: value,
-            //         valueType: "",
-            //         isSelected: false
-            //     };
-            //     fields.push(ob);
-            // });
-            // setFields(fields);
-            // nextStep();
+            /* const data = {
+                fields: [
+                    "Name", "Age", "Number",
+                ]
+            } */
+            const fields = [];
+            response.data.forEach((value) => {
+                const ob = {
+                    key: value,
+                    valueType: "",
+                    isSelected: false
+                };
+                fields.push(ob);
+            });
+            setFields(fields);
+            nextStep();
+            // console.log(response.data)
         }
         catch (error) {
             console.log(error);

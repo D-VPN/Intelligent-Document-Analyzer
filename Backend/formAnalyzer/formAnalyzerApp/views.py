@@ -6,7 +6,9 @@ from .serializers import ProjectSerializer
 from rest_framework.decorators import api_view
 from rest_framework import status
 from rest_framework.response import Response
-import pymongo
+import pymongo, os, cv2, numpy as np, json
+from django.core.files.storage import default_storage
+from django.core.files.base import ContentFile
 
 # MongoDB database connection
 connection_string = "mongodb://vishal2720:1infiniteloop@cluster0-shard-00-00.xgy7f.mongodb.net:27017,cluster0-shard-00-01.xgy7f.mongodb.net:27017,cluster0-shard-00-02.xgy7f.mongodb.net:27017/myFirstDatabase?ssl=true&replicaSet=atlas-2cqg7j-shard-0&authSource=admin&retryWrites=true&w=majority"
@@ -59,9 +61,17 @@ def textExtraction(request):
 
 @api_view(["POST"])
 def extractKeys(request):
+    print(request.data)
+    data = request.FILES.get('file') # or self.files['image'] in your form
+    path = default_storage.save('tmp/img.jpg', ContentFile(data.read()))   
     # template_image = request.data
-    img_path = r"images/temp.png"
-    print(API(img_path, "temp.png"))
+    img_path = r"tmp/img.jpg"
+    res = API(img_path, "temp.jpg")
+    print(res)
+    keys = [kv[0] for kv in res]
+    json_object = json.dumps(keys)
+
+    return HttpResponse(json_object)
 
 
 @api_view(["POST"])

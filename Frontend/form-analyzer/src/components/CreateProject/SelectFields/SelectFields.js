@@ -17,6 +17,8 @@ const SelectFields = ({ nextStep, values, prevStep, setFields, setProjectId }) =
     }
 
     const submit = async (e) => {
+        nextStep();
+        return;
         e.preventDefault();
         const url = "/create-project/";
         const newFields = [];

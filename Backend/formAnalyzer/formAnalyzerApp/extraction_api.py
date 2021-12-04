@@ -100,11 +100,12 @@ def API(img_path, filename):
                         temp_img2, lang='eng').replace(
                         "|", "I").replace("\n", " ").replace("\x0c","").replace("♀", "").strip()
                 extracted_key_val.append([key,value])
-                print('KEY:', key, '\nVALUE:', value)
+                #print('KEY:', key, '\nVALUE:', value)
                 break
         i += 1
-    print("")    
-    print(np.matrix(extracted_key_val))
+    return extracted_key_val
+    #print("")    
+    #print(np.matrix(extracted_key_val))
 
 
 
@@ -152,7 +153,7 @@ def multiple_choice(parent_path, parent_key, image):
             value_img = image[y+2:y+h-2, x+2: x+w-2]  # val
             key_img = image[y:y+h, x + w:]  # key
         
-        print(np.mean(value_img))
+        #print(np.mean(value_img))
         if np.mean(value_img) >= 253:
             value_text = "no"
         else:
