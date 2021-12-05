@@ -36,11 +36,9 @@ const SelectFields = ({ nextStep, values, prevStep, setFields, setProjectId }) =
             name: values.name,
             fields: newFields,
         }
-        console.log(body)
         try {
-            // const { data } = await axios.post(url, body);
-            // console.log(data);
-            setProjectId("Darshan");
+            const { data } = await axios.post(url, body);
+            setProjectId(data);
             nextStep();
         }
         catch (e) {

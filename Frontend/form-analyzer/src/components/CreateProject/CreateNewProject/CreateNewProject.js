@@ -43,7 +43,6 @@ const CreateNewProject = ({ nextStep, values, handleChange, onFileChange, setFie
         }
     }
     const onChange = (e) => {
-        console.log(e.target.files);
         onFileChange(e.target.files[0]);
     }
 

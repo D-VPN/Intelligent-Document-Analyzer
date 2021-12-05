@@ -1,7 +1,14 @@
 import React from 'react'
 import './UploadForms.css';
+import { useState } from 'react';
 
 const UploadForms = ({ nextStep, values }) => {
+    const [forms, setforms] = useState([])
+
+    const onChange = (e) => {
+        console.log(e.target.files);
+    }
+
     return (
         <div>
             <div class='container'>
@@ -19,7 +26,7 @@ const UploadForms = ({ nextStep, values }) => {
                         </form>
                         <div class="row mt-5">
                             <div class='d-grid '>
-                                <button className="submit__btn" type='submit' onClick={nextStep}>NEXT</button>
+                                <button className="submit__btn" type='submit' onClick={nextStep} onChange={onChange}>NEXT</button>
                             </div>
                         </div>
                     </div>

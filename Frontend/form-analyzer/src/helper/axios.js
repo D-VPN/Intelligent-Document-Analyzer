@@ -2,8 +2,6 @@ import axios from "axios";
 const authToken = () => {
     const userDetail = sessionStorage.getItem('user');
     const user = JSON.parse(userDetail);
-    console.log(user?.token)
-
     return user?.token
 }
 const instance = axios.create({
