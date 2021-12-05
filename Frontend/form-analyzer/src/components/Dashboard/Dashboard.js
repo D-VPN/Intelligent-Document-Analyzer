@@ -43,7 +43,7 @@ const Dashboard = ({ setToken }) => {
         <div>
             <div class='container'>
                 <div class='row mt-5'>
-                    <div class="col-lg-4 d-flex ">
+                    <div class="col-md-4 d-flex ">
                         <div class="card shadow" style={{ width: "18rem" }}>
                             <Link to="/create">
                                 <div class="card-body p-4" >

@@ -38,8 +38,8 @@ const SelectFields = ({ nextStep, values, prevStep, setFields, setProjectId }) =
         }
         console.log(body)
         try {
-            // const { data } = await axios.post(url, body);
-            // console.log(data);
+            const { data } = await axios.post(url, body);
+            console.log(data);
             setProjectId("Darshan");
             nextStep();
         }

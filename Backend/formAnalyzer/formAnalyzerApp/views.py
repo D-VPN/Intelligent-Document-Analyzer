@@ -62,20 +62,17 @@ def extractKeys(request):
 
 @api_view(["POST"])
 def projectCreate(request):
-
-    print(request.user.id)
-
+    projectId = str(request.user.id) + "_" + str(request.data["name"])
     collection = db["Projects"]
     collection.insert_one(
         {
-            "project_id": str(request.user.id) + "_" + str(request.data["name"])
+            "project_id": projectId,
             "user_id": request.user.id,
             "name": request.data["name"],
             "fields": request.data["fields"],
         }
     )
-
-    return HttpResponse()
+    return HttpResponse(projectId)
 
 @api_view(["GET"])
 def getAllProjects(request):
