@@ -68,6 +68,7 @@ def projectCreate(request):
     collection = db["Projects"]
     collection.insert_one(
         {
+            "project_id": str(request.user.id) + "_" + str(request.data["name"])
             "user_id": request.user.id,
             "name": request.data["name"],
             "fields": request.data["fields"],
@@ -75,3 +76,24 @@ def projectCreate(request):
     )
 
     return HttpResponse()
+
+@api_view(["GET"])
+def getAllProjects(request):
+
+    user_id = request.user.id
+    collection = db["Projects"]
+
+    res = []
+
+    for ele in collection.find():
+        if ele['user_id'] == user_id:
+            curr = {
+                'project_id': ele['project_id'],
+                'name': ele['name']
+            }
+            res.append(curr)
+
+    json_object = json.dumps(res)
+    return HttpResponse(json_object)
+
+
