@@ -11,13 +11,13 @@ const UploadForms = ({ nextStep, values }) => {
     }
     const onSubmit = async (e) => {
         e.preventDefault();
-        const forms = new FormData();
-        if (forms.length >= 0) {
-            forms.append("file", forms[0]);
+        const formData = new FormData();
+        if (formData.length >= 0) {
+            formData.append("file", forms[0]);
         }
         try {
             const url = "/upload-forms/";
-            const response = await multiAxios.post(url, forms);
+            const response = await multiAxios.post(url, formData);
             nextStep();
         }
         catch (error) {
