@@ -16,7 +16,6 @@ const CreateNewProject = ({ nextStep, values, handleChange, onFileChange, setFie
         }
 
         submit(file);
-        // nextStep();
     }
 
     const submit = async (file) => {
@@ -27,11 +26,6 @@ const CreateNewProject = ({ nextStep, values, handleChange, onFileChange, setFie
         try {
             const form = "/extract-keys/";
             const response = await multiAxios.post(form, data);
-            /* const data = {
-                fields: [
-                    "Name", "Age", "Number",
-                ]
-            } */
             const fields = [];
             response.data.forEach((value) => {
                 const ob = {

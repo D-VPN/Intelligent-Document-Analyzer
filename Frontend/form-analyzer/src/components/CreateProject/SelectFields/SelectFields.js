@@ -17,8 +17,6 @@ const SelectFields = ({ nextStep, values, prevStep, setFields, setProjectId }) =
     }
 
     const submit = async (e) => {
-        // nextStep();
-        // return;
         e.preventDefault();
         const url = "/create-project/";
         const newFields = [];
@@ -27,7 +25,6 @@ const SelectFields = ({ nextStep, values, prevStep, setFields, setProjectId }) =
                 if (value.valueType === "") {
                     return;
                 }
-
                 const a = {
                     name: value.key,
                     valueType: value.valueType,
@@ -41,8 +38,9 @@ const SelectFields = ({ nextStep, values, prevStep, setFields, setProjectId }) =
         }
         console.log(body)
         try {
-            const { data } = await axios.post(url, body);
-            console.log(data);
+            // const { data } = await axios.post(url, body);
+            // console.log(data);
+            setProjectId("Darshan");
             nextStep();
         }
         catch (e) {

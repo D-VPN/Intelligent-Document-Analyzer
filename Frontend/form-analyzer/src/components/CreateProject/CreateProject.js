@@ -19,7 +19,6 @@ export default class CreateProject extends Component {
     }
     nextStep = () => {
         const { step } = this.state;
-        console.log(this.state.fields)
         this.setState({ step: step + 1 });
     }
     handleChange = input => e => {
@@ -29,7 +28,6 @@ export default class CreateProject extends Component {
         this.setState({ file: file });
     }
     setFields = fields => {
-        console.log(fields);
         this.setState({ fields: fields });
     }
     setProjectId = id => {

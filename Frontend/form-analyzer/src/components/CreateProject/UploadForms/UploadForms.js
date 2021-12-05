@@ -6,7 +6,7 @@ const UploadForms = ({ nextStep, values }) => {
         <div>
             <div class='container'>
                 <div class='header text-center'>
-                    <h1>Project Name</h1>
+                    <h1>{values.name}</h1>
                 </div>
                 <div class='row'>
                     <div class='col-md-3 '></div>
