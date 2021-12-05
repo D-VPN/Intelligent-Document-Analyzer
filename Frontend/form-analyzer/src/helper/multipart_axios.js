@@ -12,5 +12,5 @@ instance.interceptors.request.use((config) => {
     config.headers.Authorization = `Token ${authToken()}`;
     return config;
 })
-instance.defaults.headers.common["Content-Type"] = `application/json`;
+instance.defaults.headers.common["Content-Type"] = `multipart/form-data`;
 export default instance;

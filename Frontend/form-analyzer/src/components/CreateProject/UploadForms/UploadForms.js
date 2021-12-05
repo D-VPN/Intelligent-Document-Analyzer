@@ -12,9 +12,16 @@ const UploadForms = ({ nextStep, values }) => {
     const onSubmit = async (e) => {
         e.preventDefault();
         const formData = new FormData();
-        if (formData.length >= 0) {
-            formData.append("file", forms[0]);
+
+        formData.append("name", values.name);
+
+        for(let idx = 0; idx < forms.length; idx++) {
+            formData.append("file" + idx, forms[idx]);
         }
+        // formData.append("file", forms);
+        // if (forms.length >= 0) {
+        //     formData.append("file", forms[0]);
+        // }
         try {
             const url = "/upload-forms/";
             const response = await multiAxios.post(url, formData);

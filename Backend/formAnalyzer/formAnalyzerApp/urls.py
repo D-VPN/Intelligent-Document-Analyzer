@@ -1,8 +1,9 @@
 from django.urls import path
-from .views import projectCreate, extractKeys, getAllProjects
+from .views import projectCreate, extractKeys, getAllProjects, uploadForms
 
 urlpatterns = [
     path("create-project/", projectCreate, name="create-project"),
     path("extract-keys/", extractKeys, name="extract-keys"),
     path("get-projects/", getAllProjects, name="get-projects"),
+    path("upload-forms/", uploadForms, name="upload-forms"),
 ]

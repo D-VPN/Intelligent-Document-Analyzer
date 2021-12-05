@@ -18,32 +18,6 @@ client = pymongo.MongoClient(connection_string)
 db = client["db"]
 
 
-class CreateProjectView:
-    queryset = Project.objects.all()
-    serializer_class = ProjectSerializer
-
-    def create(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-
-        # Here all incoming data we kept in serializer variable.
-        # Change the data in your way and then pass it inside perform_create()
-
-        print(serializer)
-
-        self.perform_create(serializer)
-        headers = self.get_success_headers(serializer.data)
-        return Response(
-            data={
-                "status": 201,
-                "message": "Product Successfully Created",
-                "data": serializer.data,
-            },
-            status=status.HTTP_201_CREATED,
-            headers=headers,
-        )
-
-
 @api_view(["POST"])
 def extractKeys(request):
     data = request.FILES.get("file")
@@ -72,6 +46,7 @@ def projectCreate(request):
             "fields": request.data["fields"],
         }
     )
+
     return HttpResponse(projectId)
 
 @api_view(["GET"])
@@ -92,5 +67,45 @@ def getAllProjects(request):
 
     json_object = json.dumps(res)
     return HttpResponse(json_object)
+
+
+@api_view(["POST"])
+def uploadForms(request):
+
+    project_id = str(request.user.id) + "_" + request.data.get("name")
+
+    num = 1
+    for file in request.data:
+        if file == "name":
+            continue
+        else:
+            img = request.data.get(file)
+            path = default_storage.save("tmp/img" + str(num) + ".jpg", ContentFile(img.read()))
+            num += 1
+
+    collection = db["Project_data"]
+    path = os.path.abspath(os.getcwd()) + "\\tmp\\"
+
+    for filename in os.listdir(path):
+        output = API("tmp\\" + filename, filename[:-4])
+        res = { 'project_id' : project_id}
+        for kv in output:
+            # for checkbox type of input
+            if type(kv[1]) == list:
+                value = "none"
+                for v in kv[1]:
+                    if v[1] == 'yes':
+                        value = v[0]
+                        break;
+                res[kv[0]] = value
+            else:
+                res[kv[0]] = kv[1]
+
+        collection.insert_one(res)
+
+    for filename in os.listdir(path):
+        os.remove(r"tmp/" + filename)
+
+    return HttpResponse()
 
 
