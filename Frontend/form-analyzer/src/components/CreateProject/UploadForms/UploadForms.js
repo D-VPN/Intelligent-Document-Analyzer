@@ -2,11 +2,27 @@ import React from 'react'
 import './UploadForms.css';
 import { useState } from 'react';
 
+import multiAxios from '../../../helper/multipart_axios';
 const UploadForms = ({ nextStep, values }) => {
     const [forms, setforms] = useState([])
 
     const onChange = (e) => {
-        console.log(e.target.files);
+        setforms(e.target.files);
+    }
+    const onSubmit = async (e) => {
+        e.preventDefault();
+        const forms = new FormData();
+        if (forms.length >= 0) {
+            forms.append("file", forms[0]);
+        }
+        try {
+            const url = "/upload-forms/";
+            const response = await multiAxios.post(url, forms);
+            nextStep();
+        }
+        catch (error) {
+            console.log(error);
+        }
     }
 
     return (
@@ -21,12 +37,13 @@ const UploadForms = ({ nextStep, values }) => {
                         <form>
                             <div class="mb-3">
                                 <label for="bulkForms" class="form-label">Upload Your Forms</label>
-                                <input class="form-control form-control-lg" type="file" id="bulkForms" multiple />
+                                <input class="form-control form-control-lg" type="file" id="bulkForms" multiple onChange={onChange} accept="image/png, image/jpeg" />
+
                             </div>
                         </form>
                         <div class="row mt-5">
                             <div class='d-grid '>
-                                <button className="submit__btn" type='submit' onClick={nextStep} onChange={onChange}>NEXT</button>
+                                <button className="submit__btn" type='submit' onClick={onSubmit}>NEXT</button>
                             </div>
                         </div>
                     </div>

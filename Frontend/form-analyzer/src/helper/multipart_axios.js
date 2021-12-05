@@ -8,6 +8,9 @@ const authToken = () => {
 const instance = axios.create({
     baseURL: "http://127.0.0.1:8000",
 })
-instance.defaults.headers.common["Authorization"] = `Token ${authToken()}`;
-instance.defaults.headers.common["Content-Type"] = `multipart/form-data`;
+instance.interceptors.request.use((config) => {
+    config.headers.Authorization = `Token ${authToken()}`;
+    return config;
+})
+instance.defaults.headers.common["Content-Type"] = `application/json`;
 export default instance;
