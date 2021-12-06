@@ -1,8 +1,10 @@
 import React from 'react'
 import './CreateNewProject.css';
 import multiAxios from '../../../helper/multipart_axios';
+import { useState } from 'react';
 
 const CreateNewProject = ({ nextStep, values, handleChange, onFileChange, setFields }) => {
+    const [loading, setloading] = useState(false)
     const Continue = e => {
         e.preventDefault();
         const { name, file } = values;
@@ -19,6 +21,7 @@ const CreateNewProject = ({ nextStep, values, handleChange, onFileChange, setFie
     }
 
     const submit = async (file) => {
+        setloading(true);
         const data = new FormData();
         data.append('file', file);
         console.log(data)
@@ -36,14 +39,22 @@ const CreateNewProject = ({ nextStep, values, handleChange, onFileChange, setFie
                 fields.push(ob);
             });
             setFields(fields);
+            setloading(false)
             nextStep();
         }
         catch (error) {
+            setloading(false)
             console.log(error);
         }
     }
     const onChange = (e) => {
         onFileChange(e.target.files[0]);
+    }
+    const button = () => {
+        return !loading ?
+            <button className="submit__btn" type='submit'>NEXT</button>
+            :
+            <button disabled={true} className="submit__btn" type='submit'>LOADING...</button>
     }
 
 
@@ -66,7 +77,7 @@ const CreateNewProject = ({ nextStep, values, handleChange, onFileChange, setFie
                                 <label for="floatingPassword">Upload Template Form</label>
                             </div>
                             <div class="d-grid gap-2 mt-5">
-                                <button className="submit__btn" type='submit'>NEXT</button>
+                                {button()}
                             </div>
                         </form>
                     </div>

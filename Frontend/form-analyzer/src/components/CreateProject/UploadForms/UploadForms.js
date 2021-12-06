@@ -5,17 +5,19 @@ import { useState } from 'react';
 import multiAxios from '../../../helper/multipart_axios';
 const UploadForms = ({ nextStep, values }) => {
     const [forms, setforms] = useState([])
+    const [loading, setLoading] = useState(false)
 
     const onChange = (e) => {
         setforms(e.target.files);
     }
     const onSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true)
         const formData = new FormData();
 
         formData.append("name", values.name);
 
-        for(let idx = 0; idx < forms.length; idx++) {
+        for (let idx = 0; idx < forms.length; idx++) {
             formData.append("file" + idx, forms[idx]);
         }
         // formData.append("file", forms);
@@ -25,11 +27,19 @@ const UploadForms = ({ nextStep, values }) => {
         try {
             const url = "/upload-forms/";
             const response = await multiAxios.post(url, formData);
+            setLoading(false);
             nextStep();
         }
         catch (error) {
+            setLoading(false);
             console.log(error);
         }
+    }
+    const button = () => {
+        return !loading ?
+            <button className="submit__btn" type='submit' onClick={onSubmit}>NEXT</button>
+            :
+            <button disabled={true} className="submit__btn" type='submit'>LOADING...</button>
     }
 
     return (
@@ -50,7 +60,7 @@ const UploadForms = ({ nextStep, values }) => {
                         </form>
                         <div class="row mt-5">
                             <div class='d-grid '>
-                                <button className="submit__btn" type='submit' onClick={onSubmit}>NEXT</button>
+                                {button()}
                             </div>
                         </div>
                     </div>
