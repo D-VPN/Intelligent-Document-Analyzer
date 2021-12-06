@@ -25,7 +25,7 @@ const Visualizations = ({ values }) => {
             <div class='container'>
                 <div class='header text-center'>
                     <h1>Your Data Insights</h1>
-                    <p><small>69 Forms Added</small></p>
+                    <p><small>5 Forms Added</small></p>
                 </div>
                 <div class='row'>
                     {/* <div class='visualization-box'>

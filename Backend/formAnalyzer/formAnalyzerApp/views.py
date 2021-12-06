@@ -96,7 +96,7 @@ def uploadForms(request):
                 for v in kv[1]:
                     if v[1] == 'yes':
                         value = v[0]
-                        break;
+                        break
                 res[kv[0]] = value
             else:
                 res[kv[0]] = kv[1]
