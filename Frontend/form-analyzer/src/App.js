@@ -7,6 +7,7 @@ import useToken from './useToken';
 import Registration from './components/Registration/Registration';
 import CreateProject from './components/CreateProject/CreateProject';
 import MainNav from './components/Navbar/MainNav';
+import Visualizations from './components/CreateProject/Visualizations/Visualizations';
 
 function App() {
   const { token, setToken } = useToken();
@@ -30,6 +31,7 @@ function App() {
           </Route>
           <Route path="/login" exact element={<Login setToken={setToken} />} />
           <Route path="/registration" exact element={<Registration />} />
+          <Route path="/project/visualization" exact element={<Visualizations />} />
         </Routes>
       </Router>
     </div>
