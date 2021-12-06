@@ -78,7 +78,7 @@ const SelectFields = ({ nextStep, values, prevStep, setFields, setProjectId }) =
         <div>
             <div class='container'>
                 <div class='header text-center'>
-                    <h1>Project Name</h1>
+                    <h1>{values.name}</h1>
                     <p><small>Choose Data Type Of Each Field</small></p>
                 </div>
 

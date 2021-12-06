@@ -44,7 +44,7 @@ const Visualizations = ({ values }) => {
                             labels : ['Male','Female'],
                             datasets: [{
                                 label: '# of Employees',
-                                data: [50, 80],
+                                data: [2, 3],
                                 backgroundColor:[
 
                                 ]
