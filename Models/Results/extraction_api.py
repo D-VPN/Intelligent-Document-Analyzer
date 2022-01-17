@@ -19,7 +19,7 @@ import pytesseract
 from matplotlib.pyplot import figure
 
 
-def API(img, filename):
+def API(img):
     # img = cv2.imread(img_path, 0)
 
     # thresholding the image to a binary image
@@ -65,7 +65,6 @@ def API(img, filename):
                 x2, y2 = img.shape[1], end
                 temp_img1 = img[y1:y2, x1:j]  # key
                 temp_img2 = img[y1 - 2 : y2 + 2, j - 2 : x2 + 2]  # value
-                print(filename)
                 cv2.imwrite("key.jpg", temp_img1)
                 cv2.imwrite("value.jpg", temp_img2)
                 key = (
@@ -79,9 +78,6 @@ def API(img, filename):
 
                 if key == "":
                     break
-
-                # cv2.imwrite("key.png", temp_img1)
-                # cv2.imwrite("value.png", temp_img2)
 
                 if "Gender" in key:
                     value = multiple_choice(temp_img2)
@@ -182,17 +178,16 @@ columns = df.columns
 for batch in batches:
     curr_itr = 0
     print("Batch size :", batch)
-    outputTime = []
-    accuracy = []
-    fileSize = []
 
-    for filename in os.listdir(path):
-        img_path = path + filename
+    outputTime, accuracy, fileSize = [], [], []
+
+    for i in range(1, batch + 1):
+        img_path = path + str(i) + ".jpg"
+
         fileSize.append(os.path.getsize(img_path))
-
         img = cv2.imread(img_path, 0)
         start = time.time()
-        output = API(img, filename)
+        output = API(img)
         end = time.time()
         outputTime.append(end - start)
 
