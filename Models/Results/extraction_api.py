@@ -1,14 +1,8 @@
 from unittest import expectedFailure
 import cv2
-import numpy as np
+import numpy as np, pandas as pd, os, time, cv2
 import pandas as pd
-import matplotlib.pyplot as plt
-import csv
 from pathlib import Path
-import os
-import time
-import pandas as pd
-import datetime as dt
 from Levenshtein import distance
 import threading
 
@@ -17,7 +11,6 @@ try:
 except ImportError:
     import Image
 import pytesseract
-from matplotlib.pyplot import figure
 
 
 def API(img):
@@ -209,21 +202,16 @@ for batch in batches:
             detected_key, detected_value = str(output[i][0]), str(output[i][1])
             expected_key, expected_value = str(columns[i]), df[columns[i]][curr_itr]
 
-            if detected_key == "":
-                continue
+            if detected_key == "":                   continue
 
-            if isinstance(expected_value, float):
-                expected_value = int(expected_value)
+            if isinstance(expected_value, float):    expected_value = int(expected_value)
 
-            if type(expected_value) is pd.Timestamp:
-                expected_value = expected_value.strftime("%d%m%Y")
+            if type(expected_value) is pd.Timestamp: expected_value = expected_value.strftime("%d%m%Y")
 
             expected_value = str(expected_value)
             if detected_key == "Gender?":
-                if detected_value == expected_value:
-                    currentAccuracy.append(1)
-                else:
-                    currentAccuracy.append(0)
+                if detected_value == expected_value: currentAccuracy.append(1)
+                else:                                currentAccuracy.append(0)
             else:
                 fieldAccuracy = (
                     len(expected_value) - distance(expected_value, detected_value)
