@@ -64,18 +64,20 @@ def API(img):
 
                 x1, y1 = 0, start
                 x2, y2 = img.shape[1], end
-                temp_img1 = img[y1:y2, x1:j]  # key
-                temp_img2 = img[y1 - 2 : y2 + 2, j - 2 : x2 + 2]  # value
-                cv2.imwrite("key.jpg", temp_img1)
-                cv2.imwrite("value.jpg", temp_img2)
-                key = (
-                    pytesseract.image_to_string(temp_img1, lang="eng")
-                    .replace("|", "I")
-                    .replace("\n", " ")
-                    .replace("\x0c", "")
-                    .replace("♀", "")
-                    .strip()
-                )
+                try:
+                    temp_img1 = img[y1:y2, x1:j]  # key
+                    temp_img2 = img[y1 - 2 : y2 + 2, j - 2 : x2 + 2]  # value
+
+                    key = (
+                        pytesseract.image_to_string(temp_img1, lang="eng")
+                        .replace("|", "I")
+                        .replace("\n", " ")
+                        .replace("\x0c", "")
+                        .replace("♀", "")
+                        .strip()
+                    )
+                except:
+                    continue
 
                 if key == "":
                     break
@@ -170,44 +172,29 @@ def multiple_choice(image):
     return extracted_value
 
 
-path = os.path.abspath(os.getcwd()) + "\\images\\"
+accuracy, fileSize = [], []
+mutex = threading.Lock()
 
-batches = [1, 10, 25, 50, 100]
-df = pd.read_excel("./Copy of data-source.xlsx")
-columns = df.columns
 
-filenames = [path+str(i)+".jpg" for i in range(101)]
+def AbstractThreadFunction(start, end, df):
 
-for batch in batches:
-    curr_itr = 0
-    print("Batch size :", batch)
+    path = os.path.abspath(os.getcwd()) + "\\images\\"
+    columns = df.columns
 
-    outputTime, accuracy, fileSize = [], [], []
-    i = 1
-    r = batch % 5
-    q = (batch-r)/5
-    t1_batch = 
-
-    t1 = threading.Thread(target=(),args=())
-    t2 = threading.Thread(target=(),args=())
-    t3 = threading.Thread(target=(),args=())
-    t4 = threading.Thread(target=(),args=())
-    t5 = threading.Thread(target=(),args=())
-        else:
-        img_path = path + str(i) + ".jpg"
+    for fileNum in range(start, end + 1):
+        img_path = path + str(fileNum) + ".jpg"
 
         fileSize.append(os.path.getsize(img_path))
+
         img = cv2.imread(img_path, 0)
-        start = time.time()
+
         output = API(img)
-        end = time.time()
-        outputTime.append(end - start)
 
         currentAccuracy = []
 
         for i in range(len(output)):
             detected_key, detected_value = str(output[i][0]), str(output[i][1])
-            expected_key, expected_value = str(columns[i]), df[columns[i]][curr_itr]
+            expected_key, expected_value = str(columns[i]), df[columns[i]][fileNum - 1]
 
             if detected_key == "":
                 continue
@@ -219,6 +206,7 @@ for batch in batches:
                 expected_value = expected_value.strftime("%d%m%Y")
 
             expected_value = str(expected_value)
+
             if detected_key == "Gender?":
                 if detected_value == expected_value:
                     currentAccuracy.append(1)
@@ -229,12 +217,43 @@ for batch in batches:
                     len(expected_value) - distance(expected_value, detected_value)
                 ) / len(expected_value)
                 currentAccuracy.append(fieldAccuracy)
-        accuracy.append(sum(currentAccuracy) / len(currentAccuracy))
-        curr_itr += 1
 
-        if curr_itr == batch:
-            break
-    print("Total execution time: " + str(sum(outputTime)))
-    print("Average Filesize: " + str((sum(fileSize) / len(fileSize)) / 1000) + "kb")
-    print("Accuracy: " + str(sum(accuracy) / len(accuracy) * 100) + "%")
-    print()
+        accuracy.append(sum(currentAccuracy) / len(currentAccuracy))
+
+
+if __name__ == "__main__":
+
+    df = pd.read_excel("./Copy of data-source.xlsx")
+
+    filesPerThread = 5
+
+    batches = [1,10,25,50,100]
+
+    for batch in batches:
+        print("Batch: ",batch)
+        threads = []
+        i = 1
+        while i <= batch:
+            start, end = i, min(i + filesPerThread, batch)
+            thread = threading.Thread(
+                target=AbstractThreadFunction, args=(start, end, df)
+            )
+            threads.append(thread)
+            i += filesPerThread
+
+        start = time.time()
+
+        for thread in threads:
+            thread.start()
+
+        for thread in threads:
+            thread.join()
+
+        end = time.time()
+
+        print("Total execution time: ", end - start)
+        print("Average Filesize: " + str((sum(fileSize) / len(fileSize)) / 1000) + "kb")
+        print("Accuracy: " + str(sum(accuracy) / len(accuracy) * 100) + "%")
+        print()
+
+        accuracy, fileSize = [], []
