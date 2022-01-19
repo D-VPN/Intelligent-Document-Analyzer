@@ -1,8 +1,7 @@
 from typing import Collection
 from django.shortcuts import HttpResponse
 from .forms import ProjetForm, TextForm
-from .extraction_api import API
-from .extraction_threading import ExtractKeyValues
+from .extraction_threading import ExtractKeyValues, API
 from .models import Project
 from .serializers import ProjectSerializer
 from rest_framework.decorators import api_view
@@ -25,7 +24,8 @@ def extractKeys(request):
     path = default_storage.save("tmp/img.jpg", ContentFile(data.read()))
 
     img_path = r"tmp/img.jpg"
-    res = API(img_path, "temp.jpg")
+    img = cv2.imread(img_path, 0)
+    res = API(img)
 
     keys = []
     for kv in res:
