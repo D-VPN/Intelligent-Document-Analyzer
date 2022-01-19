@@ -1,27 +1,20 @@
-from unittest import expectedFailure
 import cv2
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
-import csv
 from pathlib import Path
 import os
 import time
 import pandas as pd
-import datetime as dt
 from Levenshtein import distance
 import threading
-
-try:
-    from PIL import Image
-except ImportError:
-    import Image
 import pytesseract
-from matplotlib.pyplot import figure
+
+# shared data between threads
+accuracy, fileSize = [], []
+mutex = threading.Lock()
 
 
 def API(img):
-    # img = cv2.imread(img_path, 0)
 
     # thresholding the image to a binary image
     img_bin = cv2.adaptiveThreshold(
@@ -83,7 +76,7 @@ def API(img):
                     break
 
                 if "Gender" in key:
-                    value = multiple_choice(temp_img2)
+                    value = MultipleChoiceHelper(temp_img2)
                 else:
                     value = (
                         pytesseract.image_to_string(temp_img2, lang="eng")
@@ -102,7 +95,7 @@ def API(img):
     return extracted_key_val
 
 
-def multiple_choice(image):
+def MultipleChoiceHelper(image):
 
     ### Binarising image
     th1, img_bin = cv2.threshold(image, 150, 225, cv2.THRESH_BINARY)
@@ -172,10 +165,6 @@ def multiple_choice(image):
     return extracted_value
 
 
-accuracy, fileSize = [], []
-mutex = threading.Lock()
-
-
 def AbstractThreadFunction(start, end, df):
 
     path = os.path.abspath(os.getcwd()) + "\\images\\"
@@ -226,11 +215,11 @@ if __name__ == "__main__":
     df = pd.read_excel("./Copy of data-source.xlsx")
 
     filesPerThread = 5
-
-    batches = [1,10,25,50,100]
+    batches = [1, 10, 25, 50, 100]
 
     for batch in batches:
-        print("Batch: ",batch)
+        print("Batch: ", batch)
+
         threads = []
         i = 1
         while i <= batch:
