@@ -17,11 +17,11 @@ const Dashboard = ({ setToken }) => {
 
   const createDashboardUI = () => {
     return projects.map((el, i) => (
-      <div key={el.project_id} class="col-lg-4 d-flex align-items-stretch mt-5">
+      <div key={el.project_id} class="col-lg-4 d-flex align-items-stretch mt-4">
         <div class="card shadow" style={{ width: '18rem' }}>
           <div class="card-body p-4">
             <h5 class="card-title">{el.name}</h5>
-            {/* <div class="text-muted"> Created {el.days} days ago </div> */}
+            <div class="text-muted"> Created {el.days} days ago </div>
             <Link to="/project/visualization">
               <a href="#" class="btn btn-primary mt-5">
                 View Project
@@ -37,7 +37,7 @@ const Dashboard = ({ setToken }) => {
     <div>
       <div class="container">
         <div class="row mt-5">
-          <div class="col-md-4 d-flex ">
+          <div class="col-lg-4 d-flex align-items-stretch mt-4">
             <div class="card shadow" style={{ width: '18rem' }}>
               <Link to="/create">
                 <div class="card-body p-4">

@@ -1,7 +1,8 @@
 from typing import Collection
 from django.shortcuts import HttpResponse
 from .forms import ProjetForm, TextForm
-from .extraction_threading import ExtractKeyValues, API
+from .ExtractionModule.extract_data_forms import ExtractDataForms
+from .ExtractionModule.extract_template_form import ExtractTemplateForm
 from .models import Project
 from .serializers import ProjectSerializer
 from rest_framework.decorators import api_view
@@ -17,23 +18,30 @@ client = pymongo.MongoClient(connection_string)
 # old_string = "mongodb+srv://vishal2720:1infiniteloop@cluster0.xgy7f.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
 db = client["db"]
 
+# helper function
+def getCheckboxFields(project_id):
+
+    collection = db["Projects"]
+    checkbox_fields = []
+
+    for doc in collection.find({"project_id": project_id}):
+        for field in doc["fields"]:
+            if field["valueType"] == "Checkbox":
+                checkbox_fields.append(field["name"])
+
+    return checkbox_fields
+
 
 @api_view(["POST"])
 def extractKeys(request):
     data = request.FILES.get("file")
-    path = default_storage.save("tmp/img.jpg", ContentFile(data.read()))
-
     img_path = r"tmp/img.jpg"
-    img = cv2.imread(img_path, 0)
-    res = API(img)
 
-    keys = []
-    for kv in res:
-        if kv[0] != "":
-            keys.append(kv[0])
+    path = default_storage.save(img_path, ContentFile(data.read()))
+    img = cv2.imread(img_path, 0)
+    keys = ExtractTemplateForm(img)
 
     json_object = json.dumps(keys)
-
     os.remove(img_path)
 
     return HttpResponse(json_object)
@@ -43,6 +51,7 @@ def extractKeys(request):
 def projectCreate(request):
     projectId = str(request.user.id) + "_" + str(request.data["name"])
     collection = db["Projects"]
+
     collection.insert_one(
         {
             "project_id": projectId,
@@ -53,6 +62,14 @@ def projectCreate(request):
     )
 
     return HttpResponse(projectId)
+
+
+@api_view(["POST"])
+def projectDelete(request):
+    project_id = request.data["project_id"]
+    collection = db[project_id]
+
+    collection.drop()
 
 
 @api_view(["GET"])
@@ -88,13 +105,19 @@ def uploadForms(request):
             )
             num += 1
 
-    collection = db["Project_data"]
-    output = ExtractKeyValues(project_id, num)
+    path = os.path.abspath(os.getcwd()) + "//tmp//"
+    checkbox_fields = getCheckboxFields(project_id)
+    print(checkbox_fields)
+    output = ExtractDataForms(path, checkbox_fields)
+    print(output)
 
-    for res in output:
+    collection = db[project_id]
+    for doc in output:
+        res = {"project_id": project_id}
+        for kv in doc:
+            res[kv[0]] = kv[1]
         collection.insert_one(res)
 
-    path = os.path.abspath(os.getcwd()) + "//tmp//"
     for filename in os.listdir(path):
         os.remove(path + filename)
 
