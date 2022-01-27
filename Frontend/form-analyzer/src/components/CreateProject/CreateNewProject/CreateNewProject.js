@@ -34,7 +34,6 @@ const CreateNewProject = ({ nextStep, values, handleChange, onFileChange, setFie
                 const ob = {
                     key: value,
                     valueType: "",
-                    isSelected: false
                 };
                 fields.push(ob);
             });

@@ -1,15 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './SelectFields.css';
-import axios from '../../../helper/axios';
+import multiAxios from '../../../helper/multipart_axios';
 
 
 const SelectFields = ({ nextStep, values, prevStep, setFields, setProjectId }) => {
-    const checkboxChange = (e, index) => {
-        const { fields } = values;
-        fields[index].isSelected = e.target.checked;
-        setFields(fields);
-    }
-
     const handleTypeChange = (e, index) => {
         const { fields } = values;
         fields[index].valueType = e.target.value;
@@ -19,25 +13,27 @@ const SelectFields = ({ nextStep, values, prevStep, setFields, setProjectId }) =
     const submit = async (e) => {
         e.preventDefault();
         const url = "/create-project/";
-        const newFields = [];
+        var error = false;
+        var isCheckbox = false;
         values.fields.forEach((value) => {
-            if (value.isSelected) {
-                if (value.valueType === "") {
-                    return;
-                }
-                const a = {
-                    name: value.key,
-                    valueType: value.valueType,
-                }
-                newFields.push(a);
+            if (error) return;
+            if (value.valueType === "") {
+                alert(`Please select a value type for ${value.key}`)
+                error = true;
+                return;
             }
+            if (value.valueType === "Checkbox") isCheckbox = true;
         });
-        const body = {
-            name: values.name,
-            fields: newFields,
+        if (error) return;
+
+        const formData = new FormData();
+        formData.append("name", values.name);
+        formData.append("fields", JSON.stringify(values.fields));
+        if (isCheckbox) {
+            formData.append("file", values.file);
         }
         try {
-            const { data } = await axios.post(url, body);
+            const { data } = await multiAxios.post(url, formData);
             console.log(data);
             setProjectId(data);
             nextStep();
@@ -51,11 +47,6 @@ const SelectFields = ({ nextStep, values, prevStep, setFields, setProjectId }) =
         return values.fields.map((el, i) =>
             <div key={i} >
                 <div class='row' class='input-group'>
-                    <div class='col-md-2'>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" checked={el.isSelected} id="flexCheckDefault" onChange={(e) => checkboxChange(e, i)} />
-                        </div>
-                    </div>
                     <div class='col-md-5'>
                         {el.key}
                     </div>
@@ -74,6 +65,8 @@ const SelectFields = ({ nextStep, values, prevStep, setFields, setProjectId }) =
         )
     }
 
+
+
     return (
         <div>
             <div class='container'>
@@ -89,6 +82,7 @@ const SelectFields = ({ nextStep, values, prevStep, setFields, setProjectId }) =
                             <div class=" mb-3">
                                 {createUI()}
                             </div>
+
 
                             <div class="row mt-5">
                                 <div class='d-grid col-md-6'>
