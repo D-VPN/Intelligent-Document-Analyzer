@@ -61,7 +61,7 @@ const UploadForms = ({ nextStep, values }) => {
                         <div class="row mt-5">
                             <div class='d-grid '>
                                 {button()}
-                                <Link to="/dashboard"> 
+                                <Link to="/">
                                     <button className="submit__btn">GO TO HOME</button>
                                 </Link>
                             </div>
