@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import './SelectFields.css';
-import multiAxios from '../../../helper/multipart_axios';
+import axios from '../../../helper/axios';
 
 
 const SelectFields = ({ nextStep, values, prevStep, setFields, setProjectId }) => {
@@ -14,7 +14,7 @@ const SelectFields = ({ nextStep, values, prevStep, setFields, setProjectId }) =
         e.preventDefault();
         const url = "/create-project/";
         var error = false;
-        var isCheckbox = false;
+        const newFields = [];
         values.fields.forEach((value) => {
             if (error) return;
             if (value.valueType === "") {
@@ -22,18 +22,20 @@ const SelectFields = ({ nextStep, values, prevStep, setFields, setProjectId }) =
                 error = true;
                 return;
             }
-            if (value.valueType === "Checkbox") isCheckbox = true;
+            const a = {
+                name: value.key,
+                valueType: value.valueType,
+            }
+            newFields.push(a);
         });
         if (error) return;
-
-        const formData = new FormData();
-        formData.append("name", values.name);
-        formData.append("fields", JSON.stringify(values.fields));
-        if (isCheckbox) {
-            formData.append("file", values.file);
+        const body = {
+            name: values.name,
+            fields: newFields,
         }
+
         try {
-            const { data } = await multiAxios.post(url, formData);
+            const { data } = await axios.post(url, body);
             console.log(data);
             setProjectId(data);
             nextStep();
