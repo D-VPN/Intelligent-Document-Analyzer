@@ -63,10 +63,6 @@ def MultipleChoice(image):
 
         extracted_value.append(key_val)
 
-        for key_val in extracted_value:
-            if key_val[1] == "yes":
-                return key_val[0]
-
         i += 1
 
     return extracted_value
