@@ -1,3 +1,4 @@
+from cmath import atan
 from typing import Collection
 from django.shortcuts import HttpResponse
 from .forms import ProjetForm, TextForm
@@ -8,7 +9,7 @@ from .serializers import ProjectSerializer
 from rest_framework.decorators import api_view
 from rest_framework import status
 from rest_framework.response import Response
-import pymongo, os, cv2, numpy as np, json
+import pymongo, os, cv2, numpy as np, json, datetime
 from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
 
@@ -30,6 +31,26 @@ def getCheckboxFields(project_id):
                 checkbox_fields.append(field["name"])
 
     return checkbox_fields
+
+
+def getFormKeys(project_id):
+
+    collection = db["Projects"]
+    keys = []
+
+    for doc in collection.find({"project_id": project_id}):
+        for field in doc["fields"]:
+            keys.append(field["valueType"])
+
+    return keys
+
+
+def getFormCreatedDate(project_id):
+
+    collection = db["Projects"]
+
+    for doc in collection.find({"project_id": project_id}):
+        return doc["created_at"]
 
 
 @api_view(["POST"])
@@ -58,6 +79,7 @@ def projectCreate(request):
             "user_id": request.user.id,
             "name": request.data["name"],
             "fields": request.data["fields"],
+            "created_at": datetime.datetime.now().isoformat(),
         }
     )
 
@@ -67,8 +89,12 @@ def projectCreate(request):
 @api_view(["POST"])
 def projectDelete(request):
     project_id = request.data["project_id"]
-    collection = db[project_id]
 
+    collection = db[project_id]
+    doc = {"project_id": project_id}
+    collection.delete_one(doc)
+
+    collection = db[project_id]
     collection.drop()
 
 
@@ -82,7 +108,11 @@ def getAllProjects(request):
 
     for ele in collection.find():
         if ele["user_id"] == user_id:
-            curr = {"project_id": ele["project_id"], "name": ele["name"]}
+            curr = {
+                "project_id": ele["project_id"],
+                "name": ele["name"],
+                "created_at": ele["created_at"],
+            }
             res.append(curr)
 
     json_object = json.dumps(res)
@@ -107,9 +137,7 @@ def uploadForms(request):
 
     path = os.path.abspath(os.getcwd()) + "//tmp//"
     checkbox_fields = getCheckboxFields(project_id)
-    print(checkbox_fields)
     output = ExtractDataForms(path, checkbox_fields)
-    print(output)
 
     collection = db[project_id]
     for doc in output:
@@ -122,3 +150,19 @@ def uploadForms(request):
         os.remove(path + filename)
 
     return HttpResponse()
+
+
+@api_view(["POST"])
+def getProjectMetadata(request):
+
+    project_id = request.data["project_id"]
+    collection = db[project_id]
+
+    number_of_forms = collection.find().count()
+    keys = getFormKeys(project_id)
+    created_at = getFormCreatedDate(project_id)
+
+    res = {"created_at": created_at, "number_of_forms": number_of_forms, "keys": keys}
+    json_object = json.dumps(res)
+
+    return HttpResponse(json_object)
