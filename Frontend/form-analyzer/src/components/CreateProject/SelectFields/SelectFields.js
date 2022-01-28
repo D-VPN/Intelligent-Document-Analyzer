@@ -57,6 +57,7 @@ const SelectFields = ({ nextStep, values, prevStep, setFields, setProjectId }) =
                             <option value="Number">Number</option>
                             <option value="Date">Date</option>
                             <option value="Checkbox">Checkbox</option>
+                            <option value="Sentiment">Sentiment</option>
                         </select>
                     </div>
                 </div>
