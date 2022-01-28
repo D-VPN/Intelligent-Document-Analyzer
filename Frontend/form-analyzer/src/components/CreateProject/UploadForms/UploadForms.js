@@ -59,12 +59,15 @@ const UploadForms = ({ nextStep, values }) => {
                             </div>
                         </form>
                         <div class="row mt-5">
-                            <div class='d-grid '>
+                            <div class='d-grid'>
                                 {button()}
-                                <Link to="/">
-                                    <button className="submit__btn">GO TO HOME</button>
-                                </Link>
                             </div>
+                            <Link to='/'>
+                                <div class='d-grid'>
+                                    <button className="submit__btn">ADD FORMS LATER</button>
+                                </div>
+                            </Link>
+                            
                         </div>
                     </div>
                 </div>
