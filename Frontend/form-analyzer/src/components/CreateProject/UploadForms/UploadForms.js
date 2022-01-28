@@ -1,6 +1,7 @@
 import React from 'react'
 import './UploadForms.css';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 import multiAxios from '../../../helper/multipart_axios';
 const UploadForms = ({ nextStep, values }) => {
@@ -55,12 +56,14 @@ const UploadForms = ({ nextStep, values }) => {
                             <div class="mb-3">
                                 <label for="bulkForms" class="form-label">Upload Your Forms</label>
                                 <input class="form-control form-control-lg" type="file" id="bulkForms" multiple onChange={onChange} accept="image/png, image/jpeg" />
-
                             </div>
                         </form>
                         <div class="row mt-5">
                             <div class='d-grid '>
                                 {button()}
+                                <Link to="/dashboard"> 
+                                    <button className="submit__btn">GO TO HOME</button>
+                                </Link>
                             </div>
                         </div>
                     </div>
