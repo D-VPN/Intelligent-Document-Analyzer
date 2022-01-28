@@ -46,11 +46,15 @@ const UploadForms = ({ nextStep, values }) => {
     return (
         <div>
             <div class='container'>
+                <div class="alert mt-3 alert-success alert-dismissible fade show" role="alert">
+                    <strong>PROJECT CREATED SUCCESSFULLY.</strong> Upload All The Forms You Want Processed.
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
                 <div class='header text-center'>
                     <h1>{values.name}</h1>
                 </div>
                 <div class='row'>
-                    <div class='col-md-3 '></div>
+                    <div class='col-md-3'></div>
                     <div class='col-md-6 box'>
                         <form>
                             <div class="mb-3">
@@ -59,12 +63,15 @@ const UploadForms = ({ nextStep, values }) => {
                             </div>
                         </form>
                         <div class="row mt-5">
-                            <div class='d-grid '>
+                            <div class='d-grid'>
                                 {button()}
-                                <Link to="/">
-                                    <button className="submit__btn">GO TO HOME</button>
-                                </Link>
                             </div>
+                            <Link to='/'>
+                                <div class='d-grid'>
+                                    <button className="submit__btn">ADD FORMS LATER</button>
+                                </div>
+                            </Link>
+                            
                         </div>
                     </div>
                 </div>
