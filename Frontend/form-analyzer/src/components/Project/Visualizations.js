@@ -43,6 +43,7 @@ const Visualizations = () => {
                 formNumber: data.number_of_forms,
                 keys: data.keys,
             }));
+            setLoading(false);
         } catch (e) {
             console.error(e);
         }
