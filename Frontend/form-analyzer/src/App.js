@@ -31,7 +31,7 @@ function App() {
           </Route>
           <Route path="/login" exact element={<Login setToken={setToken} />} />
           <Route path="/registration" exact element={<Registration />} />
-          <Route path="/project/visualization" exact element={<Visualizations />} />
+          <Route path="/project/visualization/:projectId" exact element={<Visualizations />} />
         </Routes>
       </Router>
     </div>

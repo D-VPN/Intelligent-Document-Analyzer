@@ -42,7 +42,7 @@ const Dashboard = ({ setToken }) => {
           <div class="card-body p-4">
             <h5 class="card-title">{el.name}</h5>
             <div class="text-muted"> {dateString} </div>
-            <Link to="/project/visualization" props={{ name: "Darshan" }}>
+            <Link to={`/project/visualization/${el.project_id}`}>
               <a href="#" class="btn btn-primary mt-5">
                 View Project
               </a>
