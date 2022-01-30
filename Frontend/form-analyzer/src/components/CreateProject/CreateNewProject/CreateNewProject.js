@@ -24,7 +24,6 @@ const CreateNewProject = ({ nextStep, values, handleChange, onFileChange, setFie
         setloading(true);
         const data = new FormData();
         data.append('file', file);
-        console.log(data)
 
         try {
             const form = "/extract-keys/";
@@ -43,7 +42,6 @@ const CreateNewProject = ({ nextStep, values, handleChange, onFileChange, setFie
         }
         catch (error) {
             setloading(false)
-            console.log(error);
         }
     }
     const onChange = (e) => {

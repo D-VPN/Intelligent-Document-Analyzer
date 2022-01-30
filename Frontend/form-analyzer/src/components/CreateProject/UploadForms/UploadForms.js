@@ -2,9 +2,12 @@ import React from 'react'
 import './UploadForms.css';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
+
 
 import multiAxios from '../../../helper/multipart_axios';
 const UploadForms = ({ nextStep, values }) => {
+    let navigate = useNavigate();
     const [forms, setforms] = useState([])
     const [loading, setLoading] = useState(false)
 
@@ -29,11 +32,12 @@ const UploadForms = ({ nextStep, values }) => {
             const url = "/upload-forms/";
             const response = await multiAxios.post(url, formData);
             setLoading(false);
-            nextStep();
+            navigate.navigate("/project/visualization");
+            // nextStep();
+
         }
         catch (error) {
             setLoading(false);
-            console.log(error);
         }
     }
     const button = () => {
@@ -71,7 +75,7 @@ const UploadForms = ({ nextStep, values }) => {
                                     <button className="submit__btn">ADD FORMS LATER</button>
                                 </div>
                             </Link>
-                            
+
                         </div>
                     </div>
                 </div>

@@ -3,7 +3,7 @@ import CreateNewProject from './CreateNewProject/CreateNewProject'
 import SelectFields from './SelectFields/SelectFields';
 
 import UploadForms from './UploadForms/UploadForms';
-import Visualizations from './Visualizations/Visualizations';
+import Visualizations from '../Project/Visualizations';
 export default class CreateProject extends Component {
     state = {
         step: 0,
@@ -14,7 +14,6 @@ export default class CreateProject extends Component {
     }
     prevStep = () => {
         const { step } = this.state;
-        console.log(this.state.fields)
         this.setState({ step: step - 1 });
     }
     nextStep = () => {
@@ -54,7 +53,7 @@ export default class CreateProject extends Component {
                 )
             case 3:
                 return (
-                    <Visualizations values={values} />
+                    <Visualizations />
                 )
 
             default:
