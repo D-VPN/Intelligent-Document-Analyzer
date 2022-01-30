@@ -9,19 +9,39 @@ const Dashboard = ({ setToken }) => {
   useEffect(async () => {
     try {
       const { data } = await axios.get('/get-projects/');
+      for (var i in data) {
+        data[i]["created_at"] = new Date(data[i]["created_at"]);
+      }
       setProjects(data);
     } catch (e) {
       console.error(e);
     }
   }, []);
 
+  function dateDiffInDays(a, b) {
+    const _MS_PER_DAY = 1000 * 60 * 60 * 24;
+
+    const utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
+    const utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
+
+    return Math.floor((utc2 - utc1) / _MS_PER_DAY);
+  }
+
   const createDashboardUI = () => {
-    return projects.map((el, i) => (
-      <div key={el.project_id} class="col-lg-4 d-flex align-items-stretch mt-4">
+    let today = new Date();
+    return projects.map((el, i) => {
+      const createdAt = dateDiffInDays(today, el.created_at);
+      var dateString = "";
+      if (createdAt == 0) {
+        dateString = "Created today";
+      } else {
+        dateString = `Create ${createdAt} days ago`;
+      }
+      return <div key={el.project_id} class="col-lg-4 d-flex align-items-stretch mt-4">
         <div class="card shadow" style={{ width: '18rem' }}>
           <div class="card-body p-4">
             <h5 class="card-title">{el.name}</h5>
-            <div class="text-muted"> Created {el.days} days ago </div>
+            <div class="text-muted"> {dateString} </div>
             <Link to="/project/visualization">
               <a href="#" class="btn btn-primary mt-5">
                 View Project
@@ -30,7 +50,8 @@ const Dashboard = ({ setToken }) => {
           </div>
         </div>
       </div>
-    ));
+    }
+    );
   };
 
   return (
