@@ -53,6 +53,14 @@ def getFormCreatedDate(project_id):
         return doc["created_at"]
 
 
+def getProjectName(project_id):
+
+    collection = db["Projects"]
+
+    for doc in collection.find({"project_id": project_id}):
+        return doc["name"]
+
+
 @api_view(["POST"])
 def extractKeys(request):
     data = request.FILES.get("file")
@@ -154,15 +162,21 @@ def uploadForms(request):
 
 @api_view(["POST"])
 def getProjectMetadata(request):
-
+    print(request.data)
     project_id = request.data["project_id"]
     collection = db[project_id]
 
     number_of_forms = collection.find().count()
     keys = getFormKeys(project_id)
     created_at = getFormCreatedDate(project_id)
+    name = getProjectName(project_id)
 
-    res = {"created_at": created_at, "number_of_forms": number_of_forms, "keys": keys}
+    res = {
+        "created_at": created_at,
+        "number_of_forms": number_of_forms,
+        "keys": keys,
+        "name": name,
+    }
     json_object = json.dumps(res)
 
     return HttpResponse(json_object)
