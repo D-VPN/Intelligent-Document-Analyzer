@@ -7,7 +7,7 @@ import useToken from './useToken';
 import Registration from './components/Registration/Registration';
 import CreateProject from './components/CreateProject/CreateProject';
 import MainNav from './components/Navbar/MainNav';
-import Visualizations from './components/Project/Visualizations';
+import Visualizations from './components/Project/Visualizations/Visualizations';
 
 function App() {
   const { token, setToken } = useToken();

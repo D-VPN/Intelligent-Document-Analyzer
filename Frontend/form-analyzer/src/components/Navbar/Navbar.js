@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import './Navbar.css';
-import logo from '../../images/logo.png'
+import logo from '../../images/logo-transparent.png'
 import { useNavigate, Link } from 'react-router-dom';
 
 
@@ -33,7 +33,7 @@ class Navbar extends Component {
                 < nav class="navbar navbar-expand-lg bg-dark px-3" >
                     <div class="container-fluid">
                         <div class="d-flex pt-3" >
-                            <img src="logo.png" height={45} width={45} />
+                            <img src={logo} height={45} width={45} />
                             <Link to="/">
                                 <a class="navbar-brand text-light" href="#"> <h2 class="mx-2">Form Data Analyzer</h2></a>
                             </Link>
@@ -54,7 +54,7 @@ class Navbar extends Component {
                 <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-3">
                     <div class="container-fluid">
                         <div class="d-flex pt-3">
-                            <img src="logo.png" height={45} width={45} />
+                            <img src={logo} height={45} width={45} />
                             <Link to="/">
                                 <a class="navbar-brand text-light" href="#"> <h2 class="mx-2">Form Data Analyzer</h2></a>
                             </Link>

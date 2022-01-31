@@ -3,7 +3,7 @@ import CreateNewProject from './CreateNewProject/CreateNewProject'
 import SelectFields from './SelectFields/SelectFields';
 
 import UploadForms from './UploadForms/UploadForms';
-import Visualizations from '../Project/Visualizations';
+import Visualizations from '../Project/Visualizations/Visualizations.js';
 export default class CreateProject extends Component {
     state = {
         step: 0,

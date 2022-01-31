@@ -1,3 +1,4 @@
+import './Visualizations.css';
 import React, { useState, useEffect } from 'react'
 import {
     Chart as ChartJS,
@@ -9,8 +10,10 @@ import {
     Legend,
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
-import axios from '../../helper/axios';
+import axios from '../../../helper/axios';
 import { useParams } from 'react-router-dom';
+import ReactLoading from 'react-loading';
+
 
 ChartJS.register(
     CategoryScale,
@@ -50,6 +53,11 @@ const Visualizations = () => {
     }, []);
     console.log(project);
     return (
+        loading ? 
+        <div className='loader'>
+            <ReactLoading type='bars' color='#0d6efd'></ReactLoading>
+        </div> 
+        :
         <div>
             <div class='container'>
                 <div class='header text-center'>
