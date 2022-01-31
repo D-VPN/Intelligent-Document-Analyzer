@@ -30,7 +30,7 @@ const Dashboard = ({ setToken }) => {
   const createDashboardUI = () => {
     let today = new Date();
     return projects.map((el, i) => {
-      const createdAt = dateDiffInDays(today, el.created_at);
+      const createdAt = dateDiffInDays(el.created_at, today);
       var dateString = "";
       if (createdAt == 0) {
         dateString = "Created today";

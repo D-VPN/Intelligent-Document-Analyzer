@@ -48,7 +48,6 @@ const Visualizations = () => {
             console.error(e);
         }
     }, []);
-    console.log(project);
     return (
         <div>
             <div class='container'>

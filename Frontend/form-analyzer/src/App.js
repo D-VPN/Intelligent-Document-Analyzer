@@ -8,6 +8,7 @@ import Registration from './components/Registration/Registration';
 import CreateProject from './components/CreateProject/CreateProject';
 import MainNav from './components/Navbar/MainNav';
 import Visualizations from './components/Project/Visualizations';
+import UploadForms from './components/CreateProject/UploadForms/UploadForms';
 
 function App() {
   const { token, setToken } = useToken();
@@ -31,6 +32,7 @@ function App() {
           </Route>
           <Route path="/login" exact element={<Login setToken={setToken} />} />
           <Route path="/registration" exact element={<Registration />} />
+          <Route path="/project/upload-forms/:projectName" exact element={<UploadForms />} />
           <Route path="/project/visualization/:projectId" exact element={<Visualizations />} />
         </Routes>
       </Router>

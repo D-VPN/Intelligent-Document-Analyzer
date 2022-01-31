@@ -45,15 +45,7 @@ export default class CreateProject extends Component {
                 )
             case 1:
                 return (
-                    <SelectFields nextStep={this.nextStep} values={values} prevStep={this.prevStep} setFields={this.setFields} setProjectId={this.setProjectId} />
-                )
-            case 2:
-                return (
-                    <UploadForms nextStep={this.nextStep} values={values} />
-                )
-            case 3:
-                return (
-                    <Visualizations />
+                    <SelectFields values={values} prevStep={this.prevStep} setFields={this.setFields} setProjectId={this.setProjectId} />
                 )
 
             default:
