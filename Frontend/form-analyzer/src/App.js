@@ -32,7 +32,8 @@ function App() {
           </Route>
           <Route path="/login" exact element={<Login setToken={setToken} />} />
           <Route path="/registration" exact element={<Registration />} />
-          <Route path="/project/upload-forms/:projectName" exact element={<UploadForms />} />
+          <Route path="/create-project/upload-forms/:projectName" exact element={<UploadForms currentCreate={true} />} />
+          <Route path="/project/upload-forms/:projectName" exact element={<UploadForms currentCreate={false} />} />
           <Route path="/project/visualization/:projectId" exact element={<Visualizations />} />
         </Routes>
       </Router>

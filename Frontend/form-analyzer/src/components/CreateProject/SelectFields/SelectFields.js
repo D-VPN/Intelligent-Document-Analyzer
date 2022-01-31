@@ -40,7 +40,7 @@ const SelectFields = ({ values, prevStep, setFields, setProjectId }) => {
         try {
             const { data } = await axios.post(url, body);
             setProjectId(data);
-            navigate(`/project/upload-forms/${data}`);
+            navigate(`/create-project/upload-forms/${data}`);
         }
         catch (e) {
         }

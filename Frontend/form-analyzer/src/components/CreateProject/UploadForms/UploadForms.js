@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 
 import multiAxios from '../../../helper/multipart_axios';
-const UploadForms = () => {
+const UploadForms = ({ currentCreate }) => {
     let navigate = useNavigate();
     const [forms, setforms] = useState([])
     const [loading, setLoading] = useState(false)
@@ -29,26 +29,36 @@ const UploadForms = () => {
             const url = "/upload-forms/";
             const response = await multiAxios.post(url, formData);
             setLoading(false);
-            navigate("/");
+            if (currentCreate) {
+                navigate("/");
+            } else {
+                navigate(-1);
+            }
+
         }
         catch (error) {
             setLoading(false);
         }
     }
     const button = () => {
+        var buttonString = currentCreate ? "NEXT" : "SUBMIT";
         return !loading ?
-            <button className="submit__btn" type='submit' onClick={onSubmit}>NEXT</button>
+            <button className="submit__btn" type='submit' onClick={onSubmit}>{buttonString}</button>
             :
             <button disabled={true} className="submit__btn" type='submit'>LOADING...</button>
+    }
+
+    const successBanner = () => {
+        return currentCreate ? <div class="alert mt-3 alert-success alert-dismissible fade show" role="alert">
+            <strong>PROJECT CREATED SUCCESSFULLY.</strong> Upload All The Forms You Want Processed.
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div> : <div></div>;
     }
 
     return (
         <div>
             <div class='container'>
-                <div class="alert mt-3 alert-success alert-dismissible fade show" role="alert">
-                    <strong>PROJECT CREATED SUCCESSFULLY.</strong> Upload All The Forms You Want Processed.
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
+                {successBanner()}
                 <div class='header text-center'>
                     <h1>{projectName}</h1>
                 </div>
