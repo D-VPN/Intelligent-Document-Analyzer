@@ -13,6 +13,7 @@ import { Bar } from 'react-chartjs-2';
 import axios from '../../../helper/axios';
 import { useParams } from 'react-router-dom';
 import ReactLoading from 'react-loading';
+import ProjectDetails from '../ProjectDetails/ProjectDetails';
 
 
 ChartJS.register(
@@ -42,7 +43,7 @@ const Visualizations = () => {
             setProject(prevState => ({
                 ...prevState,
                 name: data.name,
-                createdAt: new Date(data.created_at),
+                createdAt: data.created_at,
                 formNumber: data.number_of_forms,
                 keys: data.keys,
             }));
@@ -59,10 +60,7 @@ const Visualizations = () => {
         :
         <div>
             <div class='container'>
-                <div class='header text-center'>
-                    <h1>Your Data Insights</h1>
-                    <p><small>5 Forms Added</small></p>
-                </div>
+                <ProjectDetails name={project.name} date={project.createdAt} totalForms={project.formNumber}/>
                 <div class='row'>
                     {/* <div class='visualization-box'>
                         Yahape Visualizations Aayenge
