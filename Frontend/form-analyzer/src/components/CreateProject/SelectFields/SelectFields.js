@@ -1,9 +1,12 @@
 import React, { useState } from 'react'
 import './SelectFields.css';
 import axios from '../../../helper/axios';
+import { useNavigate } from 'react-router-dom';
 
 
-const SelectFields = ({ nextStep, values, prevStep, setFields, setProjectId }) => {
+const SelectFields = ({ values, prevStep, setFields, setProjectId }) => {
+    let navigate = useNavigate();
+
     const handleTypeChange = (e, index) => {
         const { fields } = values;
         fields[index].valueType = e.target.value;
@@ -37,7 +40,7 @@ const SelectFields = ({ nextStep, values, prevStep, setFields, setProjectId }) =
         try {
             const { data } = await axios.post(url, body);
             setProjectId(data);
-            nextStep();
+            navigate(`/project/upload-forms/${data}`);
         }
         catch (e) {
         }

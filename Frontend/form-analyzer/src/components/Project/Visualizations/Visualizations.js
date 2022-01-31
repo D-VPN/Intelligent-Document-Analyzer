@@ -51,7 +51,6 @@ const Visualizations = () => {
             console.error(e);
         }
     }, []);
-    console.log(project);
     return (
         loading ? 
         <div className='loader'>
