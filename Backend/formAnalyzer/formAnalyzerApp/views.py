@@ -40,7 +40,7 @@ def getFormKeys(project_id):
 
     for doc in collection.find({"project_id": project_id}):
         for field in doc["fields"]:
-            keys.append(field["valueType"])
+            keys.append(field["name"])
 
     return keys
 
