@@ -14,7 +14,7 @@ import axios from '../../../helper/axios';
 import { useParams } from 'react-router-dom';
 import ReactLoading from 'react-loading';
 import ProjectDetails from '../ProjectDetails/ProjectDetails';
-
+import SideMenu from '../SideMenu/SideMenu';
 
 ChartJS.register(
     CategoryScale,
@@ -63,8 +63,11 @@ const Visualizations = () => {
                 <ReactLoading type='bars' color='#0d6efd'></ReactLoading>
             </div>
             :
-            <div class='container'>
-                <ProjectDetails name={project.name} date={project.createdAt} totalForms={project.formNumber}/>
+            <div>
+                <div class='row'>
+                    <ProjectDetails name={project.name} date={project.createdAt} totalForms={project.formNumber} />
+                    <SideMenu keys={project.keys} currentKey={currentKey} setCurrentKey={setCurrentKey} />
+                </div>
             </div>
     )
 }
