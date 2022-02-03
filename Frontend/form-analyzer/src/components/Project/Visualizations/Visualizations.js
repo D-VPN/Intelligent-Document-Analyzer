@@ -15,6 +15,7 @@ import { useParams } from 'react-router-dom';
 import ReactLoading from 'react-loading';
 import ProjectDetails from '../ProjectDetails/ProjectDetails';
 import SideMenu from '../SideMenu/SideMenu';
+import PieChart from '../Charts/PieChart';
 
 ChartJS.register(
     CategoryScale,
@@ -63,10 +64,13 @@ const Visualizations = () => {
                 <ReactLoading type='bars' color='#0d6efd'></ReactLoading>
             </div>
             :
-            <div>
+            <div class='container'>
                 <div class='row'>
                     <ProjectDetails name={project.name} date={project.createdAt} totalForms={project.formNumber} />
+                </div>
+                <div class='row'>
                     <SideMenu keys={project.keys} currentKey={currentKey} setCurrentKey={setCurrentKey} />
+                    <PieChart/>
                 </div>
             </div>
     )

@@ -1,0 +1,5 @@
+.box{
+    -webkit-box-shadow: -1px 0px 12px -2px #CECECE; 
+    box-shadow: -1px 0px 12px -2px #CECECE;
+    margin-left: 20px;
+}   
