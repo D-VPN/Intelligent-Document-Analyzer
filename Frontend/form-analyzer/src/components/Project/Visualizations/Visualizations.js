@@ -33,6 +33,7 @@ const Visualizations = () => {
         formNumber: null,
         keys: [],
     });
+    const [currentKey, setCurrentKey] = useState("");
     var projectId = useParams().projectId;
 
     useEffect(async () => {
@@ -47,47 +48,24 @@ const Visualizations = () => {
                 formNumber: data.number_of_forms,
                 keys: data.keys,
             }));
+            if (data.keys.length >= 0) {
+                setCurrentKey(data.keys[0]);
+            }
             setLoading(false);
         } catch (e) {
             console.error(e);
         }
     }, []);
-    return (
-        loading ? 
-        <div className='loader'>
-            <ReactLoading type='bars' color='#0d6efd'></ReactLoading>
-        </div> 
-        :
-        <div>
-            <div class='container'>
-                <ProjectDetails name={project.name} date={project.createdAt} totalForms={project.formNumber}/>
-                <div class='row'>
-                    {/* <div class='visualization-box'>
-                        Yahape Visualizations Aayenge
-                    </div>
-                    <div>
-                        <canvas id="myChart"></canvas>
-                    </div> */}
-                    <Bar
-                        height={100}
-                        width={300}
-                        options={{
-                            responsive: true,
-                        }}
-                        data={{
-                            labels: ['Male', 'Female'],
-                            datasets: [{
-                                label: '# of Employees',
-                                data: [2, 3],
-                                backgroundColor: [
 
-                                ]
-                            }]
-                        }}
-                    />
-                </div>
+    return (
+        loading ?
+            <div className='loader'>
+                <ReactLoading type='bars' color='#0d6efd'></ReactLoading>
             </div>
-        </div>
+            :
+            <div>
+                Darshan
+            </div>
     )
 }
 
