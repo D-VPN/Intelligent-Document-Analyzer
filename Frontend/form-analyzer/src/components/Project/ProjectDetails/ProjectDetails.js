@@ -4,7 +4,6 @@ import './ProjectDetails.css';
 import "react-awesome-button/dist/styles.css";
 import { useNavigate } from 'react-router-dom';
 import moment from 'moment';
-import SideMenu from '../SideMenu/SideMenu';
 
 function ProjectDetails({ name, date, totalForms }) {
     const navigate = useNavigate();
@@ -48,9 +47,7 @@ function ProjectDetails({ name, date, totalForms }) {
 
             </div>
 
-            <div class='row'>
-                <SideMenu/>
-            </div>
+
 
         </div>
     )
