@@ -63,8 +63,8 @@ const Visualizations = () => {
                 <ReactLoading type='bars' color='#0d6efd'></ReactLoading>
             </div>
             :
-            <div>
-                Darshan
+            <div class='container'>
+                <ProjectDetails name={project.name} date={project.createdAt} totalForms={project.formNumber}/>
             </div>
     )
 }
