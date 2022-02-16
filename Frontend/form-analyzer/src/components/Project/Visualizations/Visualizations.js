@@ -16,6 +16,7 @@ import ReactLoading from 'react-loading';
 import ProjectDetails from '../ProjectDetails/ProjectDetails';
 import SideMenu from '../SideMenu/SideMenu';
 import PieChart from '../Charts/PieChart';
+import KeyVisualization from '../KeyVisualization/KeyVisualization';
 
 ChartJS.register(
     CategoryScale,
@@ -57,11 +58,13 @@ const Visualizations = () => {
             console.error(e);
         }
     }, []);
-
     return (
         loading ?
-            <div className='loader'>
-                <ReactLoading type='bars' color='#0d6efd'></ReactLoading>
+            <div class="container">
+
+                <div className='loader'>
+                    <ReactLoading type='bars' color='#0d6efd'></ReactLoading>
+                </div>
             </div>
             :
             <div class='container'>
@@ -70,7 +73,7 @@ const Visualizations = () => {
                 </div>
                 <div class='row'>
                     <SideMenu keys={project.keys} currentKey={currentKey} setCurrentKey={setCurrentKey} />
-                    <PieChart/>
+                    <KeyVisualization projectId={projectId} currentKey={currentKey} />
                 </div>
             </div>
     )

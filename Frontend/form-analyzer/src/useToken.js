@@ -1,7 +1,7 @@
 import { useState } from "react";
 export default function useToken() {
     const getToken = () => {
-        const userDetail = sessionStorage.getItem('user');
+        const userDetail = localStorage.getItem('user');
         const user = JSON.parse(userDetail);
 
         return user?.token
@@ -9,11 +9,11 @@ export default function useToken() {
     const [token, setToken] = useState(getToken());
     const saveToken = user => {
         if (typeof user === "undefined") {
-            sessionStorage.removeItem('user');
+            localStorage.removeItem('user');
             setToken()
         }
         else {
-            sessionStorage.setItem('user', JSON.stringify(user));
+            localStorage.setItem('user', JSON.stringify(user));
             setToken(user.token);
         }
     };

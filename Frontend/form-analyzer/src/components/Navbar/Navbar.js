@@ -15,7 +15,7 @@ class Navbar extends Component {
     }
 
     getUser = () => {
-        const userDetail = sessionStorage.getItem('user');
+        const userDetail = localStorage.getItem('user');
         const user = JSON.parse(userDetail);
         return <div class="text-light mx-5 fs-4" style={{
             "display": "inline-flex",
