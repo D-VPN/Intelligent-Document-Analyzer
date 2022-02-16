@@ -6,6 +6,7 @@ from .views import (
     uploadForms,
     projectDelete,
     getProjectMetadata,
+    getVisualizationData,
 )
 
 urlpatterns = [
@@ -14,5 +15,6 @@ urlpatterns = [
     path("get-projects/", getAllProjects, name="get-projects"),
     path("upload-forms/", uploadForms, name="upload-forms"),
     path("delete-project/", projectDelete, name="delete-project"),
-    path("project-dashboard/", getProjectMetadata, name="project-dashboard"),
+    path("project-dashboard/", getProjectMetadata, name="project-dahsboard"),
+    path("visualization-data/", getVisualizationData, name="visualization-data"),
 ]

@@ -53,12 +53,50 @@ def getFormCreatedDate(project_id):
         return doc["created_at"]
 
 
+def processDateValues(values):
+
+    res = []
+    for val in values:
+        day, month, year = int(val[:2]), int(val[2:4]), int(val[4:])
+        date = datetime.datetime(year, month, day)
+        res.append(date.isoformat())
+
+    return res
+
+
+def processCheckboxValues(values):
+
+    res = dict()
+
+    for val in values:
+        for keys in val:
+            if keys[0] in res:
+                res[keys[0]] += 1 if keys[1] == "yes" else 0
+            else:
+                res[keys[0]] = 1 if keys[1] == "yes" else 0
+
+    return res
+
+
 def getProjectName(project_id):
 
     collection = db["Projects"]
 
     for doc in collection.find({"project_id": project_id}):
         return doc["name"]
+
+
+def findValueType(project_id, key):
+
+    collection = db["Projects"]
+
+    for doc in collection.find():
+        if doc["project_id"] == project_id:
+            for field in doc["fields"]:
+                if field["name"] == key:
+                    return field["valueType"]
+
+    return None
 
 
 @api_view(["POST"])
@@ -177,6 +215,31 @@ def getProjectMetadata(request):
         "keys": keys,
         "name": name,
     }
+    json_object = json.dumps(res)
+
+    return HttpResponse(json_object)
+
+
+@api_view(["POST"])
+def getVisualizationData(request):
+
+    project_id = request.data["project_id"]
+    key = request.data["key"]
+    valueType = findValueType(project_id, key)
+
+    values = []
+    collection = db[project_id]
+    for doc in collection.find():
+        values.append(doc[key])
+
+    if valueType == "Date":
+        values = processDateValues(values)
+
+    if valueType == "Checkbox":
+        values = processCheckboxValues(values)
+
+    res = {"valueType": valueType, "values": values}
+
     json_object = json.dumps(res)
 
     return HttpResponse(json_object)
