@@ -48,6 +48,9 @@ export default function TextKeyVisualization({ values }) {
         const options = {
             responsive: true,
             indexAxis: 'y',
+            animation: {
+                duration: 500,
+            },
         };
 
         return <Bar options={options} data={pieData} />;

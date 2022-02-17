@@ -57,6 +57,9 @@ export default function NumberKeyVisualization({ values }) {
         const options = {
             responsive: true,
             indexAxis: 'y',
+            animation: {
+                duration: 500,
+            },
         };
 
         return <Bar options={options} data={chartData} />;
@@ -74,8 +77,13 @@ export default function NumberKeyVisualization({ values }) {
                 },
             ],
         }
+        const options = {
+            animation: {
+                duration: 500,
+            },
+        }
 
-        return <Radar data={chartData} />;
+        return <Radar options={options} data={chartData} />;
     }
 
 
