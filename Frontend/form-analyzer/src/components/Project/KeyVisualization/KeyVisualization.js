@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from '../../../helper/axios';
 import CheckBoxKeyVisualization from './keys/CheckBoxKeyVisualization';
+import NumberKeyVisualization from './keys/NumberKeyVisualization';
 import TextKeyVisualization from './keys/TextKeyVisualization';
 export default function KeyVisualization({ projectId, currentKey }) {
 
@@ -16,7 +17,6 @@ export default function KeyVisualization({ projectId, currentKey }) {
                 project_id: projectId,
                 key: currentKey,
             });
-            console.log(data)
             setKeyData(prevState => ({
                 ...prevState,
                 valueType: data.valueType,
@@ -37,9 +37,7 @@ export default function KeyVisualization({ projectId, currentKey }) {
         } else if (keyData.valueType === "Text") {
             return <TextKeyVisualization values={keyData.values} />
         } else if (keyData.valueType === "Number") {
-            return <div>
-                Checkbox
-            </div>
+            return <NumberKeyVisualization values={keyData.values} />
         } else if (keyData.valueType === "Sentiment") {
             return <div>
                 Checkbox

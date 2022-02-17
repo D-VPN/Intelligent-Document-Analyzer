@@ -28,7 +28,6 @@ export default function TextKeyVisualization({ values }) {
                 obj[values[i]] = 1
             }
         }
-        console.log(Object.values(obj))
         setverticalBarData({
             labels: Object.keys(obj),
             data: Object.values(obj),
