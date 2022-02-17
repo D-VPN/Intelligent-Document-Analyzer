@@ -6,17 +6,18 @@ from .ExtractionModule.extract_data_forms import ExtractDataForms
 from .ExtractionModule.extract_template_form import ExtractTemplateForm
 from .models import Project
 from .serializers import ProjectSerializer
+from .sentiment import predict_sentence
 from rest_framework.decorators import api_view
 from rest_framework import status
 from rest_framework.response import Response
 import pymongo, os, cv2, numpy as np, json, datetime
 from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
+from decouple import config
 
 # MongoDB database connection
-connection_string = "mongodb://vishal2720:1infiniteloop@cluster0-shard-00-00.xgy7f.mongodb.net:27017,cluster0-shard-00-01.xgy7f.mongodb.net:27017,cluster0-shard-00-02.xgy7f.mongodb.net:27017/myFirstDatabase?ssl=true&replicaSet=atlas-2cqg7j-shard-0&authSource=admin&retryWrites=true&w=majority"
+connection_string = config("MONGO")
 client = pymongo.MongoClient(connection_string)
-# old_string = "mongodb+srv://vishal2720:1infiniteloop@cluster0.xgy7f.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
 db = client["db"]
 
 # helper function
@@ -99,6 +100,37 @@ def findValueType(project_id, key):
     return None
 
 
+def get_sentiment_keys(project_id):
+
+    collection = db["Projects"]
+    sentiment_keys = []
+
+    for doc in collection.find({"project_id": project_id}):
+        for kv in doc["fields"]:
+            if (kv["valueType"]) == "Sentiment":
+                sentiment_keys.append(kv["name"])
+
+    return sentiment_keys
+
+
+def processSentimentValues(values):
+
+    positive = {"sentiment": [], "data": []}
+    negative = {"sentiment": [], "data": []}
+
+    for data in values:
+        if data[1] >= 0:
+            positive["sentiment"].append(data[1])
+            positive["data"].append(data[0])
+        else:
+            negative["sentiment"].append(data[1])
+            negative["data"].append(data[0])
+
+    res = {"positive": positive, "negative": negative}
+
+    return res
+
+
 @api_view(["POST"])
 def extractKeys(request):
     data = request.FILES.get("file")
@@ -168,11 +200,11 @@ def getAllProjects(request):
 @api_view(["POST"])
 def uploadForms(request):
 
-    project_id = str(request.user.id) + "_" + request.data.get("name")
+    project_id = request.data.get("project_id")
 
     num = 1
     for file in request.data:
-        if file == "name":
+        if file == "project_id":
             continue
         else:
             img = request.data.get(file)
@@ -184,12 +216,16 @@ def uploadForms(request):
     path = os.path.abspath(os.getcwd()) + "//tmp//"
     checkbox_fields = getCheckboxFields(project_id)
     output = ExtractDataForms(path, checkbox_fields)
+    sentiment_keys = get_sentiment_keys(project_id)
 
     collection = db[project_id]
     for doc in output:
         res = {"project_id": project_id}
         for kv in doc:
-            res[kv[0]] = kv[1]
+            if kv[0] in sentiment_keys:
+                res[kv[0]] = [kv[1], predict_sentence(kv[1])]
+            else:
+                res[kv[0]] = kv[1]
         collection.insert_one(res)
 
     for filename in os.listdir(path):
@@ -237,6 +273,9 @@ def getVisualizationData(request):
 
     if valueType == "Checkbox":
         values = processCheckboxValues(values)
+
+    if valueType == "Sentiment":
+        values = processSentimentValues(values)
 
     res = {"valueType": valueType, "values": values}
 
