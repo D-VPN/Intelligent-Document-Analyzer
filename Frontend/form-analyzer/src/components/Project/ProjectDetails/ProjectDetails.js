@@ -5,11 +5,11 @@ import "react-awesome-button/dist/styles.css";
 import { useNavigate } from 'react-router-dom';
 import moment from 'moment';
 
-function ProjectDetails({ name, date, totalForms }) {
+function ProjectDetails({ projectId, name, date, totalForms }) {
     const navigate = useNavigate();
     var dateTime = new Date(date);
     const uploadFormPressed = () => {
-        navigate(`/project/upload-forms/${name}`);
+        navigate(`/project/upload-forms/${projectId}`);
     }
     return (
         <div>

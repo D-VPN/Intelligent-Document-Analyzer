@@ -14,13 +14,13 @@ const UploadForms = ({ currentCreate }) => {
     const onChange = (e) => {
         setforms(e.target.files);
     }
-    var projectName = useParams().projectName;
+    var projectId = useParams().projectId;
     const onSubmit = async (e) => {
         e.preventDefault();
         setLoading(true)
         const formData = new FormData();
 
-        formData.append("name", projectName);
+        formData.append("project_id", projectId);
 
         for (let idx = 0; idx < forms.length; idx++) {
             formData.append("file" + idx, forms[idx]);
@@ -59,9 +59,6 @@ const UploadForms = ({ currentCreate }) => {
         <div>
             <div class='container'>
                 {successBanner()}
-                <div class='header text-center'>
-                    <h1>{projectName}</h1>
-                </div>
                 <div class='row'>
                     <div class='col-md-3'></div>
                     <div class='col-md-6 box'>

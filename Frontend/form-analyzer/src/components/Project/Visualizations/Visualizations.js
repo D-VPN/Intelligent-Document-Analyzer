@@ -69,7 +69,7 @@ const Visualizations = () => {
             :
             <div class='container'>
                 <div class='row'>
-                    <ProjectDetails name={project.name} date={project.createdAt} totalForms={project.formNumber} />
+                    <ProjectDetails projectId={projectId} name={project.name} date={project.createdAt} totalForms={project.formNumber} />
                 </div>
                 <div class='row'>
                     <SideMenu keys={project.keys} currentKey={currentKey} setCurrentKey={setCurrentKey} />
