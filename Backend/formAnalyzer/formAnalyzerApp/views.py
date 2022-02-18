@@ -117,17 +117,16 @@ def processSentimentValues(values):
 
     positive = {"sentiment": [], "data": []}
     negative = {"sentiment": [], "data": []}
-
+    print(values)
     for data in values:
-        if data[1] >= 0:
+        if data[1] < 0.5:
             positive["sentiment"].append(data[1])
             positive["data"].append(data[0])
         else:
             negative["sentiment"].append(data[1])
             negative["data"].append(data[0])
-
-    res = {"positive": positive, "negative": negative}
-
+    # res = {"positive": positive, "negative": negative}
+    res = [positive, negative]
     return res
 
 

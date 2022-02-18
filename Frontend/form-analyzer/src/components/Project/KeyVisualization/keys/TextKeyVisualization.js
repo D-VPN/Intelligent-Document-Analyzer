@@ -41,7 +41,8 @@ export default function TextKeyVisualization({ values }) {
                 {
                     label: "Labels",
                     data: verticalBarData.data,
-                    backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                    /* backgroundColor: 'rgba(255, 99, 132, 0.5)' */
+                    backgroundColor: "#187bd1",
                 },
             ],
         }
@@ -51,6 +52,24 @@ export default function TextKeyVisualization({ values }) {
             animation: {
                 duration: 500,
             },
+            elements: {
+                bar: {
+                  borderWidth: 1,
+                  borderColor: "#000000"
+                },
+            },
+            scales: {
+                x: {
+                  grid: {
+                    display: false
+                  }
+                },
+                y: {
+                  grid: {
+                    display: false
+                  }
+                }
+              }
         };
 
         return <Bar options={options} data={pieData} />;
@@ -58,6 +77,10 @@ export default function TextKeyVisualization({ values }) {
 
 
     return (
-        showHorizontalBar()
+        <div class='row'>
+            <div class='col-md-1'></div>
+            <div class='col-md-10'>{showHorizontalBar()}</div>
+        </div>
+        
     )
 }

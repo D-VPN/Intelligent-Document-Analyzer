@@ -50,7 +50,9 @@ export default function NumberKeyVisualization({ values }) {
                 {
                     label: "Labels",
                     data: horizontalBarData.data,
-                    backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                    backgroundColor: "#187bd1",
+                    borderWidth: 1,
+                    borderColor: "#000000",
                 },
             ],
         }
@@ -60,6 +62,18 @@ export default function NumberKeyVisualization({ values }) {
             animation: {
                 duration: 500,
             },
+            scales: {
+                x: {
+                  grid: {
+                    display: false
+                  }
+                },
+                y: {
+                  grid: {
+                    display: false
+                  }
+                }
+              }
         };
 
         return <Bar options={options} data={chartData} />;
@@ -72,8 +86,9 @@ export default function NumberKeyVisualization({ values }) {
                 {
                     label: "Labels",
                     data: horizontalBarData.data,
-                    backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                    backgroundColor: "#187bd1",
                     borderWidth: 1,
+                    borderColor: "#000000",
                 },
             ],
         }
@@ -81,6 +96,7 @@ export default function NumberKeyVisualization({ values }) {
             animation: {
                 duration: 500,
             },
+            
         }
 
         return <Radar options={options} data={chartData} />;
@@ -88,10 +104,17 @@ export default function NumberKeyVisualization({ values }) {
 
 
     return (
-        <div class='col-md-10 mt-5'>
 
-            {showHorizontalBar()}
-            {showRadarBar()}
+        <div>
+            <div class='row'>
+                <div class='col-md-1'></div>
+                <div class='col-md-10'>{showHorizontalBar()}</div>
+            </div>
+
+            <div class='row'>
+                <div class='col-md-1'></div>
+                <div class='col-md-10'>{showRadarBar()}</div>
+            </div>
         </div>
     )
 }

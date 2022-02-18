@@ -75,10 +75,6 @@ export default function DateKeyVisualization({ values }) {
                 legend: {
                     position: 'top',
                 },
-                title: {
-                    display: true,
-                    text: 'Chart.js Line Chart',
-                },
             },
         };
 
@@ -89,8 +85,9 @@ export default function DateKeyVisualization({ values }) {
                 {
                     label: "Years",
                     data: yearData.data,
-                    backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                    backgroundColor: "#187bd1",
                     borderWidth: 1,
+                    borderColor: "#000000",
                 },
             ],
         }
@@ -108,10 +105,6 @@ export default function DateKeyVisualization({ values }) {
                 legend: {
                     position: 'top',
                 },
-                title: {
-                    display: true,
-                    text: 'Chart.js Line Chart',
-                },
             },
         };
 
@@ -122,8 +115,9 @@ export default function DateKeyVisualization({ values }) {
                 {
                     label: "Months",
                     data: monthData.data,
-                    backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                    backgroundColor: "#187bd1",
                     borderWidth: 1,
+                    borderColor: "#000000",
                 },
             ],
         }
@@ -132,9 +126,20 @@ export default function DateKeyVisualization({ values }) {
     }
 
     return (
-        <div>
+        /* <div>
             {showYearLineChart()}
             {showMonthLineChart()}
+        </div> */
+
+        <div>
+            <div class='row'>
+                <div class='col-md-1'></div>
+                <div class='col-md-10'>{showYearLineChart()}</div>
+            </div>
+            <div class='row'>
+                <div class='col-md-1'></div>
+                <div class='col-md-10'>{showMonthLineChart()}</div>
+            </div>
         </div>
     )
 }

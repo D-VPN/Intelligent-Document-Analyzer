@@ -19,12 +19,12 @@ export default function KeyVisualization({ projectId, currentKey }) {
                 project_id: projectId,
                 key: currentKey,
             });
-            // const data = {
-            //     valueType: "Sentiment", values: [
-            //         { "sentiment": [0.5, 0.23], "data": ["This is good", "This is the best"] },
-            //         { "sentiment": [0.5, 0.2], "data": ["This is bad", "This is worst"] },
-            //     ]
-            // };
+            /* const data = {
+                valueType: "Sentiment", values: [
+                    { "sentiment": [0.5, 0.23], "data": ["This is good", "This is the best"] },
+                    { "sentiment": [0.5, 0.2], "data": ["This is bad", "This is worst"] },
+                ]
+            }; */
 
             setKeyData(prevState => ({
                 ...prevState,

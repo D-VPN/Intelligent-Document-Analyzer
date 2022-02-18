@@ -24,7 +24,7 @@ export default function SentimentKeyVisualization({ values }) {
         var positive = [];
         for (let i = 0; i < values[0].data.length; i++) {
             const obj = {
-                sentiment: values[0].sentiment[i] * 100,
+                sentiment: values[0].sentiment[i],
                 data: values[0].data[i]
             }
             positive.push(obj)
@@ -34,7 +34,7 @@ export default function SentimentKeyVisualization({ values }) {
         var negative = [];
         for (let i = 0; i < values[1].data.length; i++) {
             const obj = {
-                sentiment: values[1].sentiment[i] * 100,
+                sentiment: values[1].sentiment[i],
                 data: values[1].data[i]
             }
             negative.push(obj)
@@ -65,19 +65,46 @@ export default function SentimentKeyVisualization({ values }) {
         return <Doughnut data={chartData} />;
     }
 
+    const createTable = (typeOfSentence, list) => {
+        return (
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Level</th>
+                        <th scope="col">Top 10 {typeOfSentence} Sentences</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {
+                        list.map((item, ix)=>{
+                            return(
+                                <tr key={ix}>
+                                    <th scope='row'>{item.sentiment}</th>
+                                    <td>{item.data}</td>
+                                </tr>
+                            )
+                        })
+                    }
+                </tbody>
+            </table>
+        )
+    }
+
     const showTopPositive = () => {
         let limit = doughnutChartData.positive.length < 10 ? doughnutChartData.positive.length : 10;
         const list = []
         for (let i = 0; i < limit; i++) {
-            list.push(doughnutChartData.positive[i].data)
+            list.push(doughnutChartData.positive[i])
         }
+        return createTable('Positive', list);
     }
     const showTopNegative = () => {
         let limit = doughnutChartData.negative.length < 10 ? doughnutChartData.negative.length : 10;
         const list = []
         for (let i = 0; i < limit; i++) {
-            list.push(doughnutChartData.negative[i].data)
+            list.push(doughnutChartData.negative[i])
         }
+        return createTable('Negative',list)
     }
 
     const defaultColors = [
@@ -87,6 +114,15 @@ export default function SentimentKeyVisualization({ values }) {
     ]
 
     return (
-        showDoughnutChart()
+        <div>
+            <div class='row'>
+                <div class='col-md-2'></div>
+                <div class='col-md-7'>{showDoughnutChart()}</div>
+            </div>
+            <div class='row'>
+                <div class='col-md-6'>{showTopPositive()}</div>
+                <div class='col-md-6'>{showTopNegative()}</div>
+            </div>
+        </div>
     )
 }
