@@ -47,7 +47,6 @@ class Navbar extends Component {
                             <ul class="navbar-nav me-auto mb-lg-0"> </ul>
 
                             {this.getUser()}
-                            {/* <button class='btn btn-primary' onClick={(e) => this.logout()} >Log Out</button> */}
                             <AwesomeButton type="secondary" onPress={(e)=>this.logout()}>Log Out</AwesomeButton>
                         </div>
                     </div>

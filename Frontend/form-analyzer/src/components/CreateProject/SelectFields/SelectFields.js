@@ -92,18 +92,13 @@ const SelectFields = ({ values, prevStep, setFields, setProjectId }) => {
 
                             <div class="row mt-5">
                                 <div class='d-grid col-md-6'>
-                                    {/* <button className="submit__btn" type='submit' onClick={(e) => {
-                                        e.preventDefault();
-                                        prevStep();
-                                    }} >PREVIOUS</button> */}
                                     <AwesomeButton type="primary" onPress={(e) => {
                                         e.preventDefault();
                                         prevStep();
                                     }}>PREVIOUS</AwesomeButton>
                                 </div>
                                 <div class='d-grid col-md-6'>
-                                    <button className="submit__btn" type='submit' onClick={submit}>CREATE</button>
-                                    {/* <AwesomeButton type="primary" onPress={submit}>CREATE</AwesomeButton> */}
+                                    <AwesomeButton type="primary" onPress={submit}>CREATE</AwesomeButton>
                                 </div>
                             </div>
                         </form>

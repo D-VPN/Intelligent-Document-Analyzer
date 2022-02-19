@@ -44,11 +44,9 @@ const UploadForms = ({ currentCreate }) => {
     const button = () => {
         var buttonString = currentCreate ? "NEXT" : "SUBMIT";
         return !loading ?
-            /* <button className="submit__btn" type='submit' onClick={onSubmit}>{buttonString}</button> */
             <AwesomeButton type="primary" onPress={onSubmit}>{buttonString}</AwesomeButton>
             :
             <AwesomeButton type="disabled">LOADING...</AwesomeButton>
-        /* <button disabled={true} className="submit__btn" type='submit'>LOADING...</button> */
     }
 
     const successBanner = () => {
@@ -77,7 +75,6 @@ const UploadForms = ({ currentCreate }) => {
                             </div>
                             <Link to='/'>
                                 <div class='d-grid mt-2'>
-                                    {/* <button className="submit__btn">ADD FORMS LATER</button> */}
                                     <AwesomeButton type="primary">ADD FORMS LATER</AwesomeButton>
                                 </div>
                             </Link>

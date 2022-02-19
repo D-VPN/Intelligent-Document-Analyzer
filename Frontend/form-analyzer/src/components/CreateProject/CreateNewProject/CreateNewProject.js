@@ -51,10 +51,8 @@ const CreateNewProject = ({ nextStep, values, handleChange, onFileChange, setFie
     }
     const button = () => {
         return !loading ?
-            /* <button className="submit__btn" type='submit'>NEXT</button> */
             <AwesomeButton type="primary">NEXT</AwesomeButton>
             :
-            /* <button disabled={true} className="submit__btn" type='submit'>LOADING...</button> */
             <AwesomeButton type="disabled">LOADING...</AwesomeButton>
     }
 

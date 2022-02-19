@@ -25,8 +25,6 @@ function ProjectDetails({ projectId, name, date, totalForms }) {
 
                 </div>
                 <div class='col-md-4 mt-3'>
-                    {/* <button className="submit__btn me-5" type='submit'>Download Your Data</button> */}
-                    {/* <button className="submit__btn" type='submit'>Add More Forms</button> */}
                     <AwesomeButton type="primary" style={{ "margin": "10px", }}>
                         Download Your Data
                     </AwesomeButton>
@@ -40,11 +38,6 @@ function ProjectDetails({ projectId, name, date, totalForms }) {
                         Add More Forms
                     </AwesomeButton>
                 </div>
-                {/* <div class='col-md-3 mt-3'>
-                <button className="submit__btn" type='submit'>Add More Forms</button>
-            </div> */}
-
-
             </div>
 
 

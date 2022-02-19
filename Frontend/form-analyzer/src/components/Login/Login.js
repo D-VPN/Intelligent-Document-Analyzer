@@ -99,7 +99,6 @@ const Login = ({ setToken }) => {
                                 </div>
                                 {showError()}
                                 <div class="d-grid gap-2 mt-5">
-                                    {/* <button className="submit__btn" type='submit'>Submit</button> */}
                                     <AwesomeButton type="primary">LOGIN</AwesomeButton>
                                 </div>
                                 <div class='row mt-3'>
