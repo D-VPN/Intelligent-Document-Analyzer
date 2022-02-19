@@ -3,6 +3,8 @@ import './UploadForms.css';
 import { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
+import { AwesomeButton } from "react-awesome-button";
+import "react-awesome-button/dist/themes/theme-blue.css";
 
 
 import multiAxios from '../../../helper/multipart_axios';
@@ -43,9 +45,11 @@ const UploadForms = ({ currentCreate }) => {
     const button = () => {
         var buttonString = currentCreate ? "NEXT" : "SUBMIT";
         return !loading ?
-            <button className="submit__btn" type='submit' onClick={onSubmit}>{buttonString}</button>
+            /* <button className="submit__btn" type='submit' onClick={onSubmit}>{buttonString}</button> */
+            <AwesomeButton type="primary" onPress={onSubmit}>{buttonString}</AwesomeButton>
             :
-            <button disabled={true} className="submit__btn" type='submit'>LOADING...</button>
+            <AwesomeButton type="disabled">LOADING...</AwesomeButton>
+            /* <button disabled={true} className="submit__btn" type='submit'>LOADING...</button> */
     }
 
     const successBanner = () => {
@@ -73,8 +77,9 @@ const UploadForms = ({ currentCreate }) => {
                                 {button()}
                             </div>
                             <Link to='/'>
-                                <div class='d-grid'>
-                                    <button className="submit__btn">ADD FORMS LATER</button>
+                                <div class='d-grid mt-2'>
+                                    {/* <button className="submit__btn">ADD FORMS LATER</button> */}
+                                    <AwesomeButton type="primary">ADD FORMS LATER</AwesomeButton>
                                 </div>
                             </Link>
 

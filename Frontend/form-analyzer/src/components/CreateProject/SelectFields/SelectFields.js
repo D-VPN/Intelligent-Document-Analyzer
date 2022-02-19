@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import './SelectFields.css';
 import axios from '../../../helper/axios';
 import { useNavigate } from 'react-router-dom';
+import { AwesomeButton } from "react-awesome-button";
+import "react-awesome-button/dist/themes/theme-blue.css";
 
 
 const SelectFields = ({ values, prevStep, setFields, setProjectId }) => {
@@ -90,13 +92,18 @@ const SelectFields = ({ values, prevStep, setFields, setProjectId }) => {
 
                             <div class="row mt-5">
                                 <div class='d-grid col-md-6'>
-                                    <button className="submit__btn" type='submit' onClick={(e) => {
+                                    {/* <button className="submit__btn" type='submit' onClick={(e) => {
                                         e.preventDefault();
                                         prevStep();
-                                    }} >PREVIOUS</button>
+                                    }} >PREVIOUS</button> */}
+                                    <AwesomeButton type="primary" onPress={(e) => {
+                                        e.preventDefault();
+                                        prevStep();
+                                    }}>PREVIOUS</AwesomeButton>
                                 </div>
                                 <div class='d-grid col-md-6'>
                                     <button className="submit__btn" type='submit' onClick={submit}>CREATE</button>
+                                    {/* <AwesomeButton type="primary" onPress={submit}>CREATE</AwesomeButton> */}
                                 </div>
                             </div>
                         </form>

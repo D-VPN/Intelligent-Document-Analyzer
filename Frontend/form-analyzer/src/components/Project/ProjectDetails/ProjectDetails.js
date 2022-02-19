@@ -1,8 +1,8 @@
 import React from 'react';
 import { AwesomeButton } from "react-awesome-button";
-import './ProjectDetails.css';
-import "react-awesome-button/dist/styles.css";
+import "react-awesome-button/dist/themes/theme-blue.css";
 import { useNavigate } from 'react-router-dom';
+import './ProjectDetails.css';
 import moment from 'moment';
 
 function ProjectDetails({ projectId, name, date, totalForms }) {
