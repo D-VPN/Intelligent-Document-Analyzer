@@ -4,8 +4,9 @@ import './ProjectDetails.css';
 import "react-awesome-button/dist/styles.css";
 import { useNavigate } from 'react-router-dom';
 import moment from 'moment';
+import DeleteProjectButton from './DeleteProjectButton/DeleteProjectButton';
 
-function ProjectDetails({ projectId, name, date, totalForms }) {
+function ProjectDetails({ projectId, name, date, totalForms, setLoading }) {
     const navigate = useNavigate();
     var dateTime = new Date(date);
     const uploadFormPressed = () => {
@@ -30,6 +31,8 @@ function ProjectDetails({ projectId, name, date, totalForms }) {
                     <AwesomeButton type="primary" style={{ "margin": "10px", }}>
                         Download Your Data
                     </AwesomeButton>
+
+                    <DeleteProjectButton projectId={projectId} setLoading={setLoading} />
                     <AwesomeButton
                         type="primary"
                         style={{ "margin": "10px", }}
