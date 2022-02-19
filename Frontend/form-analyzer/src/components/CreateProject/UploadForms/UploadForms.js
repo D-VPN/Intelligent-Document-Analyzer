@@ -18,7 +18,6 @@ const UploadForms = ({ currentCreate }) => {
     }
     var projectId = useParams().projectId;
     const onSubmit = async (e) => {
-        e.preventDefault();
         setLoading(true)
         const formData = new FormData();
 
@@ -49,7 +48,7 @@ const UploadForms = ({ currentCreate }) => {
             <AwesomeButton type="primary" onPress={onSubmit}>{buttonString}</AwesomeButton>
             :
             <AwesomeButton type="disabled">LOADING...</AwesomeButton>
-            /* <button disabled={true} className="submit__btn" type='submit'>LOADING...</button> */
+        /* <button disabled={true} className="submit__btn" type='submit'>LOADING...</button> */
     }
 
     const successBanner = () => {
