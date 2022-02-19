@@ -6,31 +6,18 @@
 }
 
 .card-text {
-  font-family: "Times New Roman", Times, serif;
-  font-size: 20px;
+  /* font-family: "Times New Roman", Times, serif; */
+  font-size: 22px;
   letter-spacing: 0px;
   word-spacing: 0px;
-  color: #000000;
-  font-weight: 400;
+  color: #0d6efd;
+  font-weight: 600;
   text-decoration: none;
   font-style: normal;
   font-variant: small-caps;
   text-transform: uppercase;
 }
 
-.card-subtitle {
-  margin-top: 2%;
-  font-size: smaller;
-}
-
-.card-textarea {
-  padding: 10%;
-}
-
-.card-textarea a {
-  text-decoration: none;
-}
-
-.card-textarea a:hover {
-  text-decoration: underline;
+.card-img{
+  margin-left: 25%;
 }
