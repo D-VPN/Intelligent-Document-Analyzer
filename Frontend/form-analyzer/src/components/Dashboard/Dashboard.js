@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
-// import './Dashboard.css';
+import './Dashboard.css';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import axios from '../../helper/axios';
+import add from '../../images/add.png';
+
 const Dashboard = ({ setToken }) => {
   const [projects, setProjects] = useState([]);
 
@@ -31,13 +33,14 @@ const Dashboard = ({ setToken }) => {
     let today = new Date();
     return projects.map((el, i) => {
       const createdAt = dateDiffInDays(el.created_at, today);
-      var dateString = "";
+      var dateString = "", begin = `Created ${createdAt} `;
       if (createdAt == 0) {
         dateString = "Created today";
       } else {
-        dateString = `Create ${createdAt} days ago`;
+        if (createdAt == 1) dateString = begin + "day ago";
+        else dateString = begin + "days ago";
       }
-      return <div key={el.project_id} class="col-lg-4 d-flex align-items-stretch mt-4">
+      return <div key={el.project_id} class="col-md-4 mt-4">
         <div class="card shadow" style={{ width: '18rem' }}>
           <div class="card-body p-4">
             <h5 class="card-title">{el.name}</h5>
@@ -58,28 +61,17 @@ const Dashboard = ({ setToken }) => {
     <div>
       <div class="container">
         <div class="row mt-5">
-          <div class="col-lg-4 d-flex align-items-stretch mt-4">
+          <div class="col-md-4 mt-4">
+            <Link to="/create">
             <div class="card shadow" style={{ width: '18rem' }}>
-              <Link to="/create">
-                <div class="card-body p-4">
-                  <i
-                    class="fa fa-plus"
-                    style={{
-                      fontSize: '60px',
-                      position: 'absolute',
-                      bottom: '50%',
-                      left: '40%',
-                    }}
-                  ></i>
-                  <h5
-                    class="card-title"
-                    style={{ position: 'absolute', bottom: '10%', left: '20%' }}
-                  >
-                    Create New Project
-                  </h5>
-                </div>
-              </Link>
+              <img src={add} class="card-img card-img-top" style={{width: "40%", height: "40%"}}/>
+              <div class="card-body">
+                <p class="card-text text-center">
+                  CREATE NEW PROJECT
+                </p>
+              </div>
             </div>
+            </Link>
           </div>
           {createDashboardUI()}
         </div>
