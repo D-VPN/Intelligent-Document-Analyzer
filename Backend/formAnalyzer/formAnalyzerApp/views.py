@@ -178,10 +178,9 @@ def projectCreate(request):
     return HttpResponse(projectId)
 
 
-@api_view(["POST"])
+@api_view(["DELETE"])
 def projectDelete(request):
-    project_id = request.data["project_id"]
-
+    project_id = request.GET.get("project_id", "")
     collection = db["Projects"]
     collection.delete_one({"project_id": project_id})
 
@@ -336,8 +335,8 @@ def exportData(request):
         series_obj = pandas.Series(doc, name=doc_id)
         docs = docs.append(series_obj)
 
-        docs.to_csv("data.csv", ",")
-        with open("data.csv") as myfile:
-            response = HttpResponse(myfile, content_type="text/csv")
-            response["Content-Disposition"] = "attachment; filename=data.csv"
-            return response
+    docs.to_csv("data.csv", ",")
+    with open("data.csv") as myfile:
+        response = HttpResponse(myfile, content_type="text/csv")
+        response["Content-Disposition"] = "attachment; filename=data.csv"
+        return response
