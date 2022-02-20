@@ -17,31 +17,30 @@ function ProjectDetails({ projectId, name, date, totalForms, setLoading }) {
             <div class='row'>
                 <div class='col-md-6'>
                     <div class='header'>
-                        <h1>{name}</h1>
+                        <h1>{name} <AwesomeButton
+                            type="primary"
+                            style={{ "margin": "10px", }}
+                            onPress={() => {
+                                uploadFormPressed();
+                            }}
+                        >
+                            Add More Forms
+                        </AwesomeButton></h1>
                         <p><small>{totalForms} Forms Added</small></p>
                         <p><small>Project Created On: {moment(dateTime).format('DD/MM/YYYY')}</small></p>
+
                     </div>
                 </div>
                 <div class="col-md-2">
 
                 </div>
                 <div class='col-md-4 mt-3'>
-                    {/* <button className="submit__btn me-5" type='submit'>Download Your Data</button> */}
-                    {/* <button className="submit__btn" type='submit'>Add More Forms</button> */}
                     <AwesomeButton type="primary" style={{ "margin": "10px", }}>
                         Download Your Data
                     </AwesomeButton>
 
                     <DeleteProjectButton projectId={projectId} setLoading={setLoading} />
-                    <AwesomeButton
-                        type="primary"
-                        style={{ "margin": "10px", }}
-                        onPress={() => {
-                            uploadFormPressed();
-                        }}
-                    >
-                        Add More Forms
-                    </AwesomeButton>
+
                 </div>
                 {/* <div class='col-md-3 mt-3'>
                 <button className="submit__btn" type='submit'>Add More Forms</button>
