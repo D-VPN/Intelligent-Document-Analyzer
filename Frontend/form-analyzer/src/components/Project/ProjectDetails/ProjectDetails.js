@@ -4,8 +4,9 @@ import "react-awesome-button/dist/themes/theme-blue.css";
 import { useNavigate } from 'react-router-dom';
 import './ProjectDetails.css';
 import moment from 'moment';
+import DeleteProjectButton from './DeleteProjectButton/DeleteProjectButton';
 
-function ProjectDetails({ projectId, name, date, totalForms }) {
+function ProjectDetails({ projectId, name, date, totalForms, setLoading }) {
     const navigate = useNavigate();
     var dateTime = new Date(date);
     const uploadFormPressed = () => {
@@ -16,9 +17,18 @@ function ProjectDetails({ projectId, name, date, totalForms }) {
             <div class='row'>
                 <div class='col-md-6'>
                     <div class='header'>
-                        <h1>{name}</h1>
+                        <h1>{name} <AwesomeButton
+                            type="primary"
+                            style={{ "margin": "10px", }}
+                            onPress={() => {
+                                uploadFormPressed();
+                            }}
+                        >
+                            Add More Forms
+                        </AwesomeButton></h1>
                         <p><small>{totalForms} Forms Added</small></p>
                         <p><small>Project Created On: {moment(dateTime).format('DD/MM/YYYY')}</small></p>
+
                     </div>
                 </div>
                 <div class="col-md-2">
@@ -28,15 +38,9 @@ function ProjectDetails({ projectId, name, date, totalForms }) {
                     <AwesomeButton type="primary" style={{ "margin": "10px", }}>
                         Download Your Data
                     </AwesomeButton>
-                    <AwesomeButton
-                        type="primary"
-                        style={{ "margin": "10px", }}
-                        onPress={() => {
-                            uploadFormPressed();
-                        }}
-                    >
-                        Add More Forms
-                    </AwesomeButton>
+
+                    <DeleteProjectButton projectId={projectId} setLoading={setLoading} />
+
                 </div>
             </div>
 
