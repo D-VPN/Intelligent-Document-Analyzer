@@ -28,11 +28,12 @@ def ExtractDataForms(path, checkbox_fields):
 
     filesPerThread = 5
     numOfFiles = len(os.listdir(path))
+    results.clear()
 
     threads = []
     currFile = 1
 
-    while currFile < numOfFiles:
+    while currFile <= numOfFiles:
         start, end = currFile, min(currFile + filesPerThread, numOfFiles + 1)
         thread = threading.Thread(
             target=AbstractThreadFunction, args=(path, start, end, checkbox_fields)
