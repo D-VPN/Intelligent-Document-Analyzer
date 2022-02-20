@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import './SelectFields.css';
 import axios from '../../../helper/axios';
 import { useNavigate } from 'react-router-dom';
+import { AwesomeButton } from "react-awesome-button";
+import "react-awesome-button/dist/themes/theme-blue.css";
 
 
 const SelectFields = ({ values, prevStep, setFields, setProjectId }) => {
@@ -13,8 +15,7 @@ const SelectFields = ({ values, prevStep, setFields, setProjectId }) => {
         setFields(fields);
     }
 
-    const submit = async (e) => {
-        e.preventDefault();
+    const submit = async () => {
         const url = "/create-project/";
         var error = false;
         const newFields = [];
@@ -82,24 +83,20 @@ const SelectFields = ({ values, prevStep, setFields, setProjectId }) => {
                 <div class='form-container row'>
                     <div class='col-md-3'></div>
                     <div class='col-md-6'>
-                        <form>
-                            <div class=" mb-3">
-                                {createUI()}
-                            </div>
+                        <div class=" mb-3">
+                            {createUI()}
+                        </div>
 
-
-                            <div class="row mt-5">
-                                <div class='d-grid col-md-6'>
-                                    <button className="submit__btn" type='submit' onClick={(e) => {
-                                        e.preventDefault();
-                                        prevStep();
-                                    }} >PREVIOUS</button>
-                                </div>
-                                <div class='d-grid col-md-6'>
-                                    <button className="submit__btn" type='submit' onClick={submit}>CREATE</button>
-                                </div>
+                        <div class="row mt-5">
+                            <div class='d-grid col-md-6'>
+                                <AwesomeButton type="primary" onPress={() => {
+                                    prevStep();
+                                }}>PREVIOUS</AwesomeButton>
                             </div>
-                        </form>
+                            <div class='d-grid col-md-6'>
+                                <AwesomeButton type="primary" onPress={submit}>CREATE</AwesomeButton>
+                            </div>
+                        </div>
                     </div>
 
                 </div>

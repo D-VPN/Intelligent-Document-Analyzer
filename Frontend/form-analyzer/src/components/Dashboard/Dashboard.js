@@ -3,7 +3,9 @@ import './Dashboard.css';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import axios from '../../helper/axios';
-import add from '../../images/add2.png';
+import add from '../../images/add3.png';
+import { AwesomeButton } from "react-awesome-button";
+import "react-awesome-button/dist/themes/theme-blue.css";
 
 const Dashboard = ({ setToken }) => {
   const [projects, setProjects] = useState([]);
@@ -46,9 +48,9 @@ const Dashboard = ({ setToken }) => {
             <h5 class="card-title">{el.name}</h5>
             <div class="text-muted"> {dateString} </div>
             <Link to={`/project/visualization/${el.project_id}`}>
-              <a href="#" class="btn btn-primary mt-5">
-                View Project
-              </a>
+              <div class="mt-5">
+              <AwesomeButton type="link">View Project</AwesomeButton>
+              </div>
             </Link>
           </div>
         </div>
@@ -64,10 +66,10 @@ const Dashboard = ({ setToken }) => {
           <div class="col-md-4 mt-4">
             <Link to="/create">
             <div class="card shadow" style={{ width: '18rem' }}>
-              <img src={add} class="card-img card-img-top mt-3" style={{width: "35%", height: "35%"}}/>
+              <img src={add} class="card-img card-img-top mt-3" style={{width: "120px"}}/>
               <div class="card-body">
                 <p class="card-text text-center">
-                  CREATE NEW PROJECT
+                  New Project
                 </p>
               </div>
             </div>

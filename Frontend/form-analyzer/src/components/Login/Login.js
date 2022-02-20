@@ -4,6 +4,9 @@ import './Login.css';
 import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
 import login from '../../images/login-image.png';
+import { AwesomeButton } from "react-awesome-button";
+import "react-awesome-button/dist/themes/theme-blue.css";
+
 
 const Login = ({ setToken }) => {
     const [email, setEmail] = useState("")
@@ -96,7 +99,7 @@ const Login = ({ setToken }) => {
                                 </div>
                                 {showError()}
                                 <div class="d-grid gap-2 mt-5">
-                                    <button className="submit__btn" type='submit'>Submit</button>
+                                    <AwesomeButton type="primary">LOGIN</AwesomeButton>
                                 </div>
                                 <div class='row mt-3'>
                                     <Link to="/registration" replace>

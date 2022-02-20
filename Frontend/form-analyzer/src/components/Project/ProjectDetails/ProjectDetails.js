@@ -1,8 +1,8 @@
 import React from 'react';
 import { AwesomeButton } from "react-awesome-button";
-import './ProjectDetails.css';
-import "react-awesome-button/dist/styles.css";
+import "react-awesome-button/dist/themes/theme-blue.css";
 import { useNavigate } from 'react-router-dom';
+import './ProjectDetails.css';
 import axios from '../../../helper/content_axios';
 import moment from 'moment';
 import DeleteProjectButton from './DeleteProjectButton/DeleteProjectButton';
@@ -22,7 +22,7 @@ function ProjectDetails({ projectId, name, date, totalForms, setLoading }) {
                 project_id: projectId,
                 responseType: "blob",
             });
-            fileDownload(res.data, 'data.csv');
+            fileDownload(res.data,`${name}`+".csv");
         } catch (e) {
 
         }
@@ -61,11 +61,6 @@ function ProjectDetails({ projectId, name, date, totalForms, setLoading }) {
                     <DeleteProjectButton projectId={projectId} setLoading={setLoading} />
 
                 </div>
-                {/* <div class='col-md-3 mt-3'>
-                <button className="submit__btn" type='submit'>Add More Forms</button>
-            </div> */}
-
-
             </div>
 
 

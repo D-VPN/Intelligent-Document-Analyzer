@@ -3,6 +3,8 @@ import axios from 'axios';
 import './Registration.css';
 import login from '../../images/login-image.png';
 import { Link, useNavigate } from "react-router-dom";
+import { AwesomeButton } from "react-awesome-button";
+import "react-awesome-button/dist/themes/theme-blue.css";
 
 const Registration = () => {
     const [username, setUsername] = useState("")
@@ -182,7 +184,7 @@ const Registration = () => {
                                 </div>
                                 {showError()}
                                 <div class="d-grid gap-2 mt-5">
-                                    <button className="submit__btn" type='submit'>Submit</button>
+                                    <AwesomeButton>REGISTER</AwesomeButton>
                                 </div>
                                 <div class='row mt-3'>
                                     <Link to="/login" replace>

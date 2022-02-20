@@ -2,6 +2,8 @@ import React from 'react'
 import './CreateNewProject.css';
 import multiAxios from '../../../helper/multipart_axios';
 import { useState } from 'react';
+import { AwesomeButton } from "react-awesome-button";
+import "react-awesome-button/dist/themes/theme-blue.css";
 
 const CreateNewProject = ({ nextStep, values, handleChange, onFileChange, setFields }) => {
     const [loading, setloading] = useState(false)
@@ -49,9 +51,9 @@ const CreateNewProject = ({ nextStep, values, handleChange, onFileChange, setFie
     }
     const button = () => {
         return !loading ?
-            <button className="submit__btn" type='submit'>NEXT</button>
+            <AwesomeButton type="primary">NEXT</AwesomeButton>
             :
-            <button disabled={true} className="submit__btn" type='submit'>LOADING...</button>
+            <AwesomeButton type="disabled">LOADING...</AwesomeButton>
     }
 
 

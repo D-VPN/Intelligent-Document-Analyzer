@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import './Navbar.css';
 import logo from '../../images/logo-transparent.png'
 import { useNavigate, Link } from 'react-router-dom';
+import { AwesomeButton } from "react-awesome-button";
+import "react-awesome-button/dist/themes/theme-blue.css";
 
 
 class Navbar extends Component {
@@ -45,7 +47,7 @@ class Navbar extends Component {
                             <ul class="navbar-nav me-auto mb-lg-0"> </ul>
 
                             {this.getUser()}
-                            <button class='btn btn-primary' onClick={(e) => this.logout()} >Log Out</button>
+                            <AwesomeButton type="secondary" onPress={(e)=>this.logout()}>Log Out</AwesomeButton>
                         </div>
                     </div>
                 </nav >
