@@ -15,8 +15,7 @@ const SelectFields = ({ values, prevStep, setFields, setProjectId }) => {
         setFields(fields);
     }
 
-    const submit = async (e) => {
-        e.preventDefault();
+    const submit = async () => {
         const url = "/create-project/";
         var error = false;
         const newFields = [];
@@ -84,24 +83,20 @@ const SelectFields = ({ values, prevStep, setFields, setProjectId }) => {
                 <div class='form-container row'>
                     <div class='col-md-3'></div>
                     <div class='col-md-6'>
-                        <form>
-                            <div class=" mb-3">
-                                {createUI()}
-                            </div>
+                        <div class=" mb-3">
+                            {createUI()}
+                        </div>
 
-
-                            <div class="row mt-5">
-                                <div class='d-grid col-md-6'>
-                                    <AwesomeButton type="primary" onPress={(e) => {
-                                        e.preventDefault();
-                                        prevStep();
-                                    }}>PREVIOUS</AwesomeButton>
-                                </div>
-                                <div class='d-grid col-md-6'>
-                                    <AwesomeButton type="primary" onPress={submit}>CREATE</AwesomeButton>
-                                </div>
+                        <div class="row mt-5">
+                            <div class='d-grid col-md-6'>
+                                <AwesomeButton type="primary" onPress={() => {
+                                    prevStep();
+                                }}>PREVIOUS</AwesomeButton>
                             </div>
-                        </form>
+                            <div class='d-grid col-md-6'>
+                                <AwesomeButton type="primary" onPress={submit}>CREATE</AwesomeButton>
+                            </div>
+                        </div>
                     </div>
 
                 </div>

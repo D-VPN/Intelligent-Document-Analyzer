@@ -17,8 +17,7 @@ const UploadForms = ({ currentCreate }) => {
         setforms(e.target.files);
     }
     var projectId = useParams().projectId;
-    const onSubmit = async (e) => {
-        e.preventDefault();
+    const onSubmit = async () => {
         if (forms.length == 0) {
             alert("Please add atleast one form");
             return;
@@ -58,7 +57,15 @@ const UploadForms = ({ currentCreate }) => {
         return currentCreate ? <div class="alert mt-3 alert-success alert-dismissible fade show" role="alert">
             <strong>PROJECT CREATED SUCCESSFULLY.</strong> Upload All The Forms You Want Processed.
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div> : <div></div>;
+        </div> : <div class='mt-5'></div>;
+    }
+
+    const skipLaterButton = () => {
+        return currentCreate ? <Link to='/'>
+            <div class='d-grid mt-2'>
+                <AwesomeButton type="primary">ADD FORMS LATER</AwesomeButton>
+            </div>
+        </Link> : <div></div>
     }
 
     return (
@@ -68,21 +75,15 @@ const UploadForms = ({ currentCreate }) => {
                 <div class='row'>
                     <div class='col-md-3'></div>
                     <div class='col-md-6 box'>
-                        <form>
                             <div class="mb-3">
                                 <label for="bulkForms" class="form-label">Upload Your Forms</label>
                                 <input class="form-control form-control-lg" type="file" id="bulkForms" multiple onChange={onChange} accept="image/png, image/jpeg" />
                             </div>
-                        </form>
                         <div class="row mt-5">
                             <div class='d-grid'>
                                 {button()}
                             </div>
-                            <Link to='/'>
-                                <div class='d-grid mt-2'>
-                                    <AwesomeButton type="primary">ADD FORMS LATER</AwesomeButton>
-                                </div>
-                            </Link>
+                            {skipLaterButton()}
 
                         </div>
                     </div>
