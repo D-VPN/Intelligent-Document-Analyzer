@@ -163,9 +163,9 @@ def projectCreate(request):
     return HttpResponse(projectId)
 
 
-@api_view(["POST"])
+@api_view(["DELETE"])
 def projectDelete(request):
-    project_id = request.data["project_id"]
+    project_id = request.GET.get("project_id", "")
 
     collection = db["Projects"]
     collection.delete_one({"project_id": project_id})
