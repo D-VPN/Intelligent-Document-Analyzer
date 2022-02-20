@@ -65,13 +65,13 @@ export default function SentimentKeyVisualization({ values }) {
         return <Doughnut data={chartData} />;
     }
 
-    const createTable = (typeOfSentence, list) => {
+    const createTable = (typeOfSentence, list, numOfSentences) => {
         return (
             <table class="table table-striped table-hover">
                 <thead>
                     <tr>
                         <th scope="col">Level</th>
-                        <th scope="col">Top 10 {typeOfSentence} Sentences</th>
+                        <th scope="col">Top {numOfSentences} {typeOfSentence} Sentences</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -96,7 +96,7 @@ export default function SentimentKeyVisualization({ values }) {
         for (let i = 0; i < limit; i++) {
             list.push(doughnutChartData.positive[i])
         }
-        return createTable('Positive', list);
+        return createTable('Positive', list, limit);
     }
     const showTopNegative = () => {
         let limit = doughnutChartData.negative.length < 10 ? doughnutChartData.negative.length : 10;
@@ -104,7 +104,7 @@ export default function SentimentKeyVisualization({ values }) {
         for (let i = 0; i < limit; i++) {
             list.push(doughnutChartData.negative[i])
         }
-        return createTable('Negative',list)
+        return createTable('Negative',list, limit);
     }
 
     const defaultColors = [
