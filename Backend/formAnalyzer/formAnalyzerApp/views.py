@@ -236,7 +236,7 @@ def uploadForms(request):
 
 @api_view(["POST"])
 def getProjectMetadata(request):
-    print(request.data)
+
     project_id = request.data["project_id"]
     collection = db[project_id]
 

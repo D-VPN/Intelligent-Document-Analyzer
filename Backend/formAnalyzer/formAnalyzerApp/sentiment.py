@@ -16,9 +16,4 @@ def predict_sentence(text):
     tw = tokenizer.texts_to_sequences([text])
     tw = pad_sequences(tw, maxlen=200)
     prediction = int(model.predict(tw).round().item())
-    print(sentiment_label[prediction])
     return round(model.predict(tw).item(), 2)
-
-
-sent = "Worst company to work at"
-print(predict_sentence(sent))
