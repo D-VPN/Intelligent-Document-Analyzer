@@ -9,14 +9,11 @@ export default function DeleteProjectButton({ projectId, setLoading }) {
         if (window.confirm("Are you sure you want to delete this project?")) {
             try {
                 setLoading(true);
-                const { data } = await axios.delete(`/delete-project`,
+                const { data } = await axios.delete(`/delete-project/`,
                     {
                         params: {
                             project_id: projectId,
                         },
-                        headers: {
-                            "Access-Control-Allow-Origin": "*"
-                        }
                     }
                 );
                 navigate(-1);
