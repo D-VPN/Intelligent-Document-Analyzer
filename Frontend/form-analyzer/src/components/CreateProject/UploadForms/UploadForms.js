@@ -17,6 +17,10 @@ const UploadForms = ({ currentCreate }) => {
     var projectId = useParams().projectId;
     const onSubmit = async (e) => {
         e.preventDefault();
+        if (forms.length == 0) {
+            alert("Please add atleast one form");
+            return;
+        }
         setLoading(true)
         const formData = new FormData();
 
