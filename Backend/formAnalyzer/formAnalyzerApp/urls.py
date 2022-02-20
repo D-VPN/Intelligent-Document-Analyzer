@@ -7,6 +7,7 @@ from .views import (
     projectDelete,
     getProjectMetadata,
     getVisualizationData,
+    exportData,
 )
 
 urlpatterns = [
@@ -17,4 +18,5 @@ urlpatterns = [
     path("delete-project/", projectDelete, name="delete-project"),
     path("project-dashboard/", getProjectMetadata, name="project-dahsboard"),
     path("visualization-data/", getVisualizationData, name="visualization-data"),
+    path("export-data/", exportData, name="export-data"),
 ]

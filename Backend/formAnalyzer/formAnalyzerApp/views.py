@@ -10,7 +10,7 @@ from .sentiment import predict_sentence
 from rest_framework.decorators import api_view
 from rest_framework import status
 from rest_framework.response import Response
-import pymongo, os, cv2, numpy as np, json, datetime
+import pymongo, os, cv2, numpy as np, json, datetime, pandas
 from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
 from decouple import config
@@ -130,6 +130,21 @@ def processSentimentValues(values):
     return res
 
 
+def getValueType(project_id, key):
+
+    collection = db["Projects"]
+
+    for doc in collection.find({"project_id": project_id}):
+        for field in doc["fields"]:
+            if field["name"] == key:
+                return field["valueType"]
+
+    return None
+
+
+########################################################
+
+
 @api_view(["POST"])
 def extractKeys(request):
     data = request.FILES.get("file")
@@ -166,7 +181,6 @@ def projectCreate(request):
 @api_view(["DELETE"])
 def projectDelete(request):
     project_id = request.GET.get("project_id", "")
-
     collection = db["Projects"]
     collection.delete_one({"project_id": project_id})
 
@@ -281,3 +295,48 @@ def getVisualizationData(request):
 
     json_object = json.dumps(res)
     return HttpResponse(json_object)
+
+
+@api_view(["POST"])
+def exportData(request):
+
+    project_id = request.data["project_id"]
+    col = db[project_id]
+    cursor = col.find()
+
+    mongo_docs = list(cursor)
+    docs = pandas.DataFrame(columns=[])
+
+    for num, doc in enumerate(mongo_docs):
+
+        doc["_id"] = str(doc["_id"])
+
+        for field in doc:
+            valueType = getValueType(project_id, field)
+            if valueType == "Checkbox":
+                for options in doc[field]:
+                    if options[1] == "yes":
+                        doc[field] = options[0]
+            elif valueType == "Sentiment":
+                doc[field] = doc[field][0]
+            elif valueType == "Date":
+                day, month, year = (
+                    int(doc[field][:2]),
+                    int(doc[field][2:4]),
+                    int(doc[field][4:]),
+                )
+                doc[field] = datetime.datetime(year, month, day).isoformat()
+
+        doc_id = doc["_id"]
+
+        del doc["_id"]
+        del doc["project_id"]
+
+        series_obj = pandas.Series(doc, name=doc_id)
+        docs = docs.append(series_obj)
+
+    docs.to_csv("data.csv", ",")
+    with open("data.csv") as myfile:
+        response = HttpResponse(myfile, content_type="text/csv")
+        response["Content-Disposition"] = "attachment; filename=data.csv"
+        return response

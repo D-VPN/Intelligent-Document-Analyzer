@@ -3,14 +3,29 @@ import { AwesomeButton } from "react-awesome-button";
 import "react-awesome-button/dist/themes/theme-blue.css";
 import { useNavigate } from 'react-router-dom';
 import './ProjectDetails.css';
+import axios from '../../../helper/content_axios';
 import moment from 'moment';
 import DeleteProjectButton from './DeleteProjectButton/DeleteProjectButton';
+
+var fileDownload = require('js-file-download');
 
 function ProjectDetails({ projectId, name, date, totalForms, setLoading }) {
     const navigate = useNavigate();
     var dateTime = new Date(date);
     const uploadFormPressed = () => {
         navigate(`/project/upload-forms/${projectId}`);
+    }
+
+    const downloadCsvData = async () => {
+        try {
+            const res = await axios.post('/export-data/', {
+                project_id: projectId,
+                responseType: "blob",
+            });
+            fileDownload(res.data,`${name}`+".csv");
+        } catch (e) {
+
+        }
     }
     return (
         <div>
@@ -35,7 +50,11 @@ function ProjectDetails({ projectId, name, date, totalForms, setLoading }) {
 
                 </div>
                 <div class='col-md-4 mt-3'>
-                    <AwesomeButton type="primary" style={{ "margin": "10px", }}>
+                    <AwesomeButton type="primary" style={{ "margin": "10px", }}
+                        onPress={() => {
+                            downloadCsvData();
+                        }
+                        }>
                         Download Your Data
                     </AwesomeButton>
 
