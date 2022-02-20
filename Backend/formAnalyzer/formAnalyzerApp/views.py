@@ -125,7 +125,7 @@ def processSentimentValues(values):
         else:
             negative["sentiment"].append(data[1])
             negative["data"].append(data[0])
-    # res = {"positive": positive, "negative": negative}
+
     res = [positive, negative]
     return res
 
@@ -167,12 +167,13 @@ def projectCreate(request):
 def projectDelete(request):
     project_id = request.data["project_id"]
 
-    collection = db[project_id]
-    doc = {"project_id": project_id}
-    collection.delete_one(doc)
+    collection = db["Projects"]
+    collection.delete_one({"project_id": project_id})
 
     collection = db[project_id]
     collection.drop()
+
+    return HttpResponse()
 
 
 @api_view(["GET"])
@@ -279,5 +280,4 @@ def getVisualizationData(request):
     res = {"valueType": valueType, "values": values}
 
     json_object = json.dumps(res)
-
     return HttpResponse(json_object)
