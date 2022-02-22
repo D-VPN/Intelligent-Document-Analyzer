@@ -102,7 +102,7 @@ const Registration = () => {
     }
     return (
         <div>
-            <div className='container registe-container'>
+            <div className='container registe-container mt-5'>
 
                 <div class="card mb-5 shadow " style={{ maxWidth: "1000px", margin: "auto", borderRadius: "2%" }}>
                     <div class="row g-0">
