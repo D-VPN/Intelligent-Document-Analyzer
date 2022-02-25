@@ -22,13 +22,13 @@ function ProjectDetails({ projectId, name, date, totalForms, setLoading }) {
                 project_id: projectId,
                 responseType: "blob",
             });
-            fileDownload(res.data,`${name}`+".csv");
+            fileDownload(res.data, `${name}` + ".csv");
         } catch (e) {
 
         }
     }
     return (
-        <div>
+        <div class="mt-4">
             <div class='row'>
                 <div class='col-md-6'>
                     <div class='header'>
@@ -41,8 +41,7 @@ function ProjectDetails({ projectId, name, date, totalForms, setLoading }) {
                         >
                             Add More Forms
                         </AwesomeButton></h1>
-                        <p><small>{totalForms} Forms Added</small></p>
-                        <p><small>Project Created On: {moment(dateTime).format('DD/MM/YYYY')}</small></p>
+                        <p><span class="badge bg-primary">{totalForms} forms</span> | Project created on {moment(dateTime).format('DD/MM/YYYY')}</p>
 
                     </div>
                 </div>

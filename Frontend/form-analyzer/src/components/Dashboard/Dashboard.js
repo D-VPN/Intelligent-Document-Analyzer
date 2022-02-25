@@ -42,14 +42,16 @@ const Dashboard = ({ setToken }) => {
         if (createdAt == 1) dateString = begin + "day ago";
         else dateString = begin + "days ago";
       }
-      return <div key={el.project_id} class="col-md-4 mt-4">
-        <div class="card shadow" style={{ width: '18rem' }}>
+      return <div key={el.project_id} class="col-md-3 mt-4">
+        <div class="card shadow" style={{ width: '18rem', borderRadius: '10px' }}>
           <div class="card-body p-4">
-            <h5 class="card-title">{el.name}</h5>
+            <h5 class="card-title"> {el.name}
+              {createdAt == 0 ? <span class="badge bg-primary mx-2">New</span> : <></>}
+            </h5>
             <div class="text-muted"> {dateString} </div>
             <Link to={`/project/visualization/${el.project_id}`}>
               <div class="mt-5">
-              <AwesomeButton type="link">View Project</AwesomeButton>
+                <AwesomeButton type="link">View Project</AwesomeButton>
               </div>
             </Link>
           </div>
@@ -63,16 +65,16 @@ const Dashboard = ({ setToken }) => {
     <div>
       <div class="container">
         <div class="row mt-5">
-          <div class="col-md-4 mt-4">
+          <div class="col-md-3 mt-4">
             <Link to="/create">
-            <div class="card shadow" style={{ width: '18rem' }}>
-              <img src={add} class="card-img card-img-top mt-3" style={{width: "120px"}}/>
-              <div class="card-body">
-                <p class="card-text text-center">
-                  New Project
-                </p>
+              <div class="card shadow p-2" style={{ width: '18rem', borderRadius: '10px' }}>
+                <img src={add} class="card-img card-img-top mt-3" style={{ width: "110px" }} />
+                <div class="card-body">
+                  <p class="card-text text-center">
+                    New Project
+                  </p>
+                </div>
               </div>
-            </div>
             </Link>
           </div>
           {createDashboardUI()}

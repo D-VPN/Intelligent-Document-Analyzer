@@ -19,21 +19,24 @@ class Navbar extends Component {
     getUser = () => {
         const userDetail = localStorage.getItem('user');
         const user = JSON.parse(userDetail);
-        return <div class="text-light mx-5 fs-4">
-            <img class="mx-2" src="https://img.icons8.com/external-kiranshastry-gradient-kiranshastry/32/000000/external-user-interface-kiranshastry-gradient-kiranshastry-1.png" />
-            {user.username}
+        return <div class="mx-5 mt-2 fs-4">
+            <span class="badge bg-light text-dark mx-2 p-2">
+                <img class="mx-2" src="https://cdn-icons-png.flaticon.com/512/1177/1177568.png" height={25} width={25} />
+                {user.username}
+            </span>
+
         </div>;
     }
 
     render() {
         const body = this.props.token ?
             /* Logged In Navbar */
-            <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-                <div class="container-fluid">
+            <nav class="navbar navbar-expand-md">
+                <div class="container">
                     <Link to="/" class='pt-3'>
-                        <a class="navbar-brand text-light" href="/"> 
-                            <img src={logo} height={45} width={45} class="d-inline-block mb-3" />
-                            <span class="h3">Form Data Analyzer</span>
+                        <a class="navbar-brand text-dark" href="/">
+                            <img src={logo} height={35} width={35} class="d-inline-block mb-3" />
+                            <span class="h3 mx-2">Form Data Analyzer</span>
                         </a>
                     </Link>
 
@@ -47,20 +50,20 @@ class Navbar extends Component {
                                 {this.getUser()}
                             </li>
                             <li class="nav-item">
-                                <AwesomeButton type="secondary" onPress={(e)=>this.logout()}>Log Out</AwesomeButton>
+                                <AwesomeButton type="secondary" onPress={(e) => this.logout()}>Log Out</AwesomeButton>
                             </li>
                         </ul>
                     </div>
                 </div>
             </nav >
-            : 
+            :
             /* Before Log In Navbar */
-            <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-                <div class="container-fluid">
+            <nav class="navbar navbar-expand-md">
+                <div class="container">
                     <Link to="/" class="pt-3">
-                        <a class="navbar-brand text-light" href="/"> 
+                        <a class="navbar-brand text-dark" href="/">
                             <img src={logo} height={45} width={45} class="d-inline-block mb-3" />
-                            <span class="h3">Form Data Analyzer</span>
+                            <span class="h3 mx-2">Form Data Analyzer</span>
                         </a>
                     </Link>
                 </div>
