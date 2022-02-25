@@ -36,7 +36,7 @@ class Navbar extends Component {
                     <Link to="/" class='pt-3'>
                         <a class="navbar-brand text-dark" href="/">
                             <img src={logo} height={35} width={35} class="d-inline-block mb-3" />
-                            <span class="h3 mx-2">Form Data Analyzer</span>
+                            <span class="h3 mx-2">Form Analyzer</span>
                         </a>
                     </Link>
 
@@ -63,7 +63,7 @@ class Navbar extends Component {
                     <Link to="/" class="pt-3">
                         <a class="navbar-brand text-dark" href="/">
                             <img src={logo} height={45} width={45} class="d-inline-block mb-3" />
-                            <span class="h3 mx-2">Form Data Analyzer</span>
+                            <span class="h3 mx-2">Form Analyzer</span>
                         </a>
                     </Link>
                 </div>

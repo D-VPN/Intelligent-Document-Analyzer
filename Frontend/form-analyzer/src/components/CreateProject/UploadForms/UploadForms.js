@@ -16,6 +16,7 @@ const UploadForms = ({ currentCreate }) => {
     const onChange = (e) => {
         setforms(e.target.files);
     }
+
     var projectId = useParams().projectId;
     const onSubmit = async () => {
         if (forms.length == 0) {
@@ -54,8 +55,9 @@ const UploadForms = ({ currentCreate }) => {
     }
 
     const successBanner = () => {
-        return currentCreate ? <div class="alert mt-3 alert-success alert-dismissible fade show" role="alert">
-            <strong>PROJECT CREATED SUCCESSFULLY.</strong> Upload All The Forms You Want Processed.
+        return currentCreate ? <div class="alert mt-3 alert-success alert-dismissible fade show my-5" role="alert">
+            <img src='https://cdn-icons.flaticon.com/png/512/5610/premium/5610944.png?token=exp=1645780521~hmac=c290eacdb1397fd7f379ccdb9cd2b25d' width={20} height={20}></img>
+            <strong> Project created successfully!</strong> Upload all the forms you want processed.
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div> : <div class='mt-5'></div>;
     }
@@ -75,10 +77,10 @@ const UploadForms = ({ currentCreate }) => {
                 <div class='row'>
                     <div class='col-md-3'></div>
                     <div class='col-md-6 box'>
-                            <div class="mb-3">
-                                <label for="bulkForms" class="form-label">Upload Your Forms</label>
-                                <input class="form-control form-control-lg" type="file" id="bulkForms" multiple onChange={onChange} accept="image/png, image/jpeg" />
-                            </div>
+                        <div class="mb-3">
+                            <label for="bulkForms" class="form-label">Upload Your Forms</label>
+                            <input class="form-control form-control-lg" type="file" id="bulkForms" multiple onChange={onChange} accept="image/png, image/jpeg" />
+                        </div>
                         <div class="row mt-5">
                             <div class='d-grid'>
                                 {button()}

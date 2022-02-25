@@ -69,12 +69,12 @@ const Login = ({ setToken }) => {
     return (
         <div>
             <div className='container login-container mt-5'>
-                <div class="card mb-5 shadow " style={{ maxWidth: "1000px", margin: "auto", borderRadius: "2%" }}>
+                <div class="card mb-5 shadow " style={{ maxWidth: "800px", margin: "auto", borderRadius: "2%" }}>
                     <div class="row g-0">
-                        <div class="col-md-6">
+                        <div class="col-md-5">
                             <img src={login} style={{ height: "100%", width: "100%", borderRadius: "2%" }} />
                         </div>
-                        <div class="col-md-6 p-5">
+                        <div class="col-md-7 p-5">
                             <h1 className='text-center login-header mb-5'>LOGIN</h1>
                             <form onSubmit={(e) => onLogin(e)}>
                                 <div class="mb-3 form-floating">
