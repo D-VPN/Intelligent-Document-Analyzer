@@ -13,7 +13,7 @@ class Navbar extends Component {
 
     logout = () => {
         this.props.setToken();
-        this.props.navigate("/login", { replace: true });
+        this.props.navigate("/", { replace: true });
     }
 
     getUser = () => {
