@@ -9,7 +9,7 @@ import CreateProject from './components/CreateProject/CreateProject';
 import MainNav from './components/Navbar/MainNav';
 import Visualizations from './components/Project/Visualizations/Visualizations';
 import UploadForms from './components/CreateProject/UploadForms/UploadForms';
-import HomePage from './components/Home/HomePage';
+import HomePage from './components/HomePage/HomePage';
 
 function App() {
   const { token, setToken } = useToken();
