@@ -1,4 +1,4 @@
-from .extraction_api import API
+from .extraction_api_v2 import API
 
 # extract keys for template form
 def ExtractTemplateForm(img):

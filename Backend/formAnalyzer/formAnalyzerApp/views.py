@@ -72,9 +72,9 @@ def processCheckboxValues(values):
     for val in values:
         for keys in val:
             if keys[0] in res:
-                res[keys[0]] += 1 if keys[1] == "yes" else 0
+                res[keys[0]] += 1 if keys[1] == 1 else 0
             else:
-                res[keys[0]] = 1 if keys[1] == "yes" else 0
+                res[keys[0]] = 1 if keys[1] == 1 else 0
 
     return res
 
@@ -151,7 +151,7 @@ def extractKeys(request):
     img_path = r"tmp/img.jpg"
 
     path = default_storage.save(img_path, ContentFile(data.read()))
-    img = cv2.imread(img_path, 0)
+    img = cv2.imread(img_path)
     keys = ExtractTemplateForm(img)
 
     json_object = json.dumps(keys)
@@ -171,6 +171,7 @@ def projectCreate(request):
             "user_id": request.user.id,
             "name": request.data["name"],
             "fields": request.data["fields"],
+            # "isHandwritten": request.data["isHandwritten"],
             "created_at": datetime.datetime.now().isoformat(),
         }
     )
@@ -233,6 +234,7 @@ def uploadForms(request):
     sentiment_keys = get_sentiment_keys(project_id)
 
     collection = db[project_id]
+
     for doc in output:
         res = {"project_id": project_id}
         for kv in doc:
@@ -315,7 +317,7 @@ def exportData(request):
             valueType = getValueType(project_id, field)
             if valueType == "Checkbox":
                 for options in doc[field]:
-                    if options[1] == "yes":
+                    if options[1] == 1:
                         doc[field] = options[0]
             elif valueType == "Sentiment":
                 doc[field] = doc[field][0]

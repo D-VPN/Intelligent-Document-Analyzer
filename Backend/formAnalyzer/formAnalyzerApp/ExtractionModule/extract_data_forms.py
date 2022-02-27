@@ -5,7 +5,7 @@ import os
 import pandas as pd
 from Levenshtein import distance
 import threading
-from .extraction_api import API
+from .extraction_api_v2 import API
 
 # shared data between threads
 results = []
@@ -16,7 +16,7 @@ def AbstractThreadFunction(path, start, end, checkbox_fields):
 
     for fileNum in range(start, end):
         img_path = path + "img" + str(fileNum) + ".jpg"
-        img = cv2.imread(img_path, 0)
+        img = cv2.imread(img_path)
         output = API(img, key_value_both=True, checkbox_fields=checkbox_fields)
 
         mutex.acquire()
