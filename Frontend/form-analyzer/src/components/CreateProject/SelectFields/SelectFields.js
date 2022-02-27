@@ -23,7 +23,7 @@ const SelectFields = ({ values, prevStep, setFields, setProjectId }) => {
             if (error) return;
             if (value.valueType === "") {
                 // alert(`Please select a value type for ${value.key}`)
-                // error = true;
+                error = true;
                 const element = document.getElementById("errorMessage");
                 element.innerHTML = "Please select a data type for each field.";
                 return;
@@ -38,6 +38,7 @@ const SelectFields = ({ values, prevStep, setFields, setProjectId }) => {
         const body = {
             name: values.name,
             fields: newFields,
+            isHandwritten: values.isHandwritten ? 1 : 0,
         }
 
         try {

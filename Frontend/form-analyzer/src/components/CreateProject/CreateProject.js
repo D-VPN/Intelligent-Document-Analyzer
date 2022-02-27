@@ -8,6 +8,7 @@ export default class CreateProject extends Component {
     state = {
         step: 0,
         name: '',
+        isHandwritten: false,
         file: null,
         fields: [],
         projectId: "",
@@ -32,16 +33,19 @@ export default class CreateProject extends Component {
     setProjectId = id => {
         this.setState({ projectId: id });
     }
+    setIsHandwritten = value => {
+        this.setState({ isHandwritten: value });
+    }
 
 
     render() {
         const { step } = this.state;
-        const { name, file, fields } = this.state;
-        const values = { name, file, fields };
+        const { name, file, fields, isHandwritten } = this.state;
+        const values = { name, file, fields, isHandwritten };
         switch (step) {
             case 0:
                 return (
-                    <CreateNewProject nextStep={this.nextStep} values={values} handleChange={this.handleChange} onFileChange={this.onFileChange} setFields={this.setFields} />
+                    <CreateNewProject nextStep={this.nextStep} values={values} handleChange={this.handleChange} onFileChange={this.onFileChange} setFields={this.setFields} setIsHandwritten={this.setIsHandwritten} />
                 )
             case 1:
                 return (
