@@ -20,7 +20,7 @@ def MultipleChoice(img):
 
     for c in contours:
         x, y, w, h = cv2.boundingRect(c)
-        if w > 50 and h > 50:
+        if w * h > 1000:
             boxes.append([x, y, w, h])
             checkbox = 255 - img[y + 5 : y + h - 5, x + 5 : x + w - 5]
             MAX = max(MAX, np.sum(checkbox))

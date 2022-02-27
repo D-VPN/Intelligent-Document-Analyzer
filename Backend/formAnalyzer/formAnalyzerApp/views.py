@@ -117,7 +117,7 @@ def processSentimentValues(values):
 
     positive = {"sentiment": [], "data": []}
     negative = {"sentiment": [], "data": []}
-    print(values)
+
     for data in values:
         if data[1] < 0.5:
             positive["sentiment"].append(data[1])
@@ -140,6 +140,14 @@ def getValueType(project_id, key):
                 return field["valueType"]
 
     return None
+
+
+def isFormHandwritten(project_id):
+
+    collection = db["Projects"]
+
+    for doc in collection.find({"project_id": project_id}):
+        return doc["isHandwritten"]
 
 
 ########################################################
@@ -171,7 +179,7 @@ def projectCreate(request):
             "user_id": request.user.id,
             "name": request.data["name"],
             "fields": request.data["fields"],
-            # "isHandwritten": request.data["isHandwritten"],
+            "isHandwritten": request.data["isHandwritten"],
             "created_at": datetime.datetime.now().isoformat(),
         }
     )
@@ -228,9 +236,10 @@ def uploadForms(request):
             )
             num += 1
 
+    isHandwritten = isFormHandwritten(project_id)
     path = os.path.abspath(os.getcwd()) + "//tmp//"
     checkbox_fields = getCheckboxFields(project_id)
-    output = ExtractDataForms(path, checkbox_fields)
+    output = ExtractDataForms(path, checkbox_fields, isHandwritten)
     sentiment_keys = get_sentiment_keys(project_id)
 
     collection = db[project_id]
