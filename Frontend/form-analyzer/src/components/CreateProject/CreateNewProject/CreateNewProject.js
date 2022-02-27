@@ -10,15 +10,6 @@ const CreateNewProject = ({ nextStep, values, handleChange, onFileChange, setFie
     const Continue = e => {
         e.preventDefault();
         const { name, file } = values;
-        if (name.length === 0) {
-            alert("Project name is required");
-            return;
-        }
-        else if (!file) {
-            alert("Select a form template");
-            return;
-        }
-
         submit(file);
     }
 
@@ -69,10 +60,10 @@ const CreateNewProject = ({ nextStep, values, handleChange, onFileChange, setFie
                         <form onSubmit={(e) => Continue(e)}>
                             <div class=" mb-3">
                                 <label for="floatingInput">Project Name</label>
-                                <input type="text" class="form-control" id="floatingInput" placeholder="My Project" value={values.name} onChange={handleChange('name')} />
+                                <input type="text" class="form-control" id="floatingInput" placeholder="My Project" value={values.name} onChange={handleChange('name')} required />
                             </div>
                             <div class="upload">
-                                <input type="file" accept="image/png, image/jpeg" class="form-control" id="floatingPassword" placeholder="Password" onChange={(e) => onChange(e)} />
+                                <input type="file" accept="image/png, image/jpeg" class="form-control" id="floatingPassword" placeholder="Password" onChange={(e) => onChange(e)} required />
                                 <label for="floatingPassword">Upload Template Form</label>
                             </div>
                             <div class="d-grid gap-2 mt-5">

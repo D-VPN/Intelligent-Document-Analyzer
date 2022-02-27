@@ -19,10 +19,10 @@ const UploadForms = ({ currentCreate }) => {
 
     var projectId = useParams().projectId;
     const onSubmit = async () => {
-        if (forms.length == 0) {
-            alert("Please add atleast one form");
-            return;
-        }
+        // if (forms.length == 0) {
+        //     alert("Please add atleast one form");
+        //     return;
+        // }
         setLoading(true)
         const formData = new FormData();
 
@@ -65,7 +65,7 @@ const UploadForms = ({ currentCreate }) => {
     const skipLaterButton = () => {
         return currentCreate ? <Link to='/'>
             <div class='d-grid mt-2'>
-                <AwesomeButton type="primary">ADD FORMS LATER</AwesomeButton>
+                <AwesomeButton type="primary">SKIP</AwesomeButton>
             </div>
         </Link> : <div></div>
     }
@@ -79,7 +79,7 @@ const UploadForms = ({ currentCreate }) => {
                     <div class='col-md-6 box'>
                         <div class="mb-3">
                             <label for="bulkForms" class="form-label">Upload Your Forms</label>
-                            <input class="form-control form-control-lg" type="file" id="bulkForms" multiple onChange={onChange} accept="image/png, image/jpeg" />
+                            <input class="form-control form-control-lg" type="file" id="bulkForms" multiple onChange={onChange} accept="image/png, image/jpeg" required />
                         </div>
                         <div class="row mt-5">
                             <div class='d-grid'>

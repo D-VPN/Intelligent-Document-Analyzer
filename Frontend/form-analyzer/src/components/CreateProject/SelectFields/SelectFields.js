@@ -22,8 +22,10 @@ const SelectFields = ({ values, prevStep, setFields, setProjectId }) => {
         values.fields.forEach((value) => {
             if (error) return;
             if (value.valueType === "") {
-                alert(`Please select a value type for ${value.key}`)
-                error = true;
+                // alert(`Please select a value type for ${value.key}`)
+                // error = true;
+                const element = document.getElementById("errorMessage");
+                element.innerHTML = "Please select a data type for each field.";
                 return;
             }
             const a = {
@@ -86,6 +88,8 @@ const SelectFields = ({ values, prevStep, setFields, setProjectId }) => {
                         <div class=" mb-3">
                             {createUI()}
                         </div>
+
+                        <p id="errorMessage" class="my-3 text-danger"></p>
 
                         <div class="row mt-5">
                             <div class='d-grid col-md-6'>
