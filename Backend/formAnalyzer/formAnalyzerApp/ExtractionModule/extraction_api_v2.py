@@ -4,6 +4,7 @@ import cv2
 import numpy as np
 import pytesseract
 from .multiple_choice_v2 import MultipleChoice
+import boto3
 
 
 def contains_box(thresh_img, mean):
@@ -22,12 +23,11 @@ def contains_box(thresh_img, mean):
 
 
 def API(img, key_value_both, checkbox_fields=None, isHandwritten=None):
-
     if img is None:
         return
 
     img = cv2.resize(img, (720, 1080))
-    cv2.imwrite("tmp/newimg.jpg", img)
+    # cv2.imwrite("tmp/newimg.jpg", img)
 
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     thresh_inv = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)[1]
@@ -46,7 +46,6 @@ def API(img, key_value_both, checkbox_fields=None, isHandwritten=None):
     res, area, coordinates = [], [], []
 
     for c in contours:
-
         x, y, w, h = cv2.boundingRect(c)
         cv2.rectangle(mask, (x, y), (x + w, y + h), (0, 0, 255), -1)
         coordinates.append([x, y, w, h])
@@ -81,22 +80,28 @@ def API(img, key_value_both, checkbox_fields=None, isHandwritten=None):
             if key == "" or contains_box(thresh[y1 - 10 : y2 + 10, 0:x1], mean):
                 continue
 
-            cv2.imwrite("tmp/key" + str(num) + ".jpg", key_img)
+            # cv2.imwrite("tmp/key" + str(num) + ".jpg", key_img)
 
             if key_value_both == True:
-
                 if key in checkbox_fields:
                     value_img = img[y1 - 10 : y2 + 10, x1:]
                     value = MultipleChoice(value_img)
                 else:
                     value_img = img[y1 + 10 : y2 - 10, x1 + 10 : x2 - 10]
-                    if isHandwritten:
+                    if isHandwritten == 1:
                         # amazon api
-                        encoded_image = cv2.imencode(".png", img)[1]
-                        imageBytes = bytearray(encoded_image.read())
+                        encoded_image = cv2.imencode(".png", value_img)[1]
+                        imageBytes = bytearray(encoded_image.tobytes())
+
+                        # Amazon Textract client
+                        textract = boto3.client("textract")
+
+                        # Call Amazon Textract
+                        response = textract.detect_document_text(
+                            Document={"Bytes": imageBytes}
+                        )
 
                         value = ""
-                        response = ""
                         # Print detected text
                         for item in response["Blocks"]:
                             if item["BlockType"] == "LINE":
@@ -111,7 +116,7 @@ def API(img, key_value_both, checkbox_fields=None, isHandwritten=None):
                             .strip()
                         )
 
-                cv2.imwrite("tmp/value" + str(num) + ".jpg", value_img)
+                # cv2.imwrite("tmp/value" + str(num) + ".jpg", value_img)
                 res.append([key, value])
             else:
                 res.append(key)
@@ -120,9 +125,8 @@ def API(img, key_value_both, checkbox_fields=None, isHandwritten=None):
 
     res_final = cv2.bitwise_and(img, img, mask=cv2.bitwise_not(mask))
 
-    cv2.imwrite("tmp/boxes.jpg", mask)
-    cv2.imwrite("tmp/final_image.jpg", res_final)
-
+    # cv2.imwrite("tmp/boxes.jpg", mask)
+    # cv2.imwrite("tmp/final_image.jpg", res_final)
     return res
 
 
