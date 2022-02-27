@@ -31,14 +31,15 @@ export default function KeyVisualization({ projectId, currentKey }) {
     }, [currentKey]);
 
     const showVisualization = () => {
+        console.log(keyData, currentKey);
         if (keyData.valueType === "Checkbox") {
             return <CheckBoxKeyVisualization values={keyData.values} currentKey={currentKey} />
         } else if (keyData.valueType === "Date") {
             return <DateKeyVisualization values={keyData.values} />
         } else if (keyData.valueType === "Text") {
-            return <TextKeyVisualization values={keyData.values} />
+            return <TextKeyVisualization values={keyData.values} currentKey={currentKey} />
         } else if (keyData.valueType === "Number") {
-            return <NumberKeyVisualization values={keyData.values} />
+            return <NumberKeyVisualization values={keyData.values} currentKey={currentKey}/>
         } else if (keyData.valueType === "Sentiment") {
             return <SentimentKeyVisualization values={keyData.values} />
         }

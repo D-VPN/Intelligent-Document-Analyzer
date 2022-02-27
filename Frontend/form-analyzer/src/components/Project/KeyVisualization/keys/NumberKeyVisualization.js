@@ -21,7 +21,7 @@ ChartJS.register(
     Tooltip,
     Legend
 );
-export default function NumberKeyVisualization({ values }) {
+export default function NumberKeyVisualization({ values, currentKey }) {
 
     const [horizontalBarData, sethorizontalBarData] = useState({
         labels: [],
@@ -48,7 +48,7 @@ export default function NumberKeyVisualization({ values }) {
             labels: horizontalBarData.labels,
             datasets: [
                 {
-                    label: "Labels",
+                    label: `Counts Of Every `+ currentKey,
                     data: horizontalBarData.data,
                     backgroundColor: "#187bd1",
                     borderWidth: 1,
@@ -84,7 +84,7 @@ export default function NumberKeyVisualization({ values }) {
             labels: horizontalBarData.labels,
             datasets: [
                 {
-                    label: "Labels",
+                    label: `Counts Of Every `+ currentKey,
                     data: horizontalBarData.data,
                     backgroundColor: "#187bd1",
                     borderWidth: 1,

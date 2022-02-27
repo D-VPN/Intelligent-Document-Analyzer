@@ -14,7 +14,7 @@ ChartJS.register(
     Legend
 );
 
-export default function TextKeyVisualization({ values }) {
+export default function TextKeyVisualization({ values, currentKey }) {
     const [verticalBarData, setverticalBarData] = useState({
         labels: [],
         data: [],
@@ -39,7 +39,7 @@ export default function TextKeyVisualization({ values }) {
             labels: verticalBarData.labels,
             datasets: [
                 {
-                    label: "Labels",
+                    label: `Counts Of Every `+ currentKey,
                     data: verticalBarData.data,
                     /* backgroundColor: 'rgba(255, 99, 132, 0.5)' */
                     backgroundColor: "#187bd1",
