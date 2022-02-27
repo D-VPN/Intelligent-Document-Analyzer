@@ -12,19 +12,24 @@ results = []
 mutex = threading.Lock()
 
 
-def AbstractThreadFunction(path, start, end, checkbox_fields):
+def AbstractThreadFunction(path, start, end, checkbox_fields, isHandwritten):
 
     for fileNum in range(start, end):
         img_path = path + "img" + str(fileNum) + ".jpg"
         img = cv2.imread(img_path)
-        output = API(img, key_value_both=True, checkbox_fields=checkbox_fields)
+        output = API(
+            img,
+            key_value_both=True,
+            checkbox_fields=checkbox_fields,
+            isHandwritten=isHandwritten,
+        )
 
         mutex.acquire()
         results.append(output)
         mutex.release()
 
 
-def ExtractDataForms(path, checkbox_fields):
+def ExtractDataForms(path, checkbox_fields, isHandwritten):
 
     filesPerThread = 5
     numOfFiles = len(os.listdir(path))
@@ -36,7 +41,8 @@ def ExtractDataForms(path, checkbox_fields):
     while currFile <= numOfFiles:
         start, end = currFile, min(currFile + filesPerThread, numOfFiles + 1)
         thread = threading.Thread(
-            target=AbstractThreadFunction, args=(path, start, end, checkbox_fields)
+            target=AbstractThreadFunction,
+            args=(path, start, end, checkbox_fields, isHandwritten),
         )
         threads.append(thread)
         currFile += filesPerThread

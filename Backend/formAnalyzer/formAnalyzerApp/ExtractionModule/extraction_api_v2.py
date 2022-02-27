@@ -1,4 +1,5 @@
 import os
+from urllib import response
 import cv2
 import numpy as np
 import pytesseract
@@ -14,16 +15,19 @@ def contains_box(thresh_img, mean):
 
     for c in contours:
         x, y, w, h = cv2.boundingRect(c)
-        if w * h > mean:
+        if w * h > 1000:
             return True
 
     return False
 
 
-def API(img, key_value_both, checkbox_fields=None):
+def API(img, key_value_both, checkbox_fields=None, isHandwritten=None):
 
     if img is None:
         return
+
+    img = cv2.resize(img, (720, 1080))
+    cv2.imwrite("tmp/newimg.jpg", img)
 
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     thresh_inv = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)[1]
@@ -36,7 +40,7 @@ def API(img, key_value_both, checkbox_fields=None):
     # find contours
     contours = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)[0]
 
-    # mask = np.ones(img.shape[:2], dtype="uint8") * 255
+    mask = np.ones(img.shape[:2], dtype="uint8") * 255
 
     num = 1
     res, area, coordinates = [], [], []
@@ -44,20 +48,19 @@ def API(img, key_value_both, checkbox_fields=None):
     for c in contours:
 
         x, y, w, h = cv2.boundingRect(c)
-        # cv2.rectangle(mask, (x, y), (x + w, y + h), (0, 0, 255), -1)
+        cv2.rectangle(mask, (x, y), (x + w, y + h), (0, 0, 255), -1)
         coordinates.append([x, y, w, h])
         area.append(w * h)
 
     mean = np.mean(area)
 
-    for c in coordinates:
+    for c in coordinates[::-1]:
 
         x, y, w, h = c
 
-        if w * h > mean:
+        if w * h > 1000:
 
             x1, x2, y1, y2 = x, x + w, y, y + h
-
             try:
                 key_img = img[y1 - 10 : y2 + 10, 0:x1]  # key
 
@@ -65,7 +68,7 @@ def API(img, key_value_both, checkbox_fields=None):
                     pytesseract.image_to_string(
                         key_img, lang="eng", config="--psm 6 --oem 3"
                     )
-                    .replace("|", "I")
+                    .replace("|", "")
                     .replace("\n", " ")
                     .replace("\x0c", "")
                     .replace("♀", "")
@@ -78,7 +81,7 @@ def API(img, key_value_both, checkbox_fields=None):
             if key == "" or contains_box(thresh[y1 - 10 : y2 + 10, 0:x1], mean):
                 continue
 
-            # cv2.imwrite("tmp/key" + str(num) + ".jpg", key_img)
+            cv2.imwrite("tmp/key" + str(num) + ".jpg", key_img)
 
             if key_value_both == True:
 
@@ -87,25 +90,38 @@ def API(img, key_value_both, checkbox_fields=None):
                     value = MultipleChoice(value_img)
                 else:
                     value_img = img[y1 + 10 : y2 - 10, x1 + 10 : x2 - 10]
-                    value = (
-                        pytesseract.image_to_string(value_img, lang="eng")
-                        .replace("|", "I")
-                        .replace("\n", " ")
-                        .replace("\x0c", "")
-                        .replace("♀", "")
-                        .strip()
-                    )
-                # cv2.imwrite("tmp/value" + str(num) + ".jpg", value_img)
+                    if isHandwritten:
+                        # amazon api
+                        encoded_image = cv2.imencode(".png", img)[1]
+                        imageBytes = bytearray(encoded_image.read())
+
+                        value = ""
+                        response = ""
+                        # Print detected text
+                        for item in response["Blocks"]:
+                            if item["BlockType"] == "LINE":
+                                value += item["Text"]
+                    else:
+                        value = (
+                            pytesseract.image_to_string(value_img, lang="eng")
+                            .replace("|", "")
+                            .replace("\n", " ")
+                            .replace("\x0c", "")
+                            .replace("♀", "")
+                            .strip()
+                        )
+
+                cv2.imwrite("tmp/value" + str(num) + ".jpg", value_img)
                 res.append([key, value])
             else:
                 res.append(key)
 
         num += 1
 
-    # res_final = cv2.bitwise_and(img, img, mask=cv2.bitwise_not(mask))
+    res_final = cv2.bitwise_and(img, img, mask=cv2.bitwise_not(mask))
 
-    # cv2.imwrite("tmp/boxes.jpg", mask)
-    # cv2.imwrite("tmp/final_image.jpg", res_final)
+    cv2.imwrite("tmp/boxes.jpg", mask)
+    cv2.imwrite("tmp/final_image.jpg", res_final)
 
     return res
 
