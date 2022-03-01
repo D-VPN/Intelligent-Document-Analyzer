@@ -5,6 +5,7 @@ import numpy as np
 import pytesseract
 from .multiple_choice_v2 import MultipleChoice
 import boto3
+from .combine import combine
 
 
 def contains_box(thresh_img, mean):
@@ -22,7 +23,7 @@ def contains_box(thresh_img, mean):
     return False
 
 
-def API(img, key_value_both, checkbox_fields=None, isHandwritten=None):
+def API(img, key_value_both, fields=None, isHandwritten=None):
     if img is None:
         return
 
@@ -52,6 +53,8 @@ def API(img, key_value_both, checkbox_fields=None, isHandwritten=None):
         area.append(w * h)
 
     mean = np.mean(area)
+
+    images, indices = [], []
 
     for c in coordinates[::-1]:
 
@@ -83,29 +86,33 @@ def API(img, key_value_both, checkbox_fields=None, isHandwritten=None):
             # cv2.imwrite("tmp/key" + str(num) + ".jpg", key_img)
 
             if key_value_both == True:
-                if key in checkbox_fields:
+                if fields[key] == "Checkbox":
                     value_img = img[y1 - 10 : y2 + 10, x1:]
                     value = MultipleChoice(value_img)
                 else:
                     value_img = img[y1 + 10 : y2 - 10, x1 + 10 : x2 - 10]
                     if isHandwritten == 1:
-                        # amazon api
-                        encoded_image = cv2.imencode(".png", value_img)[1]
-                        imageBytes = bytearray(encoded_image.tobytes())
-
-                        # Amazon Textract client
-                        textract = boto3.client("textract")
-
-                        # Call Amazon Textract
-                        response = textract.detect_document_text(
-                            Document={"Bytes": imageBytes}
-                        )
-
                         value = ""
-                        # Print detected text
-                        for item in response["Blocks"]:
-                            if item["BlockType"] == "LINE":
-                                value += item["Text"]
+                        if fields[key] == "Sentiment":
+                            encoded_image = cv2.imencode(".png", value_img)[1]
+                            imageBytes = bytearray(encoded_image.tobytes())
+
+                            # # Amazon Textract client
+                            textract = boto3.client("textract")
+
+                            # # Call Amazon Textract
+                            response = textract.detect_document_text(
+                                Document={"Bytes": imageBytes}
+                            )
+                            # TODO remove
+                            # # Print detected text
+                            for item in response["Blocks"]:
+                                if item["BlockType"] == "LINE":
+                                    print(item["Text"])
+                                    value += item["Text"] + " "
+                        else:
+                            images.append(value_img)
+                            indices.append(len(res))
                     else:
                         value = (
                             pytesseract.image_to_string(value_img, lang="eng")
@@ -123,7 +130,26 @@ def API(img, key_value_both, checkbox_fields=None, isHandwritten=None):
 
         num += 1
 
-    res_final = cv2.bitwise_and(img, img, mask=cv2.bitwise_not(mask))
+    if len(indices) > 0:
+        combined_image = combine(images)
+
+        # amazon api
+        encoded_image = cv2.imencode(".png", combined_image)[1]
+        imageBytes = bytearray(encoded_image.tobytes())
+
+        # # Amazon Textract client
+        textract = boto3.client("textract")
+
+        # # Call Amazon Textract
+        response = textract.detect_document_text(Document={"Bytes": imageBytes})
+
+        # # Print detected text
+        for item in response["Blocks"]:
+            if item["BlockType"] == "LINE":
+                res[indices[0]][1] = item["Text"]
+                indices.pop(0)
+
+    # res_final = cv2.bitwise_and(img, img, mask=cv2.bitwise_not(mask))
 
     # cv2.imwrite("tmp/boxes.jpg", mask)
     # cv2.imwrite("tmp/final_image.jpg", res_final)
