@@ -76,8 +76,8 @@ export default function SentimentKeyVisualization({ values }) {
                 </thead>
                 <tbody>
                     {
-                        list.map((item, ix)=>{
-                            return(
+                        list.map((item, ix) => {
+                            return (
                                 <tr key={ix}>
                                     <th scope='row'>{item.sentiment}</th>
                                     <td>{item.data}</td>
@@ -104,7 +104,7 @@ export default function SentimentKeyVisualization({ values }) {
         for (let i = 0; i < limit; i++) {
             list.push(doughnutChartData.negative[i])
         }
-        return createTable('Negative',list, limit);
+        return createTable('Negative', list, limit);
     }
 
     const defaultColors = [
@@ -119,10 +119,10 @@ export default function SentimentKeyVisualization({ values }) {
                 <div class='col-md-2'></div>
                 <div class='col-md-7'>{showDoughnutChart()}</div>
             </div>
-            <div class='row'>
+            {/* <div class='row'>
                 <div class='col-md-6'>{showTopPositive()}</div>
                 <div class='col-md-6'>{showTopNegative()}</div>
-            </div>
+            </div> */}
         </div>
     )
 }

@@ -12,10 +12,10 @@ from sklearn import metrics
 path = os.path.abspath(os.getcwd())
 # path = r"D:\Intelligent-Document-Analyzer\Backend\formAnalyzer"
 
-with open(path + "\Model_v2\\model.pkl", "rb") as inp:
+with open(path + "\\formAnalyzerApp\\Model_v2\\model.pkl", "rb") as inp:
     model = pickle.load(inp)
 
-with open(path + "\Model_v2\\cv.pkl", "rb") as inp:
+with open(path + "\\formAnalyzerApp\\Model_v2\\cv.pkl", "rb") as inp:
     cv = pickle.load(inp)
 
 
@@ -24,7 +24,7 @@ def predict_sentence(text):
 
     # make prediction
     prediction = model.predict(val)[0]
-    return prediction
+    return int(prediction)
     # if prediction == 0:
     #     return "Negative"
     # else:
