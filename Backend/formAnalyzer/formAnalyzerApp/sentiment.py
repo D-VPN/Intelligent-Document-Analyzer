@@ -1,19 +1,31 @@
-import tensorflow as tf
-from tensorflow.keras.preprocessing.text import Tokenizer
-from tensorflow.keras.preprocessing.sequence import pad_sequences
+# import tensorflow as tf
+# from tensorflow.keras.preprocessing.text import Tokenizer
+# from tensorflow.keras.preprocessing.sequence import pad_sequences
 import pickle
 import os
+from sklearn.feature_extraction.text import CountVectorizer
+from nltk.tokenize import RegexpTokenizer
+from sklearn.model_selection import train_test_split
+from sklearn.naive_bayes import MultinomialNB
+from sklearn import metrics
 
 path = os.path.abspath(os.getcwd())
+# path = r"D:\Intelligent-Document-Analyzer\Backend\formAnalyzer"
 
-model = tf.keras.models.load_model(path + "\Model\sentiment_model.h5")
-with open(path + "\Model\\tokenizer.pkl", "rb") as inp:
-    tokenizer = pickle.load(inp)
-sentiment_label = ["positive", "negative"]
+with open(path + "\Model_v2\\model.pkl", "rb") as inp:
+    model = pickle.load(inp)
+
+with open(path + "\Model_v2\\cv.pkl", "rb") as inp:
+    cv = pickle.load(inp)
 
 
 def predict_sentence(text):
-    tw = tokenizer.texts_to_sequences([text])
-    tw = pad_sequences(tw, maxlen=200)
-    prediction = int(model.predict(tw).round().item())
-    return round(model.predict(tw).item(), 2)
+    val = cv.transform([text])
+
+    # make prediction
+    prediction = model.predict(val)[0]
+    return prediction
+    # if prediction == 0:
+    #     return "Negative"
+    # else:
+    #     return "Positive"

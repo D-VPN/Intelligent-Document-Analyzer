@@ -139,7 +139,7 @@ def processSentimentValues(values):
     negative = {"sentiment": [], "data": []}
 
     for data in values:
-        if data[1] < 0.5:
+        if data[1] == 1:
             positive["sentiment"].append(data[1])
             positive["data"].append(data[0])
         else:
@@ -288,12 +288,9 @@ def uploadForms(request):
         res = {"project_id": project_id}
 
         for kv in doc:
-
             if kv[0] in sentiment_keys:
-
                 res[kv[0]] = [kv[1], predict_sentence(kv[1])]
             else:
-
                 res[kv[0]] = kv[1]
         collection.insert_one(res)
 
