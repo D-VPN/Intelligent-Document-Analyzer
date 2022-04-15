@@ -4,7 +4,8 @@ import cv2
 import numpy as np
 import pytesseract
 from multiple_choice import *
-import boto3
+
+# import boto3
 from combine import *
 
 
@@ -83,6 +84,9 @@ def API(img, key_value_both, fields=None, isHandwritten=None):
             if key == "" or contains_box(thresh[y1 - 10 : y2 + 10, 0:x1], mean):
                 continue
 
+            if key not in fields.keys():
+                continue
+
             if key_value_both == True:
                 if fields[key] == "Checkbox":
                     value_img = img[y1 - 10 : y2 + 10, x1:]
@@ -149,7 +153,7 @@ def API(img, key_value_both, fields=None, isHandwritten=None):
 
 
 if __name__ == "__main__":
-    path = os.path.abspath(os.getcwd()) + "\\images\\"
+    path = os.path.abspath(os.getcwd())
     img_path = path + "1.jpg"
 
     img = cv2.imread(img_path)
