@@ -3,9 +3,9 @@ from urllib import response
 import cv2
 import numpy as np
 import pytesseract
-from .multiple_choice_v2 import MultipleChoice
+from multiple_choice import *
 import boto3
-from .combine import combine
+from combine import *
 
 
 def contains_box(thresh_img, mean):
@@ -26,11 +26,11 @@ def contains_box(thresh_img, mean):
 def API(img, key_value_both, fields=None, isHandwritten=None):
     if img is None:
         return
-
+    path = os.path.abspath(os.getcwd()) + "\\output"
     img = cv2.resize(img, (720, 1080))
-    # cv2.imwrite("tmp/newimg.jpg", img)
 
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+
     thresh_inv = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)[1]
 
     # Blur the image
@@ -83,13 +83,17 @@ def API(img, key_value_both, fields=None, isHandwritten=None):
             if key == "" or contains_box(thresh[y1 - 10 : y2 + 10, 0:x1], mean):
                 continue
 
-            if fields is not None and key not in fields.keys():
+            if key not in fields.keys():
                 continue
 
             if key_value_both == True:
                 if fields[key] == "Checkbox":
                     value_img = img[y1 - 10 : y2 + 10, x1:]
-                    value = MultipleChoice(value_img)
+                    value_list = MultipleChoice(value_img)
+                    value = ""
+                    for pair in value_list:
+                        if pair[1] == 1:
+                            value = pair[0]
                 else:
                     value_img = img[y1 + 10 : y2 - 10, x1 + 10 : x2 - 10]
                     if isHandwritten == 1:
@@ -109,7 +113,6 @@ def API(img, key_value_both, fields=None, isHandwritten=None):
                             # # Print detected text
                             for item in response["Blocks"]:
                                 if item["BlockType"] == "LINE":
-                                    print(item["Text"])
                                     value += item["Text"] + " "
                         else:
                             images.append(value_img)
@@ -123,8 +126,6 @@ def API(img, key_value_both, fields=None, isHandwritten=None):
                             .replace("♀", "")
                             .strip()
                         )
-
-                # cv2.imwrite("tmp/value" + str(num) + ".jpg", value_img)
                 res.append([key, value])
             else:
                 res.append(key)
@@ -151,30 +152,4 @@ def API(img, key_value_both, fields=None, isHandwritten=None):
                     res[indices[0]][1] = item["Text"]
                     indices.pop(0)
 
-    # res_final = cv2.bitwise_and(img, img, mask=cv2.bitwise_not(mask))
-
-    # cv2.imwrite("tmp/boxes.jpg", mask)
-    # cv2.imwrite("tmp/final_image.jpg", res_final)
     return res
-
-
-# if __name__ == "__main__":
-
-#     for filename in os.listdir("rest images/"):
-#         img = cv2.imread("rest images/" + filename)
-#         print(
-#             API(
-#                 img,
-#                 key_value_both=True,
-#                 checkbox_fields=[
-#                     "Ambiance",
-#                     "Staff Politeness",
-#                     "Food Quality",
-#                     "Would You Recommend Us To A Friend?",
-#                 ],
-#             )
-#         )
-#         break
-
-# img = cv2.imread("tmp/value18.jpg")
-# print(MultipleChoice(img))

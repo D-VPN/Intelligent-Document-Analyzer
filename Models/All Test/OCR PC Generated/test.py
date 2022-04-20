@@ -13,23 +13,6 @@ accuracy, fileSize = [], []
 mutex = threading.Lock()
 
 
-# def API(img, key_value_both, fields=None, isHandwritten=None):
-#     return [
-#         ["Name", "MAXIMILIAN THOMAS"],
-#         ["Phone Number", "9981170856"],
-#         ["City", "Pune"],
-#         ["Date (DDMMYYYY)", "24092021"],
-#         ["Ambiance", "Satisfactory"],
-#         ["Service", "Good"],
-#         ["Food Quality", "Excellent"],
-#         ["Would You Recommend Us to a Friend?", "Yes"],
-#         [
-#             "Tell Us Your Overall Experience",
-#             "ALSO I FEEL LIKE THE CHIPS ARE BOUGHT NOT MADE IN HOUSE",
-#         ],
-#     ]
-
-
 def find_field(field_name, fields):
     for field in fields:
         if field[0] == field_name:
@@ -38,35 +21,36 @@ def find_field(field_name, fields):
 
 
 def AbstractThreadFunction(start, end, df):
-    path = os.path.abspath(os.getcwd()) + "\\Images2\\"
+    path = os.path.abspath(os.getcwd()) + "\\images\\"
     keys = df.columns
     fields = {
         "Name": "Text",
-        "Phone Number": "Number",
+        "Roll Number": "Number",
+        "Department": "Checkbox",
+        "Date of Birth (DDMMYYYY)": "Date",
         "City": "Text",
-        "Date (DDMMYYYY)": "Date",
-        "City": "Text",
-        "Ambiance": "Checkbox",
-        "Service": "Checkbox",
-        "Food Quality": "Checkbox",
-        "Would You Recommend Us to a Friend?": "Checkbox",
-        "Tell Us Your Overall Experience": "Sentiment",
+        "Year of Passing (School)": "Number",
+        "Percentage (School)": "Number",
+        "Year of Passing (High School)": "Number",
+        "Percentage (High School)": "Number",
+        "Technical Skill": "Checkbox",
+        "Communication Skill": "Checkbox",
     }
 
     for fileNum in range(start, end + 1):
         img_path = path + str(fileNum) + ".jpg"
-        print(img_path)
         try:
             fileSize.append(os.path.getsize(img_path))
             img = cv2.imread(img_path)
         except:
+            print("ERROR : " + img_path)
             continue
 
         output = API(
             img,
             key_value_both=True,
             fields=fields,
-            isHandwritten=1,
+            isHandwritten=0,
         )
 
         currentAccuracy = []
@@ -100,12 +84,14 @@ def AbstractThreadFunction(start, end, df):
 
 if __name__ == "__main__":
 
-    df = pd.read_excel("./Joey's Cafe Handwritten.xlsx")
-    df.drop(["Creator", "Id"], axis=1, inplace=True)
+    df = pd.read_excel("./Database.xlsx")
+    df["Date of Birth (DDMMYYYY)"] = df["Date of Birth (DDMMYYYY)"].dt.strftime(
+        "%d%m%Y"
+    )
 
     filesPerThread = 5
-    # batches = [1, 10, 25, 50, 100]
-    batches = [1]
+    batches = [1, 10, 25, 50, 100]
+    # batches = [1]
 
     for batch in batches:
         print("Batch: ", batch)
@@ -130,9 +116,15 @@ if __name__ == "__main__":
 
         end = time.time()
 
-        print("Total execution time: ", end - start)
-        print("Average Filesize: " + str((sum(fileSize) / len(fileSize)) / 1000) + "kb")
-        print("Accuracy: " + str(sum(accuracy) / len(accuracy) * 100) + "%")
-        print()
-
+        try:
+            print("Total execution time: ", end - start)
+            print(
+                "Average Filesize: "
+                + str((sum(fileSize) / len(fileSize)) / 1000)
+                + "kb"
+            )
+            print("Accuracy: " + str(sum(accuracy) / len(accuracy) * 100) + "%")
+            print()
+        except:
+            print("ERROR")
         accuracy, fileSize = [], []

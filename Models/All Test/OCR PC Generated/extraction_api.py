@@ -83,10 +83,17 @@ def API(img, key_value_both, fields=None, isHandwritten=None):
             if key == "" or contains_box(thresh[y1 - 10 : y2 + 10, 0:x1], mean):
                 continue
 
+            if key not in fields.keys():
+                continue
+
             if key_value_both == True:
                 if fields[key] == "Checkbox":
                     value_img = img[y1 - 10 : y2 + 10, x1:]
-                    value = MultipleChoice(value_img)
+                    value_list = MultipleChoice(value_img)
+                    value = ""
+                    for pair in value_list:
+                        if pair[1] == 1:
+                            value = pair[0]
                 else:
                     value_img = img[y1 + 10 : y2 - 10, x1 + 10 : x2 - 10]
                     if isHandwritten == 1:
@@ -146,41 +153,3 @@ def API(img, key_value_both, fields=None, isHandwritten=None):
                 indices.pop(0)
 
     return res
-
-
-if __name__ == "__main__":
-    path = os.path.abspath(os.getcwd()) + "\\images\\"
-    img_path = path + "1.jpg"
-
-    img = cv2.imread(img_path)
-
-    output = API(
-        img,
-        key_value_both=True,
-        fields={
-            "Name": "Text",
-            "Phone Number": "Number",
-            "City": "Text",
-            "Date (DDMMYYYY)": "Date",
-            "City": "Text",
-            "Ambiance": "Checkbox",
-            "Service": "Checkbox",
-            "Food Quality": "Checkbox",
-            "Would You Recommend Us to a Friend?": "Checkbox",
-            "Tell Us Your Overall Experience": "Sentiment",
-        },
-        isHandwritten=1,
-    )
-    # output_path = os.path.abspath(os.getcwd()) + "\\output\\"
-    # for filename in os.listdir(output_path):
-    #     try:
-    #         os.remove(output_path + filename)
-    #     except:
-    #         print(1)
-    # checkbox_path = os.path.abspath(os.getcwd()) + "\\output\\checkbox\\"
-    # for filename in os.listdir(checkbox_path):
-    #     try:
-    #         os.remove(checkbox_path + filename)
-    #     except:
-    #         print(1)
-    print(output)

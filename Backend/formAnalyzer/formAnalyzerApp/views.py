@@ -61,9 +61,12 @@ def processDateValues(values):
 
     res = []
     for val in values:
-        day, month, year = int(val[:2]), int(val[2:4]), int(val[4:])
-        date = datetime.datetime(year, month, day)
-        res.append(date.isoformat())
+        try:
+            day, month, year = int(val[:2]), int(val[2:4]), int(val[4:])
+            date = datetime.datetime(year, month, day)
+            res.append(date.isoformat())
+        except:
+            pass
 
     return res
 
@@ -244,7 +247,9 @@ def uploadForms(request):
     path = os.path.abspath(os.getcwd()) + "//tmp//"
 
     fields = getFields(project_id)
+    print(fields)
     output = ExtractDataForms(path, fields, isHandwritten)
+    print(output)
     sentiment_keys = get_sentiment_keys(project_id)
 
     collection = db[project_id]
@@ -295,7 +300,10 @@ def getVisualizationData(request):
 
     collection = db[project_id]
     for doc in collection.find():
-        values.append(doc[key])
+        try:
+            values.append(doc[key])
+        except:
+            pass
 
     if valueType == "Date":
         values = processDateValues(values)
