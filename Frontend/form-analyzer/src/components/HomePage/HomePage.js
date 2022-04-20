@@ -1,9 +1,19 @@
 import React from 'react'
 import './HomePage.css';
-import ourSolution from '../../images/our-solution.svg';
-import { IoDocumentSharp } from "react-icons/io5";
+import { AwesomeButton } from "react-awesome-button";
+import { useNavigate } from 'react-router-dom';
+
+
 
 function HomePage() {
+    const navigate = useNavigate();
+
+    const goToLoginIn = () => {
+        navigate("/login", { replace: false });
+    }
+    const goToRegister = () => {
+        navigate("/registration", { replace: false });
+    }
 
   return (
     <div class='container'>
@@ -12,6 +22,11 @@ function HomePage() {
                 <p class='h1 mt-5 tracking-in-contract-bck-top'>TOO MANY FORMS?</p>
                 <p class='h1 mt-5 tracking-in-contract-bck-top-2'>TOO MUCH MANUAL WORK ?</p>
                 <p class='h1 mt-5 tracking-in-contract-bck-top-3 '>THIS IS YOU EVERYDAY &rarr;</p>
+                <div class=''>
+                    <AwesomeButton style={{ "margin-right": "50px", "margin-top":"10px" }} type="primary" onPress={(e) => goToRegister()}>REGISTER</AwesomeButton>
+                    <AwesomeButton style={{ "margin-top":"10px" }} type="primary" onPress={(e) => goToLoginIn()}>LOG IN</AwesomeButton>
+                </div>
+
             </div>
             <div class='col-md-6'>
                   <div class="tenor-gif-embed" data-postid="12504318" data-share-method="host" data-aspect-ratio="1.78" data-width="100%"></div> 
@@ -59,8 +74,9 @@ function HomePage() {
                 <div>Visualize The Data</div>
             </div>
         </div>
-        <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+        {/* <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/> */}
     </div>
+    
   )
 }
 
