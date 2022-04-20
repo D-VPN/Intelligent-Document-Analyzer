@@ -1,6 +1,7 @@
 import React from 'react'
 import './HomePage.css';
 import ourSolution from '../../images/our-solution.svg';
+import { IoDocumentSharp } from "react-icons/io5";
 
 function HomePage() {
 
@@ -17,12 +18,12 @@ function HomePage() {
             </div>
         </div>
 
-        <section id="section07" class="demo">
+        <section id="section07" class="demo d-md-block d-none">
             <a href="#section08"><span></span><span></span><span></span>WE HAVE THE SOLUTION</a>
         </section>
         
         <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
-        <div class='row mt-5 mb-5' id='section08'>
+        {/* <div class='row mt-5 mb-5' id='section08'>
             <div class='col-md-6'>
                 <img src={ourSolution} alt="our solution" width="100%"/>
             </div>
@@ -36,8 +37,26 @@ function HomePage() {
                         <li class='pb-3'>Visualize The Data</li>
                     </ul>
                 </div>
-                
-                
+            </div>
+        </div> */}
+
+        <div class='row our-solution-points mt-5 mb-5 text-center' id='section08'>
+            <p class='h1 mb-5 text-center'>FORM ANALYZER</p>
+            <div class='col-md-3 col-sm-12'>
+                <i class="icofont-file-document icofont-5x"></i><br/>
+                <div>We Take Your Forms</div>
+            </div>
+            <div class='col-md-3 col-sm-12'>
+                <i class="icofont-chart-flow-1 icofont-5x"></i><br/>
+                <div>Break Them Down</div>
+            </div>
+            <div class='col-md-3 col-sm-12'>
+                <i class="icofont-data icofont-5x"></i><br/>
+                <div>Extract The Data</div>
+            </div>
+            <div class='col-md-3 col-sm-12'>
+                <i class="icofont-chart-pie icofont-5x"></i><br/>
+                <div>Visualize The Data</div>
             </div>
         </div>
         <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>

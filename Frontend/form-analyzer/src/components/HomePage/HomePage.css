@@ -233,3 +233,7 @@ opacity: .5;
       font-size: 3vh;
       font-weight: 500;
   }
+
+  .our-solution-points i{
+    color: #1e88e5;
+  }
