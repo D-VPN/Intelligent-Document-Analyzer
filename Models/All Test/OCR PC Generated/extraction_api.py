@@ -4,7 +4,8 @@ import cv2
 import numpy as np
 import pytesseract
 from multiple_choice import *
-import boto3
+
+# import boto3
 from combine import *
 
 
@@ -153,3 +154,44 @@ def API(img, key_value_both, fields=None, isHandwritten=None):
                 indices.pop(0)
 
     return res
+<<<<<<< HEAD:Models/All Test/OCR PC Generated/extraction_api.py
+=======
+
+
+if __name__ == "__main__":
+    path = os.path.abspath(os.getcwd())
+    img_path = path + "1.jpg"
+
+    img = cv2.imread(img_path)
+
+    output = API(
+        img,
+        key_value_both=True,
+        fields={
+            "Name": "Text",
+            "Phone Number": "Number",
+            "City": "Text",
+            "Date (DDMMYYYY)": "Date",
+            "City": "Text",
+            "Ambiance": "Checkbox",
+            "Service": "Checkbox",
+            "Food Quality": "Checkbox",
+            "Would You Recommend Us to a Friend?": "Checkbox",
+            "Tell Us Your Overall Experience": "Sentiment",
+        },
+        isHandwritten=1,
+    )
+    # output_path = os.path.abspath(os.getcwd()) + "\\output\\"
+    # for filename in os.listdir(output_path):
+    #     try:
+    #         os.remove(output_path + filename)
+    #     except:
+    #         print(1)
+    # checkbox_path = os.path.abspath(os.getcwd()) + "\\output\\checkbox\\"
+    # for filename in os.listdir(checkbox_path):
+    #     try:
+    #         os.remove(checkbox_path + filename)
+    #     except:
+    #         print(1)
+    print(output)
+>>>>>>> 146c7fa3cb4700aed3f328b1bc1405dd8865ef63:Models/All Test/OCR Handwritten/Helper/extraction_api.py

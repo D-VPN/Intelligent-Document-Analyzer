@@ -3,7 +3,7 @@ import './Dashboard.css';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import axios from '../../helper/axios';
-import add from '../../images/add3.png';
+import add from '../../images/add.png';
 import { AwesomeButton } from "react-awesome-button";
 import "react-awesome-button/dist/themes/theme-blue.css";
 
