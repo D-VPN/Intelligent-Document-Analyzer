@@ -7,6 +7,7 @@ import "react-awesome-button/dist/themes/theme-blue.css";
 
 
 class Navbar extends Component {
+
     constructor(props) {
         super(props)
     }
@@ -27,6 +28,8 @@ class Navbar extends Component {
 
         </div>;
     }
+
+
 
     render() {
         const body = this.props.token ?
@@ -66,8 +69,12 @@ class Navbar extends Component {
                             <span class="h3 mx-2">Form Analyzer</span>
                         </a>
                     </Link>
+                    <div class='px-5'>
+                        <AwesomeButton style={{ "margin-right": "50px", "margin-top": "10px" }} type="primary" >Register</AwesomeButton>
+                        <AwesomeButton style={{ "margin-top": "10px" }} type="primary">Login</AwesomeButton>
+                    </div>
                 </div>
-            </nav>
+            </nav >
             ;
         return body;
     }
