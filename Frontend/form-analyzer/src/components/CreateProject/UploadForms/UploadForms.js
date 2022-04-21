@@ -56,7 +56,7 @@ const UploadForms = ({ currentCreate }) => {
 
     const successBanner = () => {
         return currentCreate ? <div class="alert mt-3 alert-success alert-dismissible fade show my-5" role="alert">
-            <img src='https://cdn-icons.flaticon.com/png/512/5610/premium/5610944.png?token=exp=1645780521~hmac=c290eacdb1397fd7f379ccdb9cd2b25d' width={20} height={20}></img>
+            <img src="/checked.png" width={20} height={20}></img>
             <strong> Project created successfully!</strong> Upload all the forms you want processed.
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div> : <div class='mt-5'></div>;
