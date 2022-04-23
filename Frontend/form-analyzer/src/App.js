@@ -13,12 +13,24 @@ import HomePage from './components/HomePage/HomePage';
 
 function App() {
   const { token, setToken } = useToken();
-  console.log(token)
   return (
     <div className="wrapper">
       <Router>
-        <MainNav setToken={setToken} token={token} />
         <Routes>
+          <Route exact path="/login" element={
+            <MainNav setToken={setToken} token={token} path="/login" />
+          }></Route>
+          <Route exact path="/registration" element={
+            <MainNav setToken={setToken} token={token} path="/registration" />
+          }></Route>
+
+          <Route element={
+            <MainNav setToken={setToken} token={token} path="/" />
+          }></Route>
+        </Routes>
+
+        <Routes>
+
           <Route exact path="/" element=
             {
               token ? <Dashboard setToken={setToken} /> : <HomePage />

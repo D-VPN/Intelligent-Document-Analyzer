@@ -4,6 +4,7 @@ import logo from '../../images/logo-transparent.png'
 import { useNavigate, Link } from 'react-router-dom';
 import { AwesomeButton } from "react-awesome-button";
 import "react-awesome-button/dist/themes/theme-blue.css";
+import { useLocation } from "react-router-dom";
 
 
 class Navbar extends Component {
@@ -29,6 +30,67 @@ class Navbar extends Component {
         </div>;
     }
 
+    goToLogin = () => {
+        this.props.navigate("/login", { replace: true });
+    }
+
+    goToRegistration = () => {
+        this.props.navigate("/registration", { replace: true });
+    }
+
+    showUserButton() {
+        const path = this.props.path;
+        if (path === "/registration") {
+            return (<nav class="navbar navbar-expand-md">
+                <div class="container">
+                    <Link to="/" class="pt-3">
+                        <a class="navbar-brand text-dark" href="/">
+                            <img src={logo} height={35} width={35} class="d-inline-block mb-3" />
+                            <span class="h3 mx-2">Form Analyzer</span>
+                        </a>
+                    </Link>
+                    <div class='px-5'>
+                        <AwesomeButton style={{ "margin-top": "10px" }} type="primary"
+                            onPress={(e) => this.goToLogin()}
+                        >Login</AwesomeButton>
+                    </div>
+                </div>
+            </nav >);
+        } else if (path === "/login") {
+            return <nav class="navbar navbar-expand-md">
+                <div class="container">
+                    <Link to="/" class="pt-3">
+                        <a class="navbar-brand text-dark" href="/">
+                            <img src={logo} height={35} width={35} class="d-inline-block mb-3" />
+                            <span class="h3 mx-2">Form Analyzer</span>
+                        </a>
+                    </Link>
+                    <div class='px-5'>
+                        <AwesomeButton style={{ "margin-right": "50px", "margin-top": "10px" }}
+                            onPress={(e) => this.goToRegistration()} type="primary" >Register</AwesomeButton>
+                    </div>
+                </div>
+            </nav >;
+        } else {
+            return <nav class="navbar navbar-expand-md">
+                <div class="container">
+                    <Link to="/" class="pt-3">
+                        <a class="navbar-brand text-dark" href="/">
+                            <img src={logo} height={35} width={35} class="d-inline-block mb-3" />
+                            <span class="h3 mx-2">Form Analyzer</span>
+                        </a>
+                    </Link>
+                    <div class='px-5'>
+                        <AwesomeButton style={{ "margin-right": "50px", "margin-top": "10px" }}
+                            onPress={(e) => this.goToRegistration()} type="primary" >Register</AwesomeButton>
+                        <AwesomeButton style={{ "margin-top": "10px" }} type="primary"
+                            onPress={(e) => this.goToLogin()}
+                        >Login</AwesomeButton>
+                    </div>
+                </div>
+            </nav >;
+        }
+    }
 
 
     render() {
@@ -61,21 +123,9 @@ class Navbar extends Component {
             </nav >
             :
             /* Before Log In Navbar */
-            <nav class="navbar navbar-expand-md">
-                <div class="container">
-                    <Link to="/" class="pt-3">
-                        <a class="navbar-brand text-dark" href="/">
-                            <img src={logo} height={35} width={35} class="d-inline-block mb-3" />
-                            <span class="h3 mx-2">Form Analyzer</span>
-                        </a>
-                    </Link>
-                    <div class='px-5'>
-                        <AwesomeButton style={{ "margin-right": "50px", "margin-top": "10px" }} type="primary" >Register</AwesomeButton>
-                        <AwesomeButton style={{ "margin-top": "10px" }} type="primary">Login</AwesomeButton>
-                    </div>
-                </div>
-            </nav >
-            ;
+            <div>
+                {this.showUserButton()}
+            </div>
         return body;
     }
 }

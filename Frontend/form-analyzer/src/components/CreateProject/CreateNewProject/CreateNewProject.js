@@ -6,7 +6,6 @@ import { AwesomeButton } from "react-awesome-button";
 import "react-awesome-button/dist/themes/theme-blue.css";
 
 const CreateNewProject = ({ nextStep, values, handleChange, onFileChange, setFields, setIsHandwritten }) => {
-    console.log(values.isHandwritten);
     const [loading, setloading] = useState(false)
     const Continue = e => {
         e.preventDefault();

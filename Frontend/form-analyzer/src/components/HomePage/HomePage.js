@@ -2,17 +2,12 @@ import React from 'react'
 import './HomePage.css';
 import homeImage from '../../images/home.jpg';
 import uiIMage from '../../images/ui.png';
-import { AwesomeButton } from "react-awesome-button";
 import { useNavigate } from 'react-router-dom';
 
 
 
 function HomePage() {
     const navigate = useNavigate();
-
-    const goToLoginIn = () => {
-        navigate("/login", { replace: false });
-    }
     const goToRegister = () => {
         navigate("/registration", { replace: false });
     }
@@ -24,36 +19,13 @@ function HomePage() {
                     <div class='col-md-6 landing-text'>
                         <h1 class='display-4 mt-3 pt-5 tracking-in-contract-bck-top'>Tired of manually entering data from documents?</h1>
                         <p class='mt-3 text-muted'>Form Analyzer is a complete end-to-end tool to process, store and visualize scanned documents.</p>
-                        {/* <div class='px-5'>
-                            <AwesomeButton style={{ "margin-right": "50px", "margin-top": "10px" }} type="primary" onPress={(e) => goToRegister()}>REGISTER</AwesomeButton>
-                            <AwesomeButton style={{ "margin-top": "10px" }} type="primary" onPress={(e) => goToLoginIn()}>LOG IN</AwesomeButton>
-                        </div> */}
-                        <button class="home_btn">Get Started</button>
+                        <button class="home_btn" onClick={() => goToRegister()}>Get Started</button>
                     </div>
                     <div class='col-md-6'>
                         <img class="mt-3" src={homeImage} style={{ height: "90%", width: "100%" }} />
                     </div>
                 </div>
             </div>
-
-
-
-            {/* <div class='row mt-5 mb-5' id='section08'>
-            <div class='col-md-6'>
-                <img src={ourSolution} alt="our solution" width="100%"/>
-            </div>
-            <div class='col-md-6 landing-text '>
-                <p class='h1 mt-5 text-center'>FORM ANALYZER</p>
-                <div class='our-solution-points'>
-                    <ul class='mt-5'>
-                        <li class='pb-3'>We Take Your Forms</li>
-                        <li class='pb-3'>Break Them Down</li>
-                        <li class='pb-3'>Extract The Data</li>
-                        <li class='pb-3'>Visualize The Data</li>
-                    </ul>
-                </div>
-            </div>
-        </div> */}
 
             <div class="container pb-5">
                 <div class='row bg-light our-solution-points my-5 text-center p-5' id='section08'>
@@ -95,7 +67,7 @@ function HomePage() {
                     <div class="col-md-5 data px-5">
                         <h3 class="display-5">Data Visualization</h3>
                         <p class='mt-3 text-muted'>See all types of visualizations related to your data at one place.</p>
-                        <button class="home_btn">Create Your First Project</button>
+                        <button onClick={(e) => goToRegister()} class="home_btn">Create Your First Project</button>
                     </div>
                 </div>
             </div>
