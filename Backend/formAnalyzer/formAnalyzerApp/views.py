@@ -344,14 +344,6 @@ def exportData(request):
             elif valueType == "Sentiment":
                 doc[field] = doc[field][0]
 
-            elif valueType == "Date":
-                day, month, year = (
-                    int(doc[field][:2]),
-                    int(doc[field][2:4]),
-                    int(doc[field][4:]),
-                )
-                doc[field] = datetime.datetime(year, month, day).isoformat()
-
         doc_id = doc["_id"]
 
         del doc["_id"]
