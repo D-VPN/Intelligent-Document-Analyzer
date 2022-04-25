@@ -17,16 +17,28 @@ function App() {
     <div className="wrapper">
       <Router>
         <Routes>
+          <Route path="/" element={
+            <MainNav setToken={setToken} token={token} path="/" />
+          }></Route>
           <Route exact path="/login" element={
             <MainNav setToken={setToken} token={token} path="/login" />
           }></Route>
           <Route exact path="/registration" element={
             <MainNav setToken={setToken} token={token} path="/registration" />
           }></Route>
-
-          <Route element={
+          <Route exact path="/create" element={
+            <MainNav setToken={setToken} token={token} path="/create" />
+          }></Route>
+          <Route exact path="/create-project/upload-forms/:projectId" element={
             <MainNav setToken={setToken} token={token} path="/" />
           }></Route>
+          <Route exact path="/project/upload-forms/:projectId" element={
+            <MainNav setToken={setToken} token={token} path="/" />
+          }></Route>
+          <Route exact path="/project/visualization/:projectId" element={
+            <MainNav setToken={setToken} token={token} path="/" />
+          }></Route>
+
         </Routes>
 
         <Routes>
