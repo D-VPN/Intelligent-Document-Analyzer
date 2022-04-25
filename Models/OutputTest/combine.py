@@ -1,6 +1,7 @@
 import sys
 from PIL import Image
 import numpy as np
+import os
 
 
 def combine(images):
@@ -19,6 +20,8 @@ def combine(images):
         new_im.paste(im, (0, y_offset))
         y_offset += im.size[1] + 20
 
-    new_im.save("combined_image.jpg")
+    path = os.path.abspath(os.getcwd()) + "\\Models\OutputTest\output"
+
+    new_im.save(path+"\\combined_image.jpg")
     result_image = np.asarray(new_im)
     return result_image

@@ -1,20 +1,25 @@
 import cv2
 import numpy as np
 import pytesseract
+import os
 
 
 def MultipleChoice(img):
-    cv2.imwrite("output/checkbox/checkbox.jpg", img)
+    path = os.path.abspath(os.getcwd()) + "\\Models\OutputTest\output"
+    cv2.imwrite(path+"\\checkbox.jpg", img)
 
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    thresh_inv = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)[1]
+    thresh_inv = cv2.threshold(
+        gray, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)[1]
 
     # Blur the image
     blur = cv2.GaussianBlur(thresh_inv, (1, 1), 0)
 
-    thresh = cv2.threshold(blur, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)[1]
+    thresh = cv2.threshold(
+        blur, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)[1]
     # find contours
-    contours = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)[0]
+    contours = cv2.findContours(
+        thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)[0]
 
     boxes, res = [], []
     MAX = 0
@@ -23,7 +28,7 @@ def MultipleChoice(img):
         x, y, w, h = cv2.boundingRect(c)
         if w * h > 1000:
             boxes.append([x, y, w, h])
-            checkbox = 255 - img[y + 5 : y + h - 5, x + 5 : x + w - 5]
+            checkbox = 255 - img[y + 5: y + h - 5, x + 5: x + w - 5]
             MAX = max(MAX, np.sum(checkbox))
 
     _next = 1
@@ -33,12 +38,12 @@ def MultipleChoice(img):
 
         try:
             x, y, w, h = box
-            checkbox = 255 - img[y + 5 : y + h - 5, x + 5 : x + w - 5]
+            checkbox = 255 - img[y + 5: y + h - 5, x + 5: x + w - 5]
 
             if _next != len(boxes):
-                key = img[y : y + h, x + w + 2 : boxes[_next][0] - 1]
+                key = img[y: y + h, x + w + 2: boxes[_next][0] - 1]
             else:
-                key = img[y : y + h, x + w + 2 :]
+                key = img[y: y + h, x + w + 2:]
 
             if MAX == np.sum(checkbox):
                 value_text = 1

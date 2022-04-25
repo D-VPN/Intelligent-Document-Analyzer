@@ -26,25 +26,28 @@ def contains_box(thresh_img, mean):
 def API(img, key_value_both, fields=None, isHandwritten=None):
     if img is None:
         return
-    path = os.path.abspath(os.getcwd()) + "\\output"
+    path = os.path.abspath(os.getcwd()) + "\\Models\OutputTest\output"
     img = cv2.resize(img, (720, 1080))
     cv2.imwrite(path + "\\img.jpg", img)
 
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     cv2.imwrite(path + "\\grayImage.jpg", gray)
 
-    thresh_inv = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)[1]
+    thresh_inv = cv2.threshold(
+        gray, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)[1]
     cv2.imwrite(path + "\\thresh_inv.jpg", thresh_inv)
 
     # Blur the image
     blur = cv2.GaussianBlur(thresh_inv, (1, 1), 0)
     cv2.imwrite(path + "\\blur.jpg", blur)
 
-    thresh = cv2.threshold(blur, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)[1]
+    thresh = cv2.threshold(
+        blur, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)[1]
     cv2.imwrite(path + "\\thresh.jpg", thresh)
 
     # find contours
-    contours = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)[0]
+    contours = cv2.findContours(
+        thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)[0]
 
     mask = np.ones(img.shape[:2], dtype="uint8") * 255
 
@@ -70,7 +73,7 @@ def API(img, key_value_both, fields=None, isHandwritten=None):
 
             x1, x2, y1, y2 = x, x + w, y, y + h
             try:
-                key_img = img[y1 - 10 : y2 + 10, 0:x1]  # key
+                key_img = img[y1 - 10: y2 + 10, 0:x1]  # key
 
                 key = (
                     pytesseract.image_to_string(
@@ -86,17 +89,24 @@ def API(img, key_value_both, fields=None, isHandwritten=None):
             except:
                 continue
 
-            if key == "" or contains_box(thresh[y1 - 10 : y2 + 10, 0:x1], mean):
+            if key == "" or contains_box(thresh[y1 - 10: y2 + 10, 0:x1], mean):
                 continue
 
-            cv2.imwrite("output/key" + str(num) + ".jpg", key_img)
+            if key not in fields.keys():
+                continue
+
+            cv2.imwrite(path+"\\key" + str(num) + ".jpg", key_img)
 
             if key_value_both == True:
                 if fields[key] == "Checkbox":
-                    value_img = img[y1 - 10 : y2 + 10, x1:]
-                    value = MultipleChoice(value_img)
+                    value_img = img[y1 - 10: y2 + 10, x1:]
+                    value_list = MultipleChoice(value_img)
+                    value = ""
+                    for pair in value_list:
+                        if pair[1] == 1:
+                            value = pair[0]
                 else:
-                    value_img = img[y1 + 10 : y2 - 10, x1 + 10 : x2 - 10]
+                    value_img = img[y1 + 10: y2 - 10, x1 + 10: x2 - 10]
                     if isHandwritten == 1:
                         value = ""
                         if fields[key] == "Sentiment":
@@ -114,7 +124,6 @@ def API(img, key_value_both, fields=None, isHandwritten=None):
                             # # Print detected text
                             for item in response["Blocks"]:
                                 if item["BlockType"] == "LINE":
-                                    print(item["Text"])
                                     value += item["Text"] + " "
                         else:
                             images.append(value_img)
@@ -128,7 +137,7 @@ def API(img, key_value_both, fields=None, isHandwritten=None):
                             .replace("♀", "")
                             .strip()
                         )
-                cv2.imwrite("output/value" + str(num) + ".jpg", value_img)
+                cv2.imwrite(path+"\\value" + str(num) + ".jpg", value_img)
                 res.append([key, value])
             else:
                 res.append(key)
@@ -146,7 +155,8 @@ def API(img, key_value_both, fields=None, isHandwritten=None):
         textract = boto3.client("textract")
 
         # # Call Amazon Textract
-        response = textract.detect_document_text(Document={"Bytes": imageBytes})
+        response = textract.detect_document_text(
+            Document={"Bytes": imageBytes})
 
         # # Print detected text
         for item in response["Blocks"]:
@@ -163,27 +173,27 @@ def API(img, key_value_both, fields=None, isHandwritten=None):
 
 
 if __name__ == "__main__":
-    path = os.path.abspath(os.getcwd()) + "\\images\\"
-    img_path = path + "1.jpg"
+    path = os.path.abspath(os.getcwd()) + "\\Models\OutputTest\images\\"
+    img_path = path + "51.jpg"
 
     img = cv2.imread(img_path)
-
     output = API(
         img,
         key_value_both=True,
         fields={
             "Name": "Text",
-            "Phone Number": "Number",
+            "Roll Number": "Number",
+            "Department": "Checkbox",
+            "Date of Birth (DDMMYYYY)": "Date",
             "City": "Text",
-            "Date (DDMMYYYY)": "Date",
-            "City": "Text",
-            "Ambiance": "Checkbox",
-            "Service": "Checkbox",
-            "Food Quality": "Checkbox",
-            "Would You Recommend Us to a Friend?": "Checkbox",
-            "Tell Us Your Overall Experience": "Sentiment",
+            "Year of Passing (School)": "Number",
+            "Percentage (School)": "Number",
+            "Year of Passing (High School)": "Number",
+            "Percentage (High School)": "Number",
+            "Technical Skill": "Checkbox",
+            "Communication Skill": "Checkbox",
         },
-        isHandwritten=1,
+        isHandwritten=0,
     )
     # output_path = os.path.abspath(os.getcwd()) + "\\output\\"
     # for filename in os.listdir(output_path):
