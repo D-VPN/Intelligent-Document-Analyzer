@@ -10,7 +10,13 @@ from .sentiment import predict_sentence
 from rest_framework.decorators import api_view
 from rest_framework import status
 from rest_framework.response import Response
-import pymongo, os, cv2, numpy as np, json, datetime, pandas
+import pymongo
+import os
+import cv2
+import numpy as np
+import json
+import datetime
+import pandas
 from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
 from decouple import config
@@ -247,9 +253,7 @@ def uploadForms(request):
     path = os.path.abspath(os.getcwd()) + "//tmp//"
 
     fields = getFields(project_id)
-    print(fields)
     output = ExtractDataForms(path, fields, isHandwritten)
-    print(output)
     sentiment_keys = get_sentiment_keys(project_id)
 
     collection = db[project_id]
