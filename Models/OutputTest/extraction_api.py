@@ -49,6 +49,9 @@ def API(img, key_value_both, fields=None, isHandwritten=None):
     contours = cv2.findContours(
         thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)[0]
 
+    cv2.drawContours(gray, contours, -1, (0, 255, 0), 3)
+    cv2.imwrite(path + "\\contour.jpg", gray)
+
     mask = np.ones(img.shape[:2], dtype="uint8") * 255
 
     num = 1
@@ -174,7 +177,7 @@ def API(img, key_value_both, fields=None, isHandwritten=None):
 
 if __name__ == "__main__":
     path = os.path.abspath(os.getcwd()) + "\\Models\OutputTest\images\\"
-    img_path = path + "51.jpg"
+    img_path = path + "3.jpg"
 
     img = cv2.imread(img_path)
     output = API(
@@ -182,16 +185,15 @@ if __name__ == "__main__":
         key_value_both=True,
         fields={
             "Name": "Text",
-            "Roll Number": "Number",
-            "Department": "Checkbox",
-            "Date of Birth (DDMMYYYY)": "Date",
+            "Phone Number": "Number",
             "City": "Text",
-            "Year of Passing (School)": "Number",
-            "Percentage (School)": "Number",
-            "Year of Passing (High School)": "Number",
-            "Percentage (High School)": "Number",
-            "Technical Skill": "Checkbox",
-            "Communication Skill": "Checkbox",
+            "Date (DDMMYYYY)": "Date",
+            "City": "Text",
+            "Ambiance": "Checkbox",
+            "Service": "Checkbox",
+            "Food Quality": "Checkbox",
+            "Would You Recommend Us to a Friend?": "Checkbox",
+            "Tell Us Your Overall Experience": "Sentiment",
         },
         isHandwritten=0,
     )

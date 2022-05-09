@@ -1,9 +1,4 @@
-,Leadership,Communication,Technical,Percentage (High School),Year of Passing (High School),Percentage (School),Year of Passing (School),City,Date of Birth (DDMMYYYY),Department,Roll Number,Name
-6218c028f53350d9315680d4,3,2,1,96.16,2019,95.98,2017,,2000-03-13T00:00:00,CS,1814776,Abraham Holmes
-6218cf0083988c96f7ad04c8,3,2,1,96.16,2019,95.98,2017,Pune,2000-03-13T00:00:00,CS,1814776,Abraham Holmes
-6218ee325d0d100b063dbdf9,3,2,1,96.16,2019,95.98,2017,Pune,2000-03-13T00:00:00,CS,1814776,Abraham Holmes
-6218ee325d0d100b063dbdfa,4,3,2,86.79,2019,83.29,2017,Delhi,2001-03-31T00:00:00,ETRX,1811380,Aida Cunningham
-6218ee325d0d100b063dbdfb,5,4,3,95:23,2019,92.27,2017,Bengaluru,1999-06-23T00:00:00,EXTC,1813893,Leonardo Cameron
-6218ee325d0d100b063dbdfc,1,5,4,81.99,2018,82.77,2015,Mumbai,1999-07-25T00:00:00,IT,1812833,David Spencer
-6218ee325d0d100b063dbdfd,2,1,=,97.25,2018,87.57,2015,Delhi,2001-11-23T00:00:00,MECH,1813492,Abraham Perry
-6218eed08063383be8820c92,1,5,4,81.99,2018,82.77,2015,Mumbai,1999-07-25T00:00:00,IT,1812833,David Spencer
+,Name,Roll Number,Department,Date of Birth (DDMMYYYY),City,Year of Passing (School),Percentage (School),Year of Passing (High School),Percentage (High School),Technical Skill,Communication Skill
+6269244317c3101141bc5a4c,Anna Barnes,1811164,EXTC,11112001,Pune,2016,88.94,2018,93.04,Beginner,Average
+6269244317c3101141bc5a4d,Victor Ferguson,1811451,MECH,07062000,Pune,2016,"96.45,",2017,90.14,Beginner,Average
+6269244317c3101141bc5a4e,Roland Ross,1813808,ETRX,02071999,Pune,2015,85.41,2019,81.94,Average,Average

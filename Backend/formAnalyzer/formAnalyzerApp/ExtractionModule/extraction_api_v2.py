@@ -31,15 +31,18 @@ def API(img, key_value_both, fields=None, isHandwritten=None):
     # cv2.imwrite("tmp/newimg.jpg", img)
 
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    thresh_inv = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)[1]
+    thresh_inv = cv2.threshold(
+        gray, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)[1]
 
     # Blur the image
     blur = cv2.GaussianBlur(thresh_inv, (1, 1), 0)
 
-    thresh = cv2.threshold(blur, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)[1]
+    thresh = cv2.threshold(
+        blur, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)[1]
 
     # find contours
-    contours = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)[0]
+    contours = cv2.findContours(
+        thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)[0]
 
     mask = np.ones(img.shape[:2], dtype="uint8") * 255
 
@@ -64,7 +67,7 @@ def API(img, key_value_both, fields=None, isHandwritten=None):
 
             x1, x2, y1, y2 = x, x + w, y, y + h
             try:
-                key_img = img[y1 - 10 : y2 + 10, 0:x1]  # key
+                key_img = img[y1 - 10: y2 + 10, 0:x1]  # key
 
                 key = (
                     pytesseract.image_to_string(
@@ -80,7 +83,7 @@ def API(img, key_value_both, fields=None, isHandwritten=None):
             except:
                 continue
 
-            if key == "" or contains_box(thresh[y1 - 10 : y2 + 10, 0:x1], mean):
+            if key == "" or contains_box(thresh[y1 - 10: y2 + 10, 0:x1], mean):
                 continue
 
             if fields is not None and key not in fields.keys():
@@ -88,10 +91,10 @@ def API(img, key_value_both, fields=None, isHandwritten=None):
 
             if key_value_both == True:
                 if fields[key] == "Checkbox":
-                    value_img = img[y1 - 10 : y2 + 10, x1:]
+                    value_img = img[y1 - 10: y2 + 10, x1:]
                     value = MultipleChoice(value_img)
                 else:
-                    value_img = img[y1 + 10 : y2 - 10, x1 + 10 : x2 - 10]
+                    value_img = img[y1 + 10: y2 - 10, x1 + 10: x2 - 10]
                     if isHandwritten == 1:
                         value = ""
                         if fields[key] == "Sentiment":
@@ -109,7 +112,6 @@ def API(img, key_value_both, fields=None, isHandwritten=None):
                             # # Print detected text
                             for item in response["Blocks"]:
                                 if item["BlockType"] == "LINE":
-                                    print(item["Text"])
                                     value += item["Text"] + " "
                         else:
                             images.append(value_img)
@@ -142,7 +144,8 @@ def API(img, key_value_both, fields=None, isHandwritten=None):
         textract = boto3.client("textract")
 
         # # Call Amazon Textract
-        response = textract.detect_document_text(Document={"Bytes": imageBytes})
+        response = textract.detect_document_text(
+            Document={"Bytes": imageBytes})
 
         # # Print detected text
         for item in response["Blocks"]:
